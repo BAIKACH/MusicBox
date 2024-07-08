@@ -23,8 +23,31 @@
             padding: 5px 0;
             margin-bottom: 10px;
         }
-        .header h1 {
-            font-size: 20px; /* Изменение размера шрифта заголовка */
+        .description {
+            margin: 20px;
+            font-size: 13px; /* Изменение размера шрифта описания */
+        }
+        .description a {
+            color: #333;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        .description a:hover {
+            text-decoration: underline;
+        }
+        .language-switcher {
+            margin: 20px;
+        }
+        .language-switcher button {
+            margin: 0 5px;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background-color: #fff;
+            color: #333;
+            display: inline-block;
         }
         .search-bar {
             margin: 20px;
@@ -52,6 +75,11 @@
             width: 200px;
             box-shadow: 0 4px 8px rgba(0,0,0,0.1);
             transition: transform 0.2s, box-shadow 0.2s;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
         }
         .artist:hover {
             transform: translateY(-5px);
@@ -61,45 +89,20 @@
             color: #000; /* Чёрный цвет для текста */
             text-decoration: none;
             font-weight: bold;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
         }
         .artist a:hover {
             text-decoration: underline;
-        }
-        .divider {
-            border-bottom: 1px solid #fff; /* Белая полоса */
-            margin: 20px 0;
-        }
-        .description {
-            margin: 20px;
-            font-size: 13px; /* Изменение размера шрифта описания */
-        }
-        .description a {
-            color: #333;
-            text-decoration: none;
-            font-weight: bold;
-        }
-        .description a:hover {
-            text-decoration: underline;
-        }
-        .language-switcher {
-            margin: 20px;
-        }
-        .language-switcher button {
-            margin: 0 5px;
-            padding: 10px 20px;
-            font-size: 16px;
-            cursor: pointer;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            background-color: #fff;
-            color: #333;
         }
     </style>
 </head>
 <body>
     <div class="header">
-        <h1>MUSICBOX</h1>
-        <div class="divider"></div>
         <p class="description" id="description">
             Музыка стала ещё ближе! Следи за нашими обновлениями на <a href="https://t.me/musicbox_rus" target="_blank">t.me/musicbox_rus</a>.<br>
             Интересует заработок на тапалках? Присоединяйся к нашему проекту <a href="https://t.me/crypto_petyshok" target="_blank">t.me/crypto_petyshok</a>.
