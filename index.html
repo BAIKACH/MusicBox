@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Music Search</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #333;
+            color: #fff;
+            text-align: center;
+        }
+        .search-bar {
+            margin: 20px;
+        }
+        .artist-list {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        .artist {
+            background-color: #444;
+            margin: 10px;
+            padding: 10px;
+            border-radius: 5px;
+            width: 200px;
+        }
+        .artist a {
+            color: #00f;
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+    <h1>MusicBox Web3</h1>
+    <div class="search-bar">
+        <input type="text" id="searchInput" placeholder="Поиск по артистам..." onkeyup="filterArtists()">
+    </div>
+    <div class="artist-list" id="artistList">
+        <!-- Пример списка артистов -->
+        <div class="artist" data-name="2Pac"><a href="https://t.me/tupac_2pac_music">2Pac</a></div>
+        <div class="artist" data-name="6ix9ine"><a href="https://t.me/music6ix9ine">6ix9ine</a></div>
+        <!-- Добавьте остальных артистов здесь -->
+    </div>
+
+    <script>
+        function filterArtists() {
+            const input = document.getElementById('searchInput').value.toLowerCase();
+            const artists = document.getElementsByClassName('artist');
+            for (let i = 0; i < artists.length; i++) {
+                const name = artists[i].getAttribute('data-name').toLowerCase();
+                if (name.includes(input)) {
+                    artists[i].style.display = 'block';
+                } else {
+                    artists[i].style.display = 'none';
+                }
+            }
+        }
+    </script>
+</body>
+</html>
