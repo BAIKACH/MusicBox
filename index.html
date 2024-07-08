@@ -25,7 +25,7 @@
         }
         .description {
             margin: 20px;
-            font-size: 13px; /* Изменение размера шрифта описания */
+            font-size: 12px; /* Изменение размера шрифта описания */
         }
         .description a {
             color: #333;
@@ -36,12 +36,12 @@
             text-decoration: underline;
         }
         .language-switcher {
-            margin: 20px;
+            margin: 16px; /* уменьшаем margin */
         }
         .language-switcher button {
-            margin: 0 5px;
-            padding: 10px 20px;
-            font-size: 16px;
+            margin: 0 4px; /* уменьшаем отступы */
+            padding: 9px 18px; /* уменьшаем padding на 10% */
+            font-size: 14.4px; /* уменьшаем на 10% */
             cursor: pointer;
             border: 1px solid #ccc;
             border-radius: 5px;
@@ -50,15 +50,15 @@
             display: inline-block;
         }
         .search-bar {
-            margin: 20px;
+            margin: 16px; /* уменьшаем margin */
         }
         .search-bar input {
-            padding: 10px;
+            padding: 9px; /* уменьшаем padding на 10% */
             width: 80%;
             max-width: 500px;
             border: 1px solid #ccc;
             border-radius: 5px;
-            font-size: 16px;
+            font-size: 14.4px; /* уменьшаем на 10% */
         }
         .artist-list {
             display: flex;
@@ -70,9 +70,9 @@
         .artist {
             background-color: #f9f9f9;
             margin: 10px;
-            padding: 20px;
+            padding: 18px; /* уменьшаем padding на 10% */
             border-radius: 10px;
-            width: 200px;
+            width: 180px; /* уменьшаем ширину на 10% */
             box-shadow: 0 4px 8px rgba(0,0,0,0.1);
             transition: transform 0.2s, box-shadow 0.2s;
             display: flex;
@@ -150,7 +150,7 @@
             for (let i = 0; i < artists.length; i++) {
                 const name = artists[i].getAttribute('data-name').toLowerCase();
                 if (name.includes(input)) {
-                    artists[i].style.display = 'block';
+                    artists[i].style.display = 'flex'; // используйте flex вместо block, чтобы сохранить структуру flex
                 } else {
                     artists[i].style.display = 'none';
                 }
