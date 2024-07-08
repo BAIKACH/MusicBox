@@ -12,9 +12,13 @@
             text-align: center;
             margin: 0;
             padding: 0;
+            -webkit-user-select: none; /* Safari */
+            -moz-user-select: none; /* Firefox */
+            -ms-user-select: none; /* Internet Explorer/Edge */
+            user-select: none; /* Standard */
         }
         .header {
-            background-color: #4CAF50;
+            background: linear-gradient(90deg, #ff5f6d, #ffc371); /* Градиент из цветов, как в логотипе iTunes */
             color: white;
             padding: 20px 0;
             margin-bottom: 30px;
@@ -51,18 +55,57 @@
             box-shadow: 0 8px 16px rgba(0,0,0,0.2);
         }
         .artist a {
-            color: #000; /* Изменено на чёрный цвет */
+            color: #000; /* Чёрный цвет для текста */
             text-decoration: none;
             font-weight: bold;
         }
         .artist a:hover {
             text-decoration: underline;
         }
+        .divider {
+            border-bottom: 2px solid #fff; /* Белая полоса */
+            margin: 20px 0;
+        }
+        .description {
+            margin: 20px;
+            font-size: 18px;
+        }
+        .description a {
+            color: #333;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        .description a:hover {
+            text-decoration: underline;
+        }
+        .language-switcher {
+            margin: 20px;
+        }
+        .language-switcher button {
+            margin: 0 5px;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background-color: #fff;
+            color: #333;
+        }
     </style>
 </head>
 <body>
     <div class="header">
         <h1>MusicBox Web3</h1>
+        <div class="divider"></div>
+        <p class="description" id="description">
+            Музыка стала ещё ближе! Следи за нашими обновлениями на <a href="https://t.me/musicbox_rus" target="_blank">t.me/musicbox_rus</a>.<br>
+            Интересует заработок на тапалках? Присоединяйся к нашему проекту <a href="https://t.me/crypto_petyshok" target="_blank">t.me/crypto_petyshok</a>.
+        </p>
+    </div>
+    <div class="language-switcher">
+        <button onclick="setLanguage('en')">EN</button>
+        <button onclick="setLanguage('ru')">RU</button>
+        <button onclick="setLanguage('ua')">UA</button>
     </div>
     <div class="search-bar">
         <input type="text" id="searchInput" placeholder="Поиск по артистам..." onkeyup="filterArtists()">
@@ -75,6 +118,26 @@
     </div>
 
     <script>
+        const languages = {
+            en: {
+                description: `Music is now even closer! Follow our updates at <a href="https://t.me/musicbox_rus" target="_blank">t.me/musicbox_rus</a>.<br>
+                              Interested in earning on Tapalki? Join our project <a href="https://t.me/crypto_petyshok" target="_blank">t.me/crypto_petyshok</a>.`
+            },
+            ru: {
+                description: `Музыка стала ещё ближе! Следи за нашими обновлениями на <a href="https://t.me/musicbox_rus" target="_blank">t.me/musicbox_rus</a>.<br>
+                              Интересует заработок на тапалках? Присоединяйся к нашему проекту <a href="https://t.me/crypto_petyshok" target="_blank">t.me/crypto_petyshok</a>.`
+            },
+            ua: {
+                description: `Музика стала ще ближче! Слідкуй за нашими оновленнями на <a href="https://t.me/musicbox_rus" target="_blank">t.me/musicbox_rus</a>.<br>
+                              Цікавить заробіток на тапалках? Приєднуйся до нашого проекту <a href="https://t.me/crypto_petyshok" target="_blank">t.me/crypto_petyshok</a>.`
+            }
+        };
+
+        function setLanguage(lang) {
+            document.getElementById('description').innerHTML = languages[lang].description;
+            document.getElementById('searchInput').placeholder = lang === 'en' ? 'Search for artists...' : (lang === 'ru' ? 'Поиск по артистам...' : 'Пошук по артистам...');
+        }
+
         function filterArtists() {
             const input = document.getElementById('searchInput').value.toLowerCase();
             const artists = document.getElementsByClassName('artist');
@@ -87,6 +150,10 @@
                 }
             }
         }
+
+        document.addEventListener('copy', function(e) {
+            e.preventDefault();
+        });
     </script>
 </body>
 </html>
