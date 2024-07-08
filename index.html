@@ -12,7 +12,7 @@
             text-align: center;
             margin: 0;
             padding: 0;
-            user-select: none; /* Standard */
+            user-select: none;
         }
         .header {
             background: linear-gradient(90deg, #ff5f6d, #ffc371);
@@ -44,7 +44,6 @@
             border-radius: 5px;
             background-color: #fff;
             color: #333;
-            display: inline-block;
         }
         .search-bar input {
             padding: 8.1px;
@@ -63,10 +62,10 @@
         }
         .artist {
             background-color: #f9f9f9;
-            margin: 8px; /* Adjusted margin for spacing */
-            padding: 10px; /* Reduced padding to maintain button appearance */
+            margin: 8px;
+            padding: 10px;
             border-radius: 10px;
-            width: 80px; /* Reduced width by 20% from the previously reduced size */
+            width: 80px;
             box-shadow: 0 4px 8px rgba(0,0,0,0.1);
             transition: transform 0.2s, box-shadow 0.2s;
             display: flex;
@@ -89,6 +88,7 @@
             flex-direction: column;
             align-items: center;
             justify-content: center;
+            font-size: 9px; /* Измените значение на нужный размер */
         }
         .artist a:hover {
             text-decoration: underline;
@@ -111,7 +111,6 @@
         <input type="text" id="searchInput" placeholder="Поиск по артистам..." onkeyup="filterArtists()">
     </div>
     <div class="artist-list" id="artistList">
-        <!-- Пример списка артистов -->
         <div class="artist" data-name="2Pac"><a href="https://t.me/tupac_2pac_music">2Pac</a></div>
         <div class="artist" data-name="6ix9ine"><a href="https://t.me/music6ix9ine">6ix9ine</a></div>
         <div class="artist" data-name="4n Way"><a href="https://t.me/music_4n_Way">4n Way</a></div>
@@ -224,9 +223,7 @@
         <div class="artist" data-name="MEGAHITS"><a href="https://t.me/musicbox_megahit">MEGAHITS</a></div>
         <div class="artist" data-name="uglystephan"><a href="https://t.me/uglystephan_musicbox">uglystephan</a></div>
         <div class="artist" data-name="cakeboy"><a href="https://t.me/cakeboy_musicbox">cakeboy</a></div>
-        <!-- Добавьте остальных артистов здесь -->
     </div>
-
     <script>
         const languages = {
             en: {
@@ -257,21 +254,8 @@
             });
         }
 
-        function sortArtists() {
-            const artistList = document.getElementById('artistList');
-            const artists = Array.from(artistList.getElementsByClassName('artist'));
-
-            artists.sort((a, b) => a.getAttribute('data-name').localeCompare(b.getAttribute('data-name'), 'ru', { sensitivity: 'base' }));
-
-            artists.forEach(artist => artistList.appendChild(artist));
-        }
-
         document.addEventListener('copy', function(e) {
             e.preventDefault();
-        });
-
-        document.addEventListener('DOMContentLoaded', function() {
-            sortArtists();
         });
     </script>
 </body>
