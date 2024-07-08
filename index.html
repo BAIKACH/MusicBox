@@ -12,20 +12,17 @@
             text-align: center;
             margin: 0;
             padding: 0;
-            -webkit-user-select: none; /* Safari */
-            -moz-user-select: none; /* Firefox */
-            -ms-user-select: none; /* Internet Explorer/Edge */
             user-select: none; /* Standard */
         }
         .header {
-            background: linear-gradient(90deg, #ff5f6d, #ffc371); /* Градиент из цветов, как в логотипе iTunes */
+            background: linear-gradient(90deg, #ff5f6d, #ffc371);
             color: white;
             padding: 5px 0;
             margin-bottom: 10px;
         }
         .description {
             margin: 20px;
-            font-size: 12px; /* Изменение размера шрифта описания */
+            font-size: 12px;
         }
         .description a {
             color: #333;
@@ -35,13 +32,13 @@
         .description a:hover {
             text-decoration: underline;
         }
-        .language-switcher {
-            margin: 14.4px; /* уменьшаем margin */
+        .language-switcher, .search-bar {
+            margin: 14.4px;
         }
         .language-switcher button {
-            margin: 0 3.6px; /* уменьшаем отступы ещё на 10% */
-            padding: 8.1px 16.2px; /* уменьшаем padding на 10% */
-            font-size: 12.96px; /* уменьшаем на 10% */
+            margin: 0 3.6px;
+            padding: 8.1px 16.2px;
+            font-size: 12.96px;
             cursor: pointer;
             border: 1px solid #ccc;
             border-radius: 5px;
@@ -49,16 +46,13 @@
             color: #333;
             display: inline-block;
         }
-        .search-bar {
-            margin: 14.4px; /* уменьшаем margin */
-        }
         .search-bar input {
-            padding: 8.1px; /* уменьшаем padding на 10% */
+            padding: 8.1px;
             width: 80%;
             max-width: 500px;
             border: 1px solid #ccc;
             border-radius: 5px;
-            font-size: 12.96px; /* уменьшаем на 10% */
+            font-size: 12.96px;
         }
         .artist-list {
             display: flex;
@@ -70,9 +64,9 @@
         .artist {
             background-color: #f9f9f9;
             margin: 10px;
-            padding: 18px; /* уменьшаем padding на 10% */
+            padding: 14.4px; /* Reduce padding slightly to maintain button appearance */
             border-radius: 10px;
-            width: 180px; /* уменьшаем ширину на 10% */
+            width: 100px; /* Reduced width by 20% from the previously reduced size */
             box-shadow: 0 4px 8px rgba(0,0,0,0.1);
             transition: transform 0.2s, box-shadow 0.2s;
             display: flex;
@@ -86,7 +80,7 @@
             box-shadow: 0 8px 16px rgba(0,0,0,0.2);
         }
         .artist a {
-            color: #000; /* Чёрный цвет для текста */
+            color: #000;
             text-decoration: none;
             font-weight: bold;
             width: 100%;
@@ -120,6 +114,8 @@
         <!-- Пример списка артистов -->
         <div class="artist" data-name="2Pac"><a href="https://t.me/tupac_2pac_music">2Pac</a></div>
         <div class="artist" data-name="6ix9ine"><a href="https://t.me/music6ix9ine">6ix9ine</a></div>
+        <div class="artist" data-name="2Pac"><a href="https://t.me/tupac_2pac_music">2Pac</a></div>
+        <div class="artist" data-name="6ix9ine"><a href="https://t.me/music6ix9ine">6ix9ine</a></div>
         <!-- Добавьте остальных артистов здесь -->
     </div>
 
@@ -147,14 +143,10 @@
         function filterArtists() {
             const input = document.getElementById('searchInput').value.toLowerCase();
             const artists = document.getElementsByClassName('artist');
-            for (let i = 0; i < artists.length; i++) {
-                const name = artists[i].getAttribute('data-name').toLowerCase();
-                if (name.includes(input)) {
-                    artists[i].style.display = 'flex'; // используйте flex вместо block, чтобы сохранить структуру flex
-                } else {
-                    artists[i].style.display = 'none';
-                }
-            }
+            Array.from(artists).forEach(artist => {
+                const name = artist.getAttribute('data-name').toLowerCase();
+                artist.style.display = name.includes(input) ? 'flex' : 'none';
+            });
         }
 
         document.addEventListener('copy', function(e) {
