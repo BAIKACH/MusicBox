@@ -96,6 +96,85 @@
     </style>
 </head>
 <body>
+<!-- Sidebar Menu -->
+<div id="mySidebar" class="sidebar">
+    <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">×</a>
+    <a href="#section1">Section 1</a>
+    <a href="#section2">Section 2</a>
+    <a href="#section3">Section 3</a>
+</div>
+<div id="main">
+    <button class="openbtn" onclick="openNav()">☰ Open Sidebar</button>
+</div>
+
+<!-- Sidebar Menu CSS -->
+<style>
+    .sidebar {
+        height: 100%;
+        width: 0;
+        position: fixed;
+        z-index: 1;
+        top: 0;
+        left: 0;
+        background-color: #111;
+        overflow-x: hidden;
+        transition: 0.5s;
+        padding-top: 60px;
+    }
+
+    .sidebar a {
+        padding: 10px 15px;
+        text-decoration: none;
+        font-size: 25px;
+        color: #818181;
+        display: block;
+        transition: 0.3s;
+    }
+
+    .sidebar a:hover {
+        color: #f1f1f1;
+    }
+
+    .sidebar .closebtn {
+        position: absolute;
+        top: 0;
+        right: 25px;
+        font-size: 36px;
+        margin-left: 50px;
+    }
+
+    .openbtn {
+        font-size: 20px;
+        cursor: pointer;
+        background-color: #111;
+        color: white;
+        padding: 10px 15px;
+        border: none;
+    }
+
+    .openbtn:hover {
+        background-color: #444;
+    }
+
+    #main {
+        transition: margin-left .5s;
+        padding: 16px;
+    }
+</style>
+
+<!-- Sidebar Menu JavaScript -->
+<script>
+    function openNav() {
+        document.getElementById("mySidebar").style.width = "250px";
+        document.getElementById("main").style.marginLeft = "250px";
+    }
+
+    function closeNav() {
+        document.getElementById("mySidebar").style.width = "0";
+        document.getElementById("main").style.marginLeft= "0";
+    }
+</script>
+
     <div class="header">
         <p class="description" id="description">
             Музыка стала ещё ближе! Следи за нашими обновлениями на <a href="https://t.me/musicbox_rus" target="_blank">t.me/musicbox_rus</a>.<br>
@@ -224,6 +303,47 @@
         <div class="artist" data-name="uglystephan"><a href="https://t.me/uglystephan_musicbox">uglystephan</a></div>
         <div class="artist" data-name="cakeboy"><a href="https://t.me/cakeboy_musicbox">cakeboy</a></div>
     </div>
-    <script type="text/javascript" src="https://www.shinystat.com/cgi-bin/shinystat.cgi?USER=SS-51041999-2282b"></script>
+    <script>
+        const languages = {
+            en: {
+                description: `Music is now even closer! Follow our updates at <a href="https://t.me/musicbox_rus" target="_blank">t.me/musicbox_rus</a>.<br>
+                              Interested in earning by taps? Join our project <a href="https://t.me/crypto_petyshok" target="_blank">t.me/crypto_petyshok</a>.`
+            },
+            ru: {
+                description: `Музыка стала ещё ближе! Следи за нашими обновлениями на <a href="https://t.me/musicbox_rus" target="_blank">t.me/musicbox_rus</a>.<br>
+                              Интересует заработок на тапалках? Присоединяйся к нашему проекту <a href="https://t.me/crypto_petyshok" target="_blank">t.me/crypto_petyshok</a>.`
+            },
+            ua: {
+                description: `Музика стала ще ближче! Слідкуй за нашими оновленнями на <a href="https://t.me/musicbox_rus" target="_blank">t.me/musicbox_rus</a>.<br>
+                              Цікавить заробіток на тапалках? Приєднуйся до нашого проекту <a href="https://t.me/crypto_petyshok" target="_blank">t.me/crypto_petyshok</a>.`
+            }
+        };
+
+        function setLanguage(lang) {
+            document.getElementById('description').innerHTML = languages[lang].description;
+            document.getElementById('searchInput').placeholder = lang === 'en' ? 'Search for artists...' : (lang === 'ru' ? 'Поиск по артистам...' : 'Пошук по артистам...');
+        }
+
+        function filterArtists() {
+            const input = document.getElementById('searchInput').value.toLowerCase();
+            const artists = document.getElementsByClassName('artist');
+            Array.from(artists).forEach(artist => {
+                const name = artist.getAttribute('data-name').toLowerCase();
+                artist.style.display = name.includes(input) ? 'flex' : 'none';
+            });
+        }
+
+        document.addEventListener('copy', function(e) {
+            e.preventDefault();
+        });
+    </script>
+
+<!-- Inizio Codice ShinyStat -->
+<script src="//codice.shinystat.com/cgi-bin/getcod.cgi?USER=SS-51041999-2282b"></script>
+<noscript>
+<a href="https://www.shinystat.com/it/" target="_top">
+<img src="//www.shinystat.com/cgi-bin/shinystat.cgi?USER=SS-51041999-2282b" alt="Statistiche web" style="border:0px" /></a>
+</noscript>
+<!-- Fine Codice ShinyStat -->
 </body>
 </html>
