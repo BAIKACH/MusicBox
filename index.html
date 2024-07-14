@@ -93,6 +93,9 @@
         .artist a:hover {
             text-decoration: underline;
         }
+        noscript {
+            display: none;
+        }
     </style>
 </head>
 <body>
@@ -224,39 +227,45 @@
         <div class="artist" data-name="uglystephan"><a href="https://t.me/uglystephan_musicbox">uglystephan</a></div>
         <div class="artist" data-name="cakeboy"><a href="https://t.me/cakeboy_musicbox">cakeboy</a></div>
     </div>
+
+    <!-- Inizio Codice ShinyStat -->
+    <script src="//codice.shinystat.com/cgi-bin/getcod.cgi?USER=SS-51041999-2282b"></script>
+    <noscript>
+        <a href="https://www.shinystat.com/it/" target="_top">
+            <img src="//www.shinystat.com/cgi-bin/shinystat.cgi?USER=SS-51041999-2282b" alt="Statistiche web" style="border:0px" />
+        </a>
+    </noscript>
+    <!-- Fine Codice ShinyStat -->
+
     <script>
-        const languages = {
-            en: {
-                description: `Music is now even closer! Follow our updates at <a href="https://t.me/musicbox_rus" target="_blank">t.me/musicbox_rus</a>.<br>
-                              Interested in earning by taps? Join our project <a href="https://t.me/crypto_petyshok" target="_blank">t.me/crypto_petyshok</a>.`
-            },
-            ru: {
-                description: `Музыка стала ещё ближе! Следи за нашими обновлениями на <a href="https://t.me/musicbox_rus" target="_blank">t.me/musicbox_rus</a>.<br>
-                              Интересует заработок на тапалках? Присоединяйся к нашему проекту <a href="https://t.me/crypto_petyshok" target="_blank">t.me/crypto_petyshok</a>.`
-            },
-            ua: {
-                description: `Музика стала ще ближче! Слідкуй за нашими оновленнями на <a href="https://t.me/musicbox_rus" target="_blank">t.me/musicbox_rus</a>.<br>
-                              Цікавить заробіток на тапалках? Приєднуйся до нашого проекту <a href="https://t.me/crypto_petyshok" target="_blank">t.me/crypto_petyshok</a>.`
-            }
-        };
-
-        function setLanguage(lang) {
-            document.getElementById('description').innerHTML = languages[lang].description;
-            document.getElementById('searchInput').placeholder = lang === 'en' ? 'Search for artists...' : (lang === 'ru' ? 'Поиск по артистам...' : 'Пошук по артистам...');
-        }
-
-        function filterArtists() {
-            const input = document.getElementById('searchInput').value.toLowerCase();
-            const artists = document.getElementsByClassName('artist');
-            Array.from(artists).forEach(artist => {
-                const name = artist.getAttribute('data-name').toLowerCase();
-                artist.style.display = name.includes(input) ? 'flex' : 'none';
+        function setLanguage(language) {
+            var elements = document.querySelectorAll('[data-lang]');
+            elements.forEach(function(element) {
+                if (element.getAttribute('data-lang') === language) {
+                    element.style.display = 'block';
+                } else {
+                    element.style.display = 'none';
+                }
             });
         }
 
-        document.addEventListener('copy', function(e) {
-            e.preventDefault();
-        });
+        function filterArtists() {
+            var input = document.getElementById('searchInput');
+            var filter = input.value.toLowerCase();
+            var artistList = document.getElementById('artistList');
+            var artists = artistList.getElementsByClassName('artist');
+
+            for (var i = 0; i < artists.length; i++) {
+                var artist = artists[i];
+                var artistName = artist.getAttribute('data-name').toLowerCase();
+
+                if (artistName.indexOf(filter) > -1) {
+                    artist.style.display = '';
+                } else {
+                    artist.style.display = 'none';
+                }
+            }
+        }
     </script>
 </body>
 </html>
