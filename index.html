@@ -111,8 +111,8 @@
         <input type="text" id="searchInput" placeholder="Поиск по артистам..." onkeyup="filterArtists()">
     </div>
     <div class="artist-list" id="artistList">
-        <div class="artist" data-name="2Pac" data-aliases="Тупак"><a href="https://t.me/tupac_2pac_music">2Pac</a></div>
-        <div class="artist" data-name="6ix9ine" data-aliases="Сикснайн"><a href="https://t.me/music6ix9ine">6ix9ine</a></div>
+        <div class="artist" data-name="2Pac"><a href="https://t.me/tupac_2pac_music">2Pac</a></div>
+        <div class="artist" data-name="6ix9ine"><a href="https://t.me/music6ix9ine">6ix9ine</a></div>
         <div class="artist" data-name="4n Way"><a href="https://t.me/music_4n_Way">4n Way</a></div>
         <div class="artist" data-name="10age"><a href="https://t.me/ten10AGE_musicbox">10age</a></div>
         <div class="artist" data-name="21 Savage"><a href="https://t.me/savage21music">21 Savage</a></div>
@@ -176,7 +176,7 @@
         <div class="artist" data-name="LILDRUGHILL"><a href="https://t.me/LILDRUGHILL_musicbox">LILDRUGHILL</a></div>
         <div class="artist" data-name="LIZER"><a href="https://t.me/lizer_musicbox">LIZER</a></div>
         <div class="artist" data-name="LOVV66"><a href="https://t.me/LOVV66_musicbox">LOVV66</a></div>
-        <div class="artist" data-name="macan" data-aliases="макан"><a href="https://t.me/macan_musicbox">macan</a></div>
+        <div class="artist" data-name="macan"><a href="https://t.me/macan_musicbox">macan</a></div>
         <div class="artist" data-name="May Wave$"><a href="https://t.me/May_Waves_music">May Wave$</a></div>
         <div class="artist" data-name="MAYOT"><a href="https://t.me/mayot_musicbox">MAYOT</a></div>
         <div class="artist" data-name="MiyaGi"><a href="https://t.me/MiyaGi_musicbox">MiyaGi</a></div>
@@ -224,39 +224,6 @@
         <div class="artist" data-name="uglystephan"><a href="https://t.me/uglystephan_musicbox">uglystephan</a></div>
         <div class="artist" data-name="cakeboy"><a href="https://t.me/cakeboy_musicbox">cakeboy</a></div>
     </div>
-    <script>
-        const languages = {
-            en: {
-                description: `Music is now even closer! Follow our updates at <a href="https://t.me/musicbox_rus" target="_blank">t.me/musicbox_rus</a>.<br>
-                              Interested in earning by taps? Join our project <a href="https://t.me/crypto_petyshok" target="_blank">t.me/crypto_petyshok</a>.`
-            },
-            ru: {
-                description: `Музыка стала ещё ближе! Следи за нашими обновлениями на <a href="https://t.me/musicbox_rus" target="_blank">t.me/musicbox_rus</a>.<br>
-                              Интересует заработок на тапалках? Присоединяйся к нашему проекту <a href="https://t.me/crypto_petyshok" target="_blank">t.me/crypto_petyshok</a>.`
-            },
-            ua: {
-                description: `Музика стала ще ближче! Слідкуй за нашими оновленнями на <a href="https://t.me/musicbox_rus" target="_blank">t.me/musicbox_rus</a>.<br>
-                              Цікавить заробіток на тапалках? Приєднуйся до нашого проекту <a href="https://t.me/crypto_petyshok" target="_blank">t.me/crypto_petyshok</a>.`
-            }
-        };
-
-        function setLanguage(lang) {
-            document.getElementById('description').innerHTML = languages[lang].description;
-            document.getElementById('searchInput').placeholder = lang === 'en' ? 'Search for artists...' : (lang === 'ru' ? 'Поиск по артистам...' : 'Пошук по артистам...');
-        }
-
-        function filterArtists() {
-            const input = document.getElementById('searchInput').value.toLowerCase();
-            const artists = document.getElementsByClassName('artist');
-            Array.from(artists).forEach(artist => {
-                const name = artist.getAttribute('data-name').toLowerCase();
-                artist.style.display = name.includes(input) ? 'flex' : 'none';
-            });
-        }
-
-        document.addEventListener('copy', function(e) {
-            e.preventDefault();
-        });
-    </script>
+    <script type="text/javascript" src="https://www.shinystat.com/cgi-bin/shinystat.cgi?USER=SS-51041999-2282b"></script>
 </body>
 </html>
