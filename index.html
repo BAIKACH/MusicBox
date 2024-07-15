@@ -139,6 +139,10 @@
         noscript {
             display: none;
         }
+        /* Стили для баннера Shiny Stat */
+        .shinystat-banner {
+            margin-top: 20px;
+        }
     </style>
 </head>
 <body>
@@ -169,24 +173,22 @@
     </div>
     <div class="dropdown">
         <!-- Кнопка меню -->
-        <button onclick="toggleMenu()" class="dropbtn">&#9776;</button>
+        <button onclick="toggleMenu()" class="dropbtn">Меню</button>
         <!-- Модальное окно меню -->
         <div id="menu" class="modal">
-            <div id="menuText"></div>
+            <span id="menuText"></span>
+            <!-- Баннер Shiny Stat -->
+            <div class="shinystat-banner">
+                <a href="http://www.at.com/cgi-bin/shinystat.cgi?USER=SS-51041999-2282b" target="_blank">
+                    <img src="http://www.at.com/cgi-bin/shinystat.cgi?USER=SS-51041999-2282b" alt="Statistiche web" style="border:0px" />
+                </a>
+            </div>
         </div>
     </div>
-    <div class="artist-list" id="artistList">
-        <!-- Список артистов -->
-        <div class="artist" data-name="2Pac" data-alt-name="тупак"><a href="https://t.me/tupac_2pac_music">2Pac</a></div>
-        <div class="artist" data-name="cakeboy" data-alt-name="кейкбой"><a href="https://t.me/cakeboy_musicbox">cakeboy</a></div>
-    </div>
-
-    <!-- Включение внешнего скрипта для статистики -->
-    <script src="//codice.shinystat.com/cgi-bin/getcod.cgi?USER=SS-51041999-2282b"></script>
     <noscript>
-        <!-- Запасной вариант для браузеров без поддержки JavaScript -->
-        <a href="https://www.shinystat.com/it/" target="_top">
-            <img src="//www.shinystat.com/cgi-bin/shinystat.cgi?USER=SS-51041999-2282b" alt="Statistiche web" style="border:0px" />
+        <!-- Ссылка на Shiny Stat для неподдерживающих JavaScript браузеров -->
+        <a href="http://www.at.com/cgi-bin/shinystat.cgi?USER=SS-51041999-2282b" target="_blank">
+            <img src="http://www.at.com/cgi-bin/shinystat.cgi?USER=SS-51041999-2282b" alt="Statistiche web" style="border:0px" />
         </a>
     </noscript>
 
@@ -242,6 +244,12 @@
                 }
                 menuText.innerHTML = content;
                 menu.style.display = 'block';
+                
+                // Подгрузка баннера Shiny Stat при первом открытии меню
+                var shinystatBanner = document.querySelector('.shinystat-banner');
+                if (!shinystatBanner.innerHTML.trim()) {
+                    shinystatBanner.innerHTML = '<a href="http://www.at.com/cgi-bin/shinystat.cgi?USER=SS-51041999-2282b" target="_blank"><img src="http://www.at.com/cgi-bin/shinystat.cgi?USER=SS-51041999-2282b" alt="Statistiche web" style="border:0px" /></a>';
+                }
             }
 
             // Включение/выключение размытия на других элементах
