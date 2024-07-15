@@ -13,7 +13,9 @@
             text-align: center;
             margin: 0;
             padding: 0;
-            user-select: none;
+            user-select: none; /* Отключение выделения текста */
+            touch-action: manipulation; /* Отключение масштабирования жестами */
+            -ms-touch-action: manipulation; /* Для поддержки IE/Edge */
         }
         .header {
             background: linear-gradient(90deg, #ff5f6d, #ffc371);
@@ -384,6 +386,15 @@
         // Установка языка по умолчанию (русский) при загрузке страницы
         document.addEventListener('DOMContentLoaded', function() {
             setLanguage('ru');
+        });
+
+        // JavaScript для запрета копирования и контекстного меню
+        document.addEventListener('contextmenu', function(e) {
+            e.preventDefault();
+        });
+
+        document.addEventListener('selectstart', function(e) {
+            e.preventDefault();
         });
     </script>
 </body>
