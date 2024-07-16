@@ -98,78 +98,30 @@
         .artist a:hover {
             text-decoration: underline;
         }
-        .dropdown {
-            position: absolute;
-            top: 14.4px;
-            right: 14.4px;
-            display: inline-block;
-        }
-        .dropbtn {
-            font-size: 10.00px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            padding: 4.0px 7.0px;
+        footer {
             background-color: #fff;
             color: #333;
-            cursor: pointer;
-        }
-        .modal {
-            display: none;
-            position: fixed;
-            z-index: 1000;
-            left: 50%;
-            top: 50%;
-            transform: translate(-50%, -50%);
-            background-color: rgba(255, 255, 255, 0.9);
-            color: #333;
-            padding: 25px;
-            border-radius: 10px;
-            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-            max-width: 80%;
+            padding: 20px 0;
             text-align: center;
-            font-size: 13px;
         }
-        .modal a {
+        .contact-info {
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: #fff; /* Изменено на белый фон */
+            color: #333; /* Изменено на черный текст */
+            padding: 10px 20px; /* Уменьшены отступы */
+            border-radius: 10px;
+            font-size: 12px; /* Размер шрифта, как в описании */
+        }
+        .contact-info p {
+            margin: 10px 0; /* Уменьшены отступы */
+        }
+        .contact-info a {
             color: #333;
-            text-decoration: none;
-            font-weight: bold;
-        }
-        .modal a:hover {
             text-decoration: underline;
         }
-        @media (max-width: 600px) {
-            .modal {
-                width: 90%;
-                font-size: 12px;
-                padding: 20px;
-            }
-            .header {
-                padding: 10px 0;
-            }
-            .description {
-                font-size: 10px;
-            }
-            .language-switcher button {
-                font-size: 11px;
-                padding: 6px 12px;
-            }
-            .search-bar input {
-                font-size: 11px;
-                padding: 6px;
-            }
-            .artist {
-                width: 60px;
-            }
-            .artist a {
-                font-size: 9px;
-            }
-            .dropbtn {
-                font-size: 9px;
-                padding: 3px 6px;
-            }
-        }
-        noscript {
-            display: none;
+        .contact-info a:hover {
+            text-decoration: none;
         }
     </style>
 </head>
@@ -198,14 +150,6 @@
     <div class="search-bar">
         <!-- Поле для поиска артистов -->
         <input type="text" id="searchInput" placeholder="Поиск по артистам..." onkeyup="filterArtists()">
-    </div>
-    <div class="dropdown">
-        <!-- Кнопка меню -->
-        <button onclick="toggleMenu()" class="dropbtn">&#9776;</button>
-        <!-- Модальное окно меню -->
-        <div id="menu" class="modal">
-            <div id="menuText"></div>
-        </div>
     </div>
     <div class="artist-list" id="artistList">
 <div class="artist" data-name="2Pac" data-alt-name="тупак"><a href="https://t.me/tupac_2pac_music">2Pac</a></div>
@@ -321,7 +265,19 @@
 <div class="artist" data-name="uglystephan" data-alt-name="аглисэфан"><a href="https://t.me/uglystephan_musicbox">uglystephan</a></div>
 <div class="artist" data-name="cakeboy" data-alt-name="кейкбой"><a href="https://t.me/cakeboy_musicbox">cakeboy</a></div>
     </div>
-
+    <footer>
+        <div class="contact-info">
+            <p data-lang="en">
+                Didn't find your favorite artist? Write to us, and we will definitely add them: <a href="https://t.me/musicbox_administrator" target="_blank">t.me/musicbox_administrator</a>
+            </p>
+            <p data-lang="ru">
+                Не нашли вашего любимого исполнителя? Напишите нам, и мы обязательно добавим его: <a href="https://t.me/musicbox_administrator" target="_blank">t.me/musicbox_administrator</a>
+            </p>
+            <p data-lang="ua">
+                Не знайшли вашого улюбленого виконавця? Напишіть нам, і ми обов'язково додамо його: <a href="https://t.me/musicbox_administrator" target="_blank">t.me/musicbox_administrator</a>
+            </p>
+        </div>
+    </footer>
     <!-- Включение внешнего скрипта для статистики -->
     <script src="//codice.shinystat.com/cgi-bin/getcod.cgi?USER=SS-51041999-2282b"></script>
     <noscript>
@@ -330,7 +286,6 @@
             <img src="//www.shinystat.com/cgi-bin/shinystat.cgi?USER=SS-51041999-2282b" alt="Statistiche web" style="border:0px" />
         </a>
     </noscript>
-
     <!-- JavaScript код -->
     <script>
         // Глобальная переменная для хранения текущего языка
@@ -339,12 +294,22 @@
         // Функция для смены языка
         function setLanguage(language) {
             currentLanguage = language;
-            var descriptions = document.querySelectorAll('.description');
-            descriptions.forEach(function(desc) {
-                desc.style.display = desc.getAttribute('data-lang') === language ? 'block' : 'none';
+            var elements = document.querySelectorAll('[data-lang]');
+            elements.forEach(function(element) {
+                element.style.display = element.getAttribute('data-lang') === language ? 'block' : 'none';
             });
-            var buttons = document.querySelectorAll('.language-switcher button');
-            buttons.forEach(function(button) {
+
+            var searchInput = document.getElementById('searchInput');
+            var placeholders = {
+                'en': 'Search for artists...',
+                'ru': 'Поиск по артистам...',
+                'ua': 'Пошук артистів...'
+            };
+            searchInput.placeholder = placeholders[language];
+
+            // Выделение активной кнопки языка
+            var languageButtons = document.querySelectorAll('.language-switcher button');
+            languageButtons.forEach(function(button) {
                 button.classList.toggle('active', button.innerText.toLowerCase() === language);
             });
         }
