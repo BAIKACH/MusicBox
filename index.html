@@ -127,8 +127,6 @@
             border-radius: 10px;
             box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2); /* Тень */
             max-width: 80%; /* Максимальная ширина окна */
-            max-height: 80%; /* Максимальная высота окна */
-            overflow-y: auto; /* Включение прокрутки, если контент больше размеров окна */
             text-align: center; /* Выравнивание текста по центру */
             font-size: 13px; /* Размер шрифта в модальном окне */
         }
@@ -149,15 +147,15 @@
     <div class="header">
         <!-- Описание на разных языках -->
         <p class="description" data-lang="en" style="display: none;">
-            Music is now closer! Follow our updates on <a href="https://t.me/musicbox_rus" target="_blank">t.me/musicbox_rus</a>.<br>
+            Music is now closer! Follow our updates on      <a href="https://t.me/musicbox_rus" target="_blank">t.me/musicbox_rus</a>.<br>
             Interested in earning on tap? Join our project <a href="https://t.me/crypto_petyshok" target="_blank">t.me/crypto_petyshok</a>.
         </p>
         <p class="description" data-lang="ru">
-            Музыка стала ещё ближе! Следи за нашими обновлениями на <a href="https://t.me/musicbox_rus" target="_blank">t.me/musicbox_rus</a>.<br>
+            Музыка стала ещё ближе! Следи за нашими обновлениями на      <a href="https://t.me/musicbox_rus" target="_blank">t.me/musicbox_rus</a>.<br>
             Интересует заработок на тапалках? Присоединяйся к нашему проекту <a href="https://t.me/crypto_petyshok" target="_blank">t.me/crypto_petyshok</a>.
         </p>
         <p class="description" data-lang="ua" style="display: none;">
-            Музика стала ближче! Слідкуйте за нашими оновленнями на <a href="https://t.me/musicbox_rus" target="_blank">t.me/musicbox_rus</a>.<br>
+            Музика стала ближче! Слідкуйте за нашими оновленнями на      <a href="https://t.me/musicbox_rus" target="_blank">t.me/musicbox_rus</a>.<br>
             Цікавить заробіток на тапах? Приєднуйтесь до нашого проекту <a href="https://t.me/crypto_petyshok" target="_blank">t.me/crypto_petyshok</a>.
         </p>
     </div>
@@ -294,51 +292,49 @@
 <div class="artist" data-name="cakeboy" data-alt-name="кейкбой"><a href="https://t.me/cakeboy_musicbox">cakeboy</a></div>
     </div>
 
-    <script>
-        // JavaScript для изменения языка
-        function setLanguage(lang) {
-            var descriptions = document.querySelectorAll('.description');
-            var activeButton = document.querySelector('.language-switcher button.active');
+    <!-- Включение внешнего скрипта для статистики -->
+    <script src="//codice.shinystat.com/cgi-bin/getcod.cgi?USER=SS-51041999-2282b"></script>
+    <noscript>
+        <!-- Запасной вариант для браузеров без поддержки JavaScript -->
+        <a href="https://www.shinystat.com/it/" target="_top">
+            <img src="//www.shinystat.com/cgi-bin/shinystat.cgi?USER=SS-51041999-2282b" alt="Statistiche web" style="border:0px" />
+        </a>
+    </noscript>
 
-            descriptions.forEach(function(desc) {
-                desc.style.display = 'none';
+    <!-- JavaScript код -->
+    <script>
+        // Функция для смены языка
+        function setLanguage(language) {
+            var elements = document.querySelectorAll('[data-lang]');
+            elements.forEach(function(element) {
+                if (element.getAttribute('data-lang') === language) {
+                    element.style.display = 'block';
+                } else {
+                    element.style.display = 'none';
+                }
             });
 
-            var selectedDesc = document.querySelector('.description[data-lang="' + lang + '"]');
-            if (selectedDesc) {
-                selectedDesc.style.display = 'block';
+            var searchInput = document.getElementById('searchInput');
+            if (language === 'en') {
+                searchInput.placeholder = 'Search for artists...';
+            } else if (language === 'ru') {
+                searchInput.placeholder = 'Поиск по артистам...';
+            } else if (language === 'ua') {
+                searchInput.placeholder = 'Пошук артистів...';
             }
 
-            // Устанавливаем активную кнопку смены языка
-            if (activeButton) {
-                activeButton.classList.remove('active');
-            }
-            var newActiveButton = document.querySelector('.language-switcher button:nth-child(' + (['en', 'ru', 'ua'].indexOf(lang) + 1) + ')');
-            if (newActiveButton) {
-                newActiveButton.classList.add('active');
-            }
-        }
-
-        // JavaScript для фильтрации артистов по введенному тексту
-        function filterArtists() {
-            var input = document.getElementById('searchInput');
-            var filter = input.value.toUpperCase();
-            var artistList = document.getElementById('artistList');
-            var artists = artistList.getElementsByClassName('artist');
-
-            for (var i = 0; i < artists.length; i++) {
-                var artist = artists[i];
-                var name = artist.getAttribute('data-name');
-                var altName = artist.getAttribute('data-alt-name');
-                if (name.toUpperCase().indexOf(filter) > -1 || altName.toUpperCase().indexOf(filter) > -1) {
-                    artist.style.display = '';
+            // Выделение активной кнопки языка
+            var languageButtons = document.querySelectorAll('.language-switcher button');
+            languageButtons.forEach(function(button) {
+                if (button.innerText === language.toUpperCase()) {
+                    button.classList.add('active');
                 } else {
-                    artist.style.display = 'none';
+                    button.classList.remove('active');
                 }
-            }
+            });
         }
 
-        // JavaScript для открытия и закрытия модального окна меню
+        // Функция для открытия/закрытия модального окна
         function toggleMenu() {
             var menu = document.getElementById('menu');
             var menuText = document.getElementById('menuText');
@@ -346,8 +342,6 @@
 
             if (menu.style.display === 'block') {
                 menu.style.display = 'none';
-                // Возвращаем стили по умолчанию при закрытии модального окна
-                resetPageStyles();
             } else {
                 var content;
                 if (language === 'EN') {
@@ -359,28 +353,49 @@
                 }
                 menuText.innerHTML = content;
                 menu.style.display = 'block';
-                // Вызываем функцию для изменения стилей при открытии модального окна
-                applyModalStyles();
+            }
+
+            // Включение/выключение размытия на других элементах
+            var blurElements = document.querySelectorAll('body > *:not(.dropdown)');
+            blurElements.forEach(function(element) {
+                element.style.filter = (menu.style.display === 'block') ? 'blur(5px)' : 'none';
+                element.style.pointerEvents = (menu.style.display === 'block') ? 'none' : 'auto';
+            });
+        }
+
+        // Функция для фильтрации списка артистов по введенному тексту
+        function filterArtists() {
+            var input = document.getElementById('searchInput');
+            var filter = input.value.toLowerCase();
+            var artistList = document.getElementById('artistList');
+            var artists = artistList.getElementsByClassName('artist');
+
+            for (var i = 0; i < artists.length; i++) {
+                var artist = artists[i];
+                var artistName = artist.getAttribute('data-name').toLowerCase();
+                var artistAltName = artist.getAttribute('data-alt-name').toLowerCase();
+
+                if (artistName.indexOf(filter) > -1 || artistAltName.indexOf(filter) > -1) {
+                    artist.style.display = '';
+                } else {
+                    artist.style.display = 'none';
+                }
             }
         }
 
-        function applyModalStyles() {
-            // Включение размытия на других элементах
-            var blurElements = document.querySelectorAll('body > *:not(.dropdown)');
-            blurElements.forEach(function(element) {
-                element.style.filter = 'blur(5px)';
-                element.style.pointerEvents = 'none';
-            });
-        }
+        // Установка языка по умолчанию (русский) при загрузке страницы
+        document.addEventListener('DOMContentLoaded', function() {
+            setLanguage('ru');
+        });
 
-        function resetPageStyles() {
-            // Возвращаем стили по умолчанию при закрытии модального окна
-            var blurElements = document.querySelectorAll('body > *:not(.dropdown)');
-            blurElements.forEach(function(element) {
-                element.style.filter = 'none';
-                element.style.pointerEvents = 'auto';
-            });
-        }
+        // JavaScript для запрета копирования и контекстного меню
+        document.addEventListener('contextmenu', function(e) {
+            e.preventDefault();
+        });
+
+        document.addEventListener('selectstart', function(e) {
+            e.preventDefault();
+        });
     </script>
 </body>
 </html>
