@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MusicBox App</title>
     <style>
-        /* Основные стили страницы */
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background-color: #fff;
@@ -13,9 +12,9 @@
             text-align: center;
             margin: 0;
             padding: 0;
-            user-select: none; /* Отключение выделения текста */
-            touch-action: manipulation; /* Отключение масштабирования жестами */
-            -ms-touch-action: manipulation; /* Для поддержки IE/Edge */
+            user-select: none;
+            touch-action: manipulation;
+            -ms-touch-action: manipulation;
         }
         .header {
             background: linear-gradient(90deg, #ff5f6d, #ffc371);
@@ -25,7 +24,7 @@
         }
         .description {
             margin: 20px;
-            font-size: 12px; /* Размер шрифта в описаниях */
+            font-size: 12px;
         }
         .description a {
             color: #333;
@@ -41,7 +40,7 @@
         .language-switcher button {
             margin: 0 3.6px;
             padding: 8.1px 16.2px;
-            font-size: 12.96px; /* Размер шрифта кнопок смены языка */
+            font-size: 12.96px;
             cursor: pointer;
             border: 1px solid #ccc;
             border-radius: 5px;
@@ -49,7 +48,7 @@
             color: #333;
         }
         .language-switcher button.active {
-            background-color: #ccc; /* Цвет активной кнопки */
+            background-color: #ccc;
         }
         .search-bar input {
             padding: 8.1px;
@@ -57,7 +56,7 @@
             max-width: 500px;
             border: 1px solid #ccc;
             border-radius: 5px;
-            font-size: 12.96px; /* Размер шрифта в поле поиска */
+            font-size: 12.96px;
         }
         .artist-list {
             display: flex;
@@ -94,7 +93,7 @@
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            font-size: 10px; /* Размер шрифта ссылок на артистов */
+            font-size: 10px;
         }
         .artist a:hover {
             text-decoration: underline;
@@ -106,7 +105,7 @@
             display: inline-block;
         }
         .dropbtn {
-            font-size: 10.00px; /* Размер шрифта кнопки меню */
+            font-size: 10.00px;
             border: 1px solid #ccc;
             border-radius: 5px;
             padding: 4.0px 7.0px;
@@ -121,22 +120,22 @@
             left: 50%;
             top: 22%;
             transform: translate(-50%, -50%);
-            background-color: rgba(255, 255, 255, 0.9); /* Цвет фона с прозрачностью */
-            color: #333; /* Цвет текста */
+            background-color: rgba(255, 255, 255, 0.9);
+            color: #333;
             padding: 25px;
             border-radius: 10px;
-            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2); /* Тень */
-            max-width: 80%; /* Максимальная ширина окна */
-            text-align: center; /* Выравнивание текста по центру */
-            font-size: 13px; /* Размер шрифта в модальном окне */
+            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+            max-width: 80%;
+            text-align: center;
+            font-size: 13px;
         }
         .modal a {
-            color: #333; /* Цвет ссылок */
-            text-decoration: none; /* Убираем подчеркивание */
-            font-weight: bold; /* Жирный текст */
+            color: #333;
+            text-decoration: none;
+            font-weight: bold;
         }
         .modal a:hover {
-            text-decoration: underline; /* Подчеркивание при наведении */
+            text-decoration: underline;
         }
         noscript {
             display: none;
@@ -147,15 +146,15 @@
     <div class="header">
         <!-- Описание на разных языках -->
         <p class="description" data-lang="en" style="display: none;">
-            Music is now closer! Follow our updates on      <a href="https://t.me/musicbox_rus" target="_blank">t.me/musicbox_rus</a>.<br>
+            Music is now closer! Follow our updates on <a href="https://t.me/musicbox_rus" target="_blank">t.me/musicbox_rus</a>.<br>
             Interested in earning on tap? Join our project <a href="https://t.me/crypto_petyshok" target="_blank">t.me/crypto_petyshok</a>.
         </p>
         <p class="description" data-lang="ru">
-            Музыка стала ещё ближе! Следи за нашими обновлениями на      <a href="https://t.me/musicbox_rus" target="_blank">t.me/musicbox_rus</a>.<br>
+            Музыка стала ещё ближе! Следи за нашими обновлениями на <a href="https://t.me/musicbox_rus" target="_blank">t.me/musicbox_rus</a>.<br>
             Интересует заработок на тапалках? Присоединяйся к нашему проекту <a href="https://t.me/crypto_petyshok" target="_blank">t.me/crypto_petyshok</a>.
         </p>
         <p class="description" data-lang="ua" style="display: none;">
-            Музика стала ближче! Слідкуйте за нашими оновленнями на      <a href="https://t.me/musicbox_rus" target="_blank">t.me/musicbox_rus</a>.<br>
+            Музика стала ближче! Слідкуйте за нашими оновленнями на <a href="https://t.me/musicbox_rus" target="_blank">t.me/musicbox_rus</a>.<br>
             Цікавить заробіток на тапах? Приєднуйтесь до нашого проекту <a href="https://t.me/crypto_petyshok" target="_blank">t.me/crypto_petyshok</a>.
         </p>
     </div>
@@ -303,34 +302,29 @@
 
     <!-- JavaScript код -->
     <script>
+        // Глобальная переменная для хранения текущего языка
+        var currentLanguage = 'ru';
+
         // Функция для смены языка
         function setLanguage(language) {
+            currentLanguage = language;
             var elements = document.querySelectorAll('[data-lang]');
             elements.forEach(function(element) {
-                if (element.getAttribute('data-lang') === language) {
-                    element.style.display = 'block';
-                } else {
-                    element.style.display = 'none';
-                }
+                element.style.display = element.getAttribute('data-lang') === language ? 'block' : 'none';
             });
 
             var searchInput = document.getElementById('searchInput');
-            if (language === 'en') {
-                searchInput.placeholder = 'Search for artists...';
-            } else if (language === 'ru') {
-                searchInput.placeholder = 'Поиск по артистам...';
-            } else if (language === 'ua') {
-                searchInput.placeholder = 'Пошук артистів...';
-            }
+            var placeholders = {
+                'en': 'Search for artists...',
+                'ru': 'Поиск по артистам...',
+                'ua': 'Пошук артистів...'
+            };
+            searchInput.placeholder = placeholders[language];
 
             // Выделение активной кнопки языка
             var languageButtons = document.querySelectorAll('.language-switcher button');
             languageButtons.forEach(function(button) {
-                if (button.innerText === language.toUpperCase()) {
-                    button.classList.add('active');
-                } else {
-                    button.classList.remove('active');
-                }
+                button.classList.toggle('active', button.innerText.toLowerCase() === language);
             });
         }
 
@@ -338,28 +332,24 @@
         function toggleMenu() {
             var menu = document.getElementById('menu');
             var menuText = document.getElementById('menuText');
-            var language = document.querySelector('.language-switcher button.active').innerText;
 
             if (menu.style.display === 'block') {
                 menu.style.display = 'none';
             } else {
-                var content;
-                if (language === 'EN') {
-                    content = "Didn't find your favorite artist? Write to us, and we will definitely add them: <a href='https://t.me/musicbox_administrator' target='_blank'>t.me/musicbox_administrator</a>";
-                } else if (language === 'RU') {
-                    content = "Не нашли вашего любимого исполнителя? Напишите нам, и мы обязательно добавим его: <a href='https://t.me/musicbox_administrator' target='_blank'>t.me/musicbox_administrator</a>";
-                } else if (language === 'UA') {
-                    content = "Не знайшли вашого улюбленого виконавця? Напишіть нам, і ми обов'язково додамо його: <a href='https://t.me/musicbox_administrator' target='_blank'>t.me/musicbox_administrator</a>";
-                }
-                menuText.innerHTML = content;
+                var content = {
+                    'en': "Didn't find your favorite artist? Write to us, and we will definitely add them: <a href='https://t.me/musicbox_administrator' target='_blank'>t.me/musicbox_administrator</a>",
+                    'ru': "Не нашли вашего любимого исполнителя? Напишите нам, и мы обязательно добавим его: <a href='https://t.me/musicbox_administrator' target='_blank'>t.me/musicbox_administrator</a>",
+                    'ua': "Не знайшли вашого улюбленого виконавця? Напишіть нам, і ми обов'язково додамо його: <a href='https://t.me/musicbox_administrator' target='_blank'>t.me/musicbox_administrator</a>"
+                };
+                menuText.innerHTML = content[currentLanguage];
                 menu.style.display = 'block';
             }
 
             // Включение/выключение размытия на других элементах
             var blurElements = document.querySelectorAll('body > *:not(.dropdown)');
             blurElements.forEach(function(element) {
-                element.style.filter = (menu.style.display === 'block') ? 'blur(5px)' : 'none';
-                element.style.pointerEvents = (menu.style.display === 'block') ? 'none' : 'auto';
+                element.style.filter = menu.style.display === 'block' ? 'blur(5px)' : 'none';
+                element.style.pointerEvents = menu.style.display === 'block' ? 'none' : 'auto';
             });
         }
 
@@ -370,17 +360,11 @@
             var artistList = document.getElementById('artistList');
             var artists = artistList.getElementsByClassName('artist');
 
-            for (var i = 0; i < artists.length; i++) {
-                var artist = artists[i];
+            Array.from(artists).forEach(function(artist) {
                 var artistName = artist.getAttribute('data-name').toLowerCase();
                 var artistAltName = artist.getAttribute('data-alt-name').toLowerCase();
-
-                if (artistName.indexOf(filter) > -1 || artistAltName.indexOf(filter) > -1) {
-                    artist.style.display = '';
-                } else {
-                    artist.style.display = 'none';
-                }
-            }
+                artist.style.display = artistName.includes(filter) || artistAltName.includes(filter) ? '' : 'none';
+            });
         }
 
         // Установка языка по умолчанию (русский) при загрузке страницы
