@@ -118,7 +118,7 @@
             position: fixed;
             z-index: 1000;
             left: 50%;
-            top: 22%;
+            top: 50%;
             transform: translate(-50%, -50%);
             background-color: rgba(255, 255, 255, 0.9);
             color: #333;
@@ -136,6 +136,37 @@
         }
         .modal a:hover {
             text-decoration: underline;
+        }
+        @media (max-width: 600px) {
+            .modal {
+                width: 90%;
+                font-size: 12px;
+                padding: 20px;
+            }
+            .header {
+                padding: 10px 0;
+            }
+            .description {
+                font-size: 10px;
+            }
+            .language-switcher button {
+                font-size: 11px;
+                padding: 6px 12px;
+            }
+            .search-bar input {
+                font-size: 11px;
+                padding: 6px;
+            }
+            .artist {
+                width: 60px;
+            }
+            .artist a {
+                font-size: 9px;
+            }
+            .dropbtn {
+                font-size: 9px;
+                padding: 3px 6px;
+            }
         }
         noscript {
             display: none;
@@ -308,22 +339,12 @@
         // Функция для смены языка
         function setLanguage(language) {
             currentLanguage = language;
-            var elements = document.querySelectorAll('[data-lang]');
-            elements.forEach(function(element) {
-                element.style.display = element.getAttribute('data-lang') === language ? 'block' : 'none';
+            var descriptions = document.querySelectorAll('.description');
+            descriptions.forEach(function(desc) {
+                desc.style.display = desc.getAttribute('data-lang') === language ? 'block' : 'none';
             });
-
-            var searchInput = document.getElementById('searchInput');
-            var placeholders = {
-                'en': 'Search for artists...',
-                'ru': 'Поиск по артистам...',
-                'ua': 'Пошук артистів...'
-            };
-            searchInput.placeholder = placeholders[language];
-
-            // Выделение активной кнопки языка
-            var languageButtons = document.querySelectorAll('.language-switcher button');
-            languageButtons.forEach(function(button) {
+            var buttons = document.querySelectorAll('.language-switcher button');
+            buttons.forEach(function(button) {
                 button.classList.toggle('active', button.innerText.toLowerCase() === language);
             });
         }
