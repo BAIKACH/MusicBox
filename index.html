@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MusicBox App</title>
     <style>
+        /* Основные стили страницы */
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background-color: #fff;
@@ -12,9 +13,9 @@
             text-align: center;
             margin: 0;
             padding: 0;
-            user-select: none;
-            touch-action: manipulation;
-            -ms-touch-action: manipulation;
+            user-select: none; /* Отключение выделения текста */
+            touch-action: manipulation; /* Отключение масштабирования жестами */
+            -ms-touch-action: manipulation; /* Для поддержки IE/Edge */
         }
         .header {
             background: linear-gradient(90deg, #ff5f6d, #ffc371);
@@ -24,7 +25,7 @@
         }
         .description {
             margin: 20px;
-            font-size: 12px;
+            font-size: 12px; /* Размер шрифта в описаниях */
         }
         .description a {
             color: #333;
@@ -40,7 +41,7 @@
         .language-switcher button {
             margin: 0 3.6px;
             padding: 8.1px 16.2px;
-            font-size: 12.96px;
+            font-size: 12.96px; /* Размер шрифта кнопок смены языка */
             cursor: pointer;
             border: 1px solid #ccc;
             border-radius: 5px;
@@ -48,7 +49,7 @@
             color: #333;
         }
         .language-switcher button.active {
-            background-color: #ccc;
+            background-color: #ccc; /* Цвет активной кнопки */
         }
         .search-bar input {
             padding: 8.1px;
@@ -56,7 +57,7 @@
             max-width: 500px;
             border: 1px solid #ccc;
             border-radius: 5px;
-            font-size: 12.96px;
+            font-size: 12.96px; /* Размер шрифта в поле поиска */
         }
         .artist-list {
             display: flex;
@@ -93,27 +94,22 @@
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            font-size: 10px;
+            font-size: 10px; /* Размер шрифта ссылок на артистов */
         }
         .artist a:hover {
             text-decoration: underline;
         }
-        .header-content {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 0 20px;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
         .dropdown {
-            position: relative;
+            position: absolute;
+            top: 14.4px;
+            right: 14.4px;
+            display: inline-block;
         }
         .dropbtn {
-            font-size: 10px;
+            font-size: 10.00px; /* Размер шрифта кнопки меню */
             border: 1px solid #ccc;
             border-radius: 5px;
-            padding: 4px 7px;
+            padding: 4.0px 7.0px;
             background-color: #fff;
             color: #333;
             cursor: pointer;
@@ -125,22 +121,24 @@
             left: 50%;
             top: 22%;
             transform: translate(-50%, -50%);
-            background-color: rgba(255, 255, 255, 0.9);
-            color: #333;
+            background-color: rgba(255, 255, 255, 0.9); /* Цвет фона с прозрачностью */
+            color: #333; /* Цвет текста */
             padding: 25px;
             border-radius: 10px;
-            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-            max-width: 80%;
-            text-align: center;
-            font-size: 13px;
+            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2); /* Тень */
+            max-width: 80%; /* Максимальная ширина окна */
+            max-height: 80%; /* Максимальная высота окна */
+            overflow-y: auto; /* Включение прокрутки, если контент больше размеров окна */
+            text-align: center; /* Выравнивание текста по центру */
+            font-size: 13px; /* Размер шрифта в модальном окне */
         }
         .modal a {
-            color: #333;
-            text-decoration: none;
-            font-weight: bold;
+            color: #333; /* Цвет ссылок */
+            text-decoration: none; /* Убираем подчеркивание */
+            font-weight: bold; /* Жирный текст */
         }
         .modal a:hover {
-            text-decoration: underline;
+            text-decoration: underline; /* Подчеркивание при наведении */
         }
         noscript {
             display: none;
@@ -149,29 +147,19 @@
 </head>
 <body>
     <div class="header">
-        <div class="header-content">
-            <!-- Описание на разных языках -->
-            <p class="description" data-lang="en" style="display: none;">
-                Music is now closer! Follow our updates on <a href="https://t.me/musicbox_rus" target="_blank">t.me/musicbox_rus</a>.<br>
-                Interested in earning on tap? Join our project <a href="https://t.me/crypto_petyshok" target="_blank">t.me/crypto_petyshok</a>.
-            </p>
-            <p class="description" data-lang="ru">
-                Музыка стала ещё ближе! Следи за нашими обновлениями на <a href="https://t.me/musicbox_rus" target="_blank">t.me/musicbox_rus</a>.<br>
-                Интересует заработок на тапалках? Присоединяйся к нашему проекту <a href="https://t.me/crypto_petyshok" target="_blank">t.me/crypto_petyshok</a>.
-            </p>
-            <p class="description" data-lang="ua" style="display: none;">
-                Музика стала ближче! Слідкуйте за нашими оновленнями на <a href="https://t.me/musicbox_rus" target="_blank">t.me/musicbox_rus</a>.<br>
-                Цікавить заробіток на тапах? Приєднуйтесь до нашого проекту <a href="https://t.me/crypto_petyshok" target="_blank">t.me/crypto_petyshok</a>.
-            </p>
-            <div class="dropdown">
-                <!-- Кнопка меню -->
-                <button onclick="toggleMenu()" class="dropbtn">&#9776;</button>
-                <!-- Модальное окно меню -->
-                <div id="menu" class="modal">
-                    <div id="menuText"></div>
-                </div>
-            </div>
-        </div>
+        <!-- Описание на разных языках -->
+        <p class="description" data-lang="en" style="display: none;">
+            Music is now closer! Follow our updates on <a href="https://t.me/musicbox_rus" target="_blank">t.me/musicbox_rus</a>.<br>
+            Interested in earning on tap? Join our project <a href="https://t.me/crypto_petyshok" target="_blank">t.me/crypto_petyshok</a>.
+        </p>
+        <p class="description" data-lang="ru">
+            Музыка стала ещё ближе! Следи за нашими обновлениями на <a href="https://t.me/musicbox_rus" target="_blank">t.me/musicbox_rus</a>.<br>
+            Интересует заработок на тапалках? Присоединяйся к нашему проекту <a href="https://t.me/crypto_petyshok" target="_blank">t.me/crypto_petyshok</a>.
+        </p>
+        <p class="description" data-lang="ua" style="display: none;">
+            Музика стала ближче! Слідкуйте за нашими оновленнями на <a href="https://t.me/musicbox_rus" target="_blank">t.me/musicbox_rus</a>.<br>
+            Цікавить заробіток на тапах? Приєднуйтесь до нашого проекту <a href="https://t.me/crypto_petyshok" target="_blank">t.me/crypto_petyshok</a>.
+        </p>
     </div>
     <div class="language-switcher">
         <!-- Кнопки смены языка -->
@@ -182,6 +170,14 @@
     <div class="search-bar">
         <!-- Поле для поиска артистов -->
         <input type="text" id="searchInput" placeholder="Поиск по артистам..." onkeyup="filterArtists()">
+    </div>
+    <div class="dropdown">
+        <!-- Кнопка меню -->
+        <button onclick="toggleMenu()" class="dropbtn">&#9776;</button>
+        <!-- Модальное окно меню -->
+        <div id="menu" class="modal">
+            <div id="menuText"></div>
+        </div>
     </div>
     <div class="artist-list" id="artistList">
 <div class="artist" data-name="2Pac" data-alt-name="тупак"><a href="https://t.me/tupac_2pac_music">2Pac</a></div>
@@ -298,43 +294,51 @@
 <div class="artist" data-name="cakeboy" data-alt-name="кейкбой"><a href="https://t.me/cakeboy_musicbox">cakeboy</a></div>
     </div>
 
-    <script src="//codice.shinystat.com/cgi-bin/getcod.cgi?USER=SS-51041999-2282b"></script>
-    <noscript>
-        <a href="https://www.shinystat.com/it/" target="_top">
-            <img src="//www.shinystat.com/cgi-bin/shinystat.cgi?USER=SS-51041999-2282b" alt="Statistiche web" style="border:0px" />
-        </a>
-    </noscript>
-
     <script>
-        function setLanguage(language) {
-            var elements = document.querySelectorAll('[data-lang]');
-            elements.forEach(function(element) {
-                if (element.getAttribute('data-lang') === language) {
-                    element.style.display = 'block';
-                } else {
-                    element.style.display = 'none';
-                }
+        // JavaScript для изменения языка
+        function setLanguage(lang) {
+            var descriptions = document.querySelectorAll('.description');
+            var activeButton = document.querySelector('.language-switcher button.active');
+
+            descriptions.forEach(function(desc) {
+                desc.style.display = 'none';
             });
 
-            var searchInput = document.getElementById('searchInput');
-            if (language === 'en') {
-                searchInput.placeholder = 'Search for artists...';
-            } else if (language === 'ru') {
-                searchInput.placeholder = 'Поиск по артистам...';
-            } else if (language === 'ua') {
-                searchInput.placeholder = 'Пошук артистів...';
+            var selectedDesc = document.querySelector('.description[data-lang="' + lang + '"]');
+            if (selectedDesc) {
+                selectedDesc.style.display = 'block';
             }
 
-            var languageButtons = document.querySelectorAll('.language-switcher button');
-            languageButtons.forEach(function(button) {
-                if (button.innerText === language.toUpperCase()) {
-                    button.classList.add('active');
-                } else {
-                    button.classList.remove('active');
-                }
-            });
+            // Устанавливаем активную кнопку смены языка
+            if (activeButton) {
+                activeButton.classList.remove('active');
+            }
+            var newActiveButton = document.querySelector('.language-switcher button:nth-child(' + (['en', 'ru', 'ua'].indexOf(lang) + 1) + ')');
+            if (newActiveButton) {
+                newActiveButton.classList.add('active');
+            }
         }
 
+        // JavaScript для фильтрации артистов по введенному тексту
+        function filterArtists() {
+            var input = document.getElementById('searchInput');
+            var filter = input.value.toUpperCase();
+            var artistList = document.getElementById('artistList');
+            var artists = artistList.getElementsByClassName('artist');
+
+            for (var i = 0; i < artists.length; i++) {
+                var artist = artists[i];
+                var name = artist.getAttribute('data-name');
+                var altName = artist.getAttribute('data-alt-name');
+                if (name.toUpperCase().indexOf(filter) > -1 || altName.toUpperCase().indexOf(filter) > -1) {
+                    artist.style.display = '';
+                } else {
+                    artist.style.display = 'none';
+                }
+            }
+        }
+
+        // JavaScript для открытия и закрытия модального окна меню
         function toggleMenu() {
             var menu = document.getElementById('menu');
             var menuText = document.getElementById('menuText');
@@ -342,6 +346,8 @@
 
             if (menu.style.display === 'block') {
                 menu.style.display = 'none';
+                // Возвращаем стили по умолчанию при закрытии модального окна
+                resetPageStyles();
             } else {
                 var content;
                 if (language === 'EN') {
@@ -353,45 +359,28 @@
                 }
                 menuText.innerHTML = content;
                 menu.style.display = 'block';
+                // Вызываем функцию для изменения стилей при открытии модального окна
+                applyModalStyles();
             }
+        }
 
+        function applyModalStyles() {
+            // Включение размытия на других элементах
             var blurElements = document.querySelectorAll('body > *:not(.dropdown)');
             blurElements.forEach(function(element) {
-                element.style.filter = (menu.style.display === 'block') ? 'blur(5px)' : 'none';
-                element.style.pointerEvents = (menu.style.display === 'block') ? 'none' : 'auto';
+                element.style.filter = 'blur(5px)';
+                element.style.pointerEvents = 'none';
             });
         }
 
-        function filterArtists() {
-            var input = document.getElementById('searchInput');
-            var filter = input.value.toLowerCase();
-            var artistList = document.getElementById('artistList');
-            var artists = artistList.getElementsByClassName('artist');
-
-            for (var i = 0; i < artists.length; i++) {
-                var artist = artists[i];
-                var artistName = artist.getAttribute('data-name').toLowerCase();
-                var artistAltName = artist.getAttribute('data-alt-name').toLowerCase();
-
-                if (artistName.indexOf(filter) > -1 || artistAltName.indexOf(filter) > -1) {
-                    artist.style.display = '';
-                } else {
-                    artist.style.display = 'none';
-                }
-            }
+        function resetPageStyles() {
+            // Возвращаем стили по умолчанию при закрытии модального окна
+            var blurElements = document.querySelectorAll('body > *:not(.dropdown)');
+            blurElements.forEach(function(element) {
+                element.style.filter = 'none';
+                element.style.pointerEvents = 'auto';
+            });
         }
-
-        document.addEventListener('DOMContentLoaded', function() {
-            setLanguage('ru');
-        });
-
-        document.addEventListener('contextmenu', function(e) {
-            e.preventDefault();
-        });
-
-        document.addEventListener('selectstart', function(e) {
-            e.preventDefault();
-        });
     </script>
 </body>
 </html>
