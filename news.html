@@ -1,1 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MusicBox News</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #fff;
+            color: #333;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+            user-select: none;
+            touch-action: manipulation;
+            -ms-touch-action: manipulation;
+        }
+        .header {
+            background: linear-gradient(90deg, #ff5f6d, #ffc371);
+            color: white;
+            padding: 5px 0;
+            margin-bottom: 10px;
+        }
+        .description {
+            margin: 20px;
+            font-size: 12px;
+        }
+        .description a {
+            color: #333;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        .description a:hover {
+            text-decoration: underline;
+        }
+        .language-switcher {
+            display: flex;
+            justify-content: center;
+            margin: 14.4px;
+        }
+        .language-switcher button {
+            margin: 0 3.6px;
+            padding: 8.1px 16.2px;
+            font-size: 12.96px;
+            cursor: pointer;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background-color: #fff;
+            color: #333;
+        }
+        .language-switcher button.active {
+            background-color: #ccc;
+        }
+        .news-section {
+            margin: 20px auto;
+            max-width: 800px;
+            text-align: left;
+        }
+        .news-list h3 {
+            margin-top: 20px;
+            font-size: 16px;
+        }
+        .news-list p {
+            margin-bottom: 20px;
+            font-size: 12px;
+        }
+        footer {
+            background-color: #fff;
+            color: #333;
+            padding: 20px 0;
+            text-align: center;
+        }
+        .contact-info {
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: #fff;
+            color: #333;
+            padding: 10px 20px;
+            border-radius: 10px;
+            font-size: 12px;
+        }
+        .contact-info p {
+            margin: 10px 0;
+        }
+        .contact-info a {
+            color: #333;
+            text-decoration: underline;
+        }
+        .contact-info a:hover {
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <p class="description" data-lang="en" style="display: none;">
+            Music is now closer! Follow our updates on <a href="https://t.me/musicbox_rus" target="_blank">t.me/musicbox_rus</a>.<br>
+            Interested in earning on tap? Join our project <a href="https://t.me/crypto_petyshok" target="_blank">t.me/crypto_petyshok</a>.
+        </p>
+        <p class="description" data-lang="ru">
+            Музыка стала ещё ближе! Следи за нашими обновлениями на <a href="https://t.me/musicbox_rus" target="_blank">t.me/musicbox_rus</a>.<br>
+            Интересует заработок на тапалках? Присоединяйся к нашему проекту <a href="https://t.me/crypto_petyshok" target="_blank">t.me/crypto_petyshok</a>.
+        </p>
+        <p class="description" data-lang="ua" style="display: none;">
+            Музика стала ближче! Слідкуйте за нашими оновленнями на <a href="https://t.me/musicbox_rus" target="_blank">t.me/musicbox_rus</a>.<br>
+            Цікавить заробіток на тапах? Приєднуйтесь до нашого проекту <a href="https://t.me/crypto_petyshok" target="_blank">t.me/crypto_petyshok</a>.
+        </p>
+    </div>
+    <div class="language-switcher">
+        <button class="lang-button" onclick="setLanguage('en')">EN</button>
+        <button class="lang-button" onclick="setLanguage('ru')">RU</button>
+        <button class="lang-button" onclick="setLanguage('ua')">UA</button>
+        <button onclick="window.location.href='index.html?lang=' + currentLanguage"><span id="artistsText">Артисты</span></button>
+    </div>
+    <div class="news-section">
+        <h2 data-lang="en" style="display: none;">News and Updates</h2>
+        <h2 data-lang="ru">Новости и Обновления</h2>
+        <h2 data-lang="ua" style="display: none;">Новини та Оновлення</h2>
+        <div class="news-list" data-lang="en" style="display: none;">
+            <h3>Update from October 15, 2024</h3>
+            <p>Added new artists: Artist1, Artist2.</p>
+            <h3>Update from October 10, 2024</h3>
+            <p>Fixed search bugs.</p>
+        </div>
+        <div class="news-list" data-lang="ru">
+            <h3>Обновление от 15 октября 2024</h3>
+            <p>Добавлены новые артисты: Artist1, Artist2.</p>
+            <h3>Обновление от 10 октября 2024</h3>
+            <p>Исправлены ошибки в поиске.</p>
+        </div>
+        <div class="news-list" data-lang="ua" style="display: none;">
+            <h3>Оновлення від 15 жовтня 2024</h3>
+            <p>Додані нові артисти: Artist1, Artist2.</p>
+            <h3>Оновлення від 10 жовтня 2024</h3>
+            <p>Виправлені помилки в пошуку.</p>
+        </div>
+    </div>
+    <footer>
+        <div class="contact-info">
+            <p data-lang="en" style="display: none;">
+                Didn't find your favorite artist? Write to us, and we will definitely add them: <a href="https://t.me/musicbox_administrator" target="_blank">t.me/musicbox_administrator</a>
+            </p>
+            <p data-lang="ru">
+                Не нашли вашего любимого исполнителя? Напишите нам, и мы обязательно добавим его: <a href="https://t.me/musicbox_administrator" target="_blank">t.me/musicbox_administrator</a>
+            </p>
+            <p data-lang="ua" style="display: none;">
+                Не знайшли вашого улюбленого виконавця? Напишіть нам, і ми обов'язково додамо його: <a href="https://t.me/musicbox_administrator" target="_blank">t.me/musicbox_administrator</a>
+            </p>
+        </div>
+    </footer>
+    <script src="//codice.shinystat.com/cgi-bin/getcod.cgi?USER=SS-51041999-2282b"></script>
+    <noscript>
+        <a href="https://www.shinystat.com/it/" target="_top">
+            <img src="//www.shinystat.com/cgi-bin/shinystat.cgi?USER=SS-51041999-2282b" alt="Statistiche web" style="border:0px" />
+        </a>
+    </noscript>
+    <script>
+        var currentLanguage = 'ru';
+        var artistsTexts = {
+            'en': 'Artists',
+            'ru': 'Артисты',
+            'ua': 'Артисти'
+        };
 
+        function setLanguage(language) {
+            currentLanguage = language;
+            var elements = document.querySelectorAll('[data-lang]');
+            elements.forEach(function(element) {
+                element.style.display = element.getAttribute('data-lang') === language ? 'block' : 'none';
+            });
+
+            if (document.getElementById('artistsText')) {
+                document.getElementById('artistsText').innerText = artistsTexts[language];
+            }
+
+            var languageButtons = document.querySelectorAll('.language-switcher .lang-button');
+            languageButtons.forEach(function(button) {
+                button.classList.toggle('active', button.innerText.toLowerCase() === language);
+            });
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            var urlParams = new URLSearchParams(window.location.search);
+            var lang = urlParams.get('lang') || 'ru';
+            setLanguage(lang);
+        });
+
+        document.addEventListener('contextmenu', function(e) {
+            e.preventDefault();
+        });
+
+        document.addEventListener('selectstart', function(e) {
+            e.preventDefault();
+        });
+    </script>
+</body>
+</html>
