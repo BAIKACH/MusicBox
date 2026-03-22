@@ -78,22 +78,30 @@
             align-items: center;
             justify-content: center;
             text-align: center;
+            cursor: pointer;
         }
         .artist:hover {
             transform: translateY(-5px);
             box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+        }
+        .artist img {
+            width: 100%;
+            border-radius: 8px;
+            margin-bottom: 6px;
+            object-fit: cover;
+            aspect-ratio: 1/1;
         }
         .artist a {
             color: #000;
             text-decoration: none;
             font-weight: bold;
             width: 100%;
-            height: 100%;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
             font-size: 10px;
+            pointer-events: none; /* Let the card handle the click */
         }
         .artist a:hover {
             text-decoration: underline;
@@ -107,14 +115,14 @@
         .contact-info {
             max-width: 800px;
             margin: 0 auto;
-            background-color: #fff; /* Изменено на белый фон */
-            color: #333; /* Изменено на черный текст */
-            padding: 10px 20px; /* Уменьшены отступы */
+            background-color: #fff;
+            color: #333;
+            padding: 10px 20px;
             border-radius: 10px;
-            font-size: 12px; /* Размер шрифта, как в описании */
+            font-size: 12px;
         }
         .contact-info p {
-            margin: 10px 0; /* Уменьшены отступы */
+            margin: 10px 0;
         }
         .contact-info a {
             color: #333;
@@ -127,7 +135,6 @@
 </head>
 <body>
     <div class="header">
-        <!-- Описание на разных языках -->
         <p class="description" data-lang="en" style="display: none;">
             Music is now closer! Follow our updates on <a href="https://t.me/musicbox_rus" target="_blank">t.me/musicbox_rus</a>.<br>
             Looking for a good marketer, send me your proposals. <a href="https://t.me/mostbettie" target="_blank">t.me/mostbettie</a>.
@@ -138,345 +145,346 @@
         </p>
         <p class="description" data-lang="ua" style="display: none;">
             Музика стала ближче! Слідкуйте за нашими оновленнями на <a href="https://t.me/musicbox_rus" target="_blank">t.me/musicbox_rus</a>.<br>
-           Шукаю хорошого маркетолога, з пропозиціями пишіть. <a href="https://t.me/mostbettie" target="_blank">t.me/mostbettie</a>.
+           Шукаю хорошого маркетолога, з пропозиціями пишіть <a href="https://t.me/mostbettie" target="_blank">t.me/mostbettie</a>.
         </p>
     </div>
+    
     <div class="language-switcher">
-        <!-- Кнопки смены языка -->
         <button onclick="setLanguage('en')">EN</button>
         <button onclick="setLanguage('ru')">RU</button>
         <button onclick="setLanguage('ua')">UA</button>
     </div>
+    
     <div class="search-bar">
-        <!-- Поле для поиска артистов -->
         <input type="text" id="searchInput" placeholder="Поиск по артистам..." onkeyup="filterArtists()">
     </div>
+    
     <div class="artist-list" id="artistList">
-<div class="artist" data-name="044 Rose" data-alt-name="44роуз"><a href="https://t.me/O44_ROSE_musicbox">044 Rose</a></div>
-<div class="artist" data-name="10age" data-alt-name="тенейдж"><a href="https://t.me/ten10AGE_musicbox">10age</a></div>
-<div class="artist" data-name="163ONMYNECK" data-alt-name="163онмайнек"><a href="https://t.me/I_163ONMYNECK">163ONMYNECK</a></div>
-<div class="artist" data-name="21 Savage" data-alt-name="21сэваж"><a href="https://t.me/+ANbbI2gFcnZkMjBk">21 Savage</a></div>
-<div class="artist" data-name="2hollis" data-alt-name="Тухоллис"><a href="https://t.me/two_hollis_music">2hollis</a></div>
-<div class="artist" data-name="2Pac" data-alt-name="тупак"><a href="https://t.me/+-FTXl1grwKcwYzA0">2Pac</a></div>
-<div class="artist" data-name="4n Way" data-alt-name="4нвэй"><a href="https://t.me/music_4n_Way">4n Way</a></div>
-<div class="artist" data-name="50 Cent" data-alt-name="фифти сент"><a href="https://t.me/+S26gEw37jBM0NjQ0">50 Cent</a></div>
-<div class="artist" data-name="6ix9ine" data-alt-name="сикснайн"><a href="https://t.me/music6ix9ine">6ix9ine</a></div>
-<div class="artist" data-name="9mice" data-alt-name="9майс"><a href="https://t.me/nine9mice_music">9mice</a></div>
-<div class="artist" data-name="Aarne" data-alt-name="арни"><a href="https://t.me/aarne_musicbox">Aarne</a></div>
-<div class="artist" data-name="AC/DC" data-alt-name="асдс"><a href="https://t.me/acdc_musicbox">AC/DC</a></div>
-<div class="artist" data-name="Accha" data-alt-name="Акча"><a href="https://t.me/Accha_music">Accha</a></div>
-<div class="artist" data-name="ak47" data-alt-name="АК47"><a href="https://t.me/ak47_musikboxx">ak47</a></div>
-<div class="artist" data-name="Akon" data-alt-name="Эйкон"><a href="https://t.me/Akon_musicbox">Akon</a></div>
-<div class="artist" data-name="ALBLACK 52" data-alt-name="Алблэк 52"><a href="https://t.me/ALBLACK_52_musicbox">ALBLACK 52</a></div>
-<div class="artist" data-name="Amy winehouse" data-alt-name="эми вайнхаус"><a href="https://t.me/amy_winehouse_music">Amy winehouse</a></div>
-<div class="artist" data-name="Anet Sai" data-alt-name="Анет Сай"><a href="https://t.me/Anet_Sai_musicbox">Anet Sai</a></div>
-<div class="artist" data-name="Arctic Monkeys" data-alt-name="Арктик Манкиз"><a href="https://t.me/Arctic_Monkeys_musicbox">Arctic Monkeys</a></div>
-<div class="artist" data-name="Ariana Grande" data-alt-name="Ариана Гранде"><a href="https://t.me/Ariana_Grande_musicbox">Ariana Grande</a></div>
-<div class="artist" data-name="ASAP Ferg" data-alt-name="Эйсап Ферг"><a href="https://t.me/ASAP_Ferg_musicbox">ASAP Ferg</a></div>
-<div class="artist" data-name="ASAP Mob" data-alt-name="асап моб"><a href="https://t.me/ASAP_Mob_music">ASAP Mob</a></div>
-<div class="artist" data-name="ASAP Rocky" data-alt-name="асап роки"><a href="https://t.me/asap_rocky_music">ASAP Rocky</a></div>
-<div class="artist" data-name="ATL" data-alt-name="АТЛ"><a href="https://t.me/ATL_musicbox">ATL</a></div>
-<div class="artist" data-name="Avril Lavigne" data-alt-name="аврил лавин"><a href="https://t.me/Avril_Lavigne_musicbox">Avril Lavigne</a></div>
-<div class="artist" data-name="Baby Melo" data-alt-name="Бэби Мело"><a href="https://t.me/Baby_Melo_musicbox">Baby Melo</a></div>
-<div class="artist" data-name="BATO" data-alt-name="Бато"><a href="https://t.me/BATO_musicbox">BATO</a></div>
-<div class="artist" data-name="Beyonce" data-alt-name="бейонсе"><a href="https://t.me/+g7OC2YYLhnlmNTM8">Beyonce</a></div>
-<div class="artist" data-name="Bhad Bhabie" data-alt-name="бхад бхаби"><a href="https://t.me/bhad_bhabie_music">Bhad Bhabie</a></div>
-<div class="artist" data-name="Big Baby Tape" data-alt-name="биг бэйби тейп"><a href="https://t.me/bigbabytape_musicbox">Big Baby Tape</a></div>
-<div class="artist" data-name="BIGBANG" data-alt-name="Биг Бэнг"><a href="https://t.me/BIGBANG_musicbox">BIGBANG</a></div>
-<div class="artist" data-name="Billie Eilish" data-alt-name="билли айлиш"><a href="https://t.me/Billie_Eilish_musicbox">Billie Eilish</a></div>
-<div class="artist" data-name="Black Eyed Peas" data-alt-name="Блэк Айд Пис"><a href="https://t.me/Black_Eyed_Peas_musicbox">Black Eyed Peas</a></div>
-<div class="artist" data-name="BLACKPINK" data-alt-name="Блэкпинк"><a href="https://t.me/BLACKPINK_musicbox">BLACKPINK</a></div>
-<div class="artist" data-name="Bladee" data-alt-name="Блейди"><a href="https://t.me/Bladee_musicbox">Bladee</a></div>
-<div class="artist" data-name="BONES" data-alt-name="боунс"><a href="https://t.me/bones_musicbox">BONES</a></div>
-<div class="artist" data-name="Boulevard Depo" data-alt-name="булевар депо"><a href="https://t.me/boulevard_depo_musicbox">Boulevard Depo</a></div>
-<div class="artist" data-name="Bruno Mars" data-alt-name="бруно марс"><a href="https://t.me/+7s_lwjq3z344MmFk">Bruno Mars</a></div>
-<div class="artist" data-name="BTS" data-alt-name="БТС"><a href="https://t.me/BTS_musicbox">BTS</a></div>
-<div class="artist" data-name="BUSHIDO ZHO" data-alt-name="бушидо жо"><a href="https://t.me/bushido_zho_musicbox">BUSHIDO ZHO</a></div>
-<div class="artist" data-name="Busta Rhymes" data-alt-name="Баста Раймс"><a href="https://t.me/Busta_Rhymes_musicbox">Busta Rhymes</a></div>
-<div class="artist" data-name="CAKEBOY" data-alt-name="кейкбой"><a href="https://t.me/cakeboy_musicbox">CAKEBOY</a></div>
-<div class="artist" data-name="CAPTOWN" data-alt-name="каптаун"><a href="https://t.me/CAPTOWN_musicbox">CAPTOWN</a></div>
-<div class="artist" data-name="Charli xcx" data-alt-name="Чарли XCX"><a href="https://t.me/Charli_xcx_musicbox">Charli xcx</a></div>
-<div class="artist" data-name="Chief Keef" data-alt-name="Чиф кифа"><a href="https://t.me/chief_keef_music">Chief Keef</a></div>
-<div class="artist" data-name="Chris Browm" data-alt-name="крис браун"><a href="https://t.me/chris_brown_music">Chris Browm</a></div>
-<div class="artist" data-name="Cigarettes After Sex" data-alt-name="Сигаретс Афтер Секс"><a href="https://t.me/Cigarettes_After_Sex_musicbox">Cigarettes After Sex</a></div>
-<div class="artist" data-name="City Morgue" data-alt-name="сити морг"><a href="https://t.me/City_Morgue_music">City Morgue</a></div>
-<div class="artist" data-name="Cleffy" data-alt-name="Клеффи"><a href="https://t.me/Cleffy_musicbox">Cleffy</a></div>
-<div class="artist" data-name="Coldplay" data-alt-name="Колдплей"><a href="https://t.me/Coldplay_musicbox">Coldplay</a></div>
-<div class="artist" data-name="Cypis" data-alt-name="ципис"><a href="https://t.me/Cypis_musicbox">Cypis</a></div>
-<div class="artist" data-name="D.Masta" data-alt-name="Д. Маста"><a href="https://t.me/D_Masta_music">D.Masta</a></div>
-<div class="artist" data-name="Deftones" data-alt-name="Дефтонс"><a href="https://t.me/Deftones_musicbox">Deftones</a></div>
-<div class="artist" data-name="Denzel Curry" data-alt-name="дензел карри"><a href="https://t.me/Denzel_Curry_music">Denzel Curry</a></div>
-<div class="artist" data-name="Destroy Lonely" data-alt-name="Дестрой Лонли"><a href="https://t.me/destroy_lonely_musicbox">Destroy Lonely</a></div>
-<div class="artist" data-name="Diamond" data-alt-name="Даймонд"><a href="https://t.me/Diamond_musicbox">Diamond</a></div>
-<div class="artist" data-name="DJ Asul" data-alt-name="Диджей Асул"><a href="https://t.me/DJ_Asul">DJ Asul</a></div>
-<div class="artist" data-name="DK" data-alt-name="ДК"><a href="https://t.me/DK_musicbox">DK</a></div>
-<div class="artist" data-name="Doja Cat" data-alt-name="Доджа Кэт"><a href="https://t.me/Doja_Cat_music">Doja Cat</a></div>
-<div class="artist" data-name="Don Toliver" data-alt-name="Дон Толивер"><a href="https://t.me/Don_Toliver_musicbox">Don Toliver</a></div>
-<div class="artist" data-name="DOROFEEVA" data-alt-name="Дорофеева"><a href="https://t.me/DOROFEEVA_music">DOROFEEVA</a></div>
-<div class="artist" data-name="Drake" data-alt-name="дрейк"><a href="https://t.me/Drake_musicbox">Drake</a></div>
-<div class="artist" data-name="Dua Lipa" data-alt-name="Дуа Липа"><a href="https://t.me/Dua_Lipa_musicbox">Dua Lipa</a></div>
-<div class="artist" data-name="Duft Punk" data-alt-name="Дафт Панк"><a href="https://t.me/Duft_Punk_music">Duft Punk</a></div>
-<div class="artist" data-name="Dutch Melrose" data-alt-name="Датч Мелроуз"><a href="https://t.me/Dutch_Melrose_music">Dutch Melrose</a></div>
-<div class="artist" data-name="Ed Sheeran" data-alt-name="Эд Ширан"><a href="https://t.me/Ed_Sheeran_musicbox">Ed Sheeran</a></div>
-<div class="artist" data-name="Effie" data-alt-name="Эффи"><a href="https://t.me/Effie_musicbox">Effie</a></div>
-<div class="artist" data-name="Electroforez" data-alt-name="Электрофорез"><a href="https://t.me/Electroforez_musicbox">Electroforez</a></div>
-<div class="artist" data-name="Eminem" data-alt-name="эминем"><a href="https://t.me/+6uLqelYaQOM5MDk0">Eminem</a></div>
-<div class="artist" data-name="Eyedress" data-alt-name="Айдресс"><a href="https://t.me/Eyedress_music">Eyedress</a></div>
-<div class="artist" data-name="Eгор Крид" data-alt-name="egor krid"><a href="https://t.me/egor_krid_music">Eгор Крид</a></div>
-<div class="artist" data-name="Face" data-alt-name="фэйс"><a href="https://t.me/face_music">Face</a></div>
-<div class="artist" data-name="Famous Dexter" data-alt-name="фэймос декстер"><a href="https://t.me/fam0us_dexter">Famous Dexter</a></div>
-<div class="artist" data-name="FENDIGLOCK" data-alt-name="фендиглок"><a href="https://t.me/FENDIGLOCK_music">FENDIGLOCK</a></div>
-<div class="artist" data-name="Freddie Gibbs" data-alt-name="Фредди Гиббс"><a href="https://t.me/Freddie_Gibbs_music">Freddie Gibbs</a></div>
-<div class="artist" data-name="FRESHTIMMER" data-alt-name="фрештиммер"><a href="https://t.me/freshtimmer">FRESHTIMMER</a></div>
-<div class="artist" data-name="Friendly Thug 52 NGG" data-alt-name="Френдли Таг 52 НГГ"><a href="https://t.me/Friendly_Thug_52_NGG_music">Friendly Thug 52 NGG</a></div>
-<div class="artist" data-name="Future" data-alt-name="фьючер"><a href="https://t.me/future_musicbox">Future</a></div>
-<div class="artist" data-name="Ghostemane" data-alt-name="гхостмэйн"><a href="https://t.me/ghostemane_musicbox">Ghostemane</a></div>
-<div class="artist" data-name="GloRilla" data-alt-name="ГлоРилла"><a href="https://t.me/GloRilla_music">GloRilla</a></div>
-<div class="artist" data-name="GONE.Fludd" data-alt-name="гон флад"><a href="https://t.me/gone_fludd_musicbox">GONE.Fludd</a></div>
-<div class="artist" data-name="gorod 312" data-alt-name="Город 312"><a href="https://t.me/gorod312_music">gorod 312</a></div>
-<div class="artist" data-name="Grimes" data-alt-name="Граймс"><a href="https://t.me/Grimes_music">Grimes</a></div>
-<div class="artist" data-name="GSPD" data-alt-name="ГСПД"><a href="https://t.me/GSPD_musicbox">GSPD</a></div>
-<div class="artist" data-name="Guf" data-alt-name="гуф"><a href="https://t.me/guf_musicbox">Guf</a></div>
-<div class="artist" data-name="Gunna" data-alt-name="Ганна"><a href="https://t.me/Gunna_music">Gunna</a></div>
-<div class="artist" data-name="Guns N Roses" data-alt-name="Ганз Н Роузес"><a href="https://t.me/Guns_N_Roses_music">Guns N Roses</a></div>
-<div class="artist" data-name="Icegergert" data-alt-name="Айсгергерт"><a href="https://t.me/Icegergert_musicbox">Icegergert</a></div>
-<div class="artist" data-name="ilyTOMMY" data-alt-name="АйлиТомми"><a href="https://t.me/ilyTOMMY_music">ilyTOMMY</a></div>
-<div class="artist" data-name="INSTASAMKA" data-alt-name="инстасамка"><a href="https://t.me/instasamka_music">INSTASAMKA</a></div>
-<div class="artist" data-name="J.Cole" data-alt-name="Джей Коул"><a href="https://t.me/J_Cole_music">J.Cole</a></div>
-<div class="artist" data-name="Jade LeMac" data-alt-name="Джейд ЛеМак"><a href="https://t.me/Jade_LeMac_musicbox">Jade LeMac</a></div>
-<div class="artist" data-name="Jah Khalib" data-alt-name="джах калиб"><a href="https://t.me/jan_khalib_music">Jah Khalib</a></div>
-<div class="artist" data-name="Jamik" data-alt-name="джамик"><a href="https://t.me/JAMIK_musicbox">Jamik</a></div>
-<div class="artist" data-name="Jay Roxxx" data-alt-name="Джей Рокс"><a href="https://t.me/Jay_Roxxx_music">Jay Roxxx</a></div>
-<div class="artist" data-name="JAY-Z" data-alt-name="джей зи"><a href="https://t.me/JAY_Z_music">JAY-Z</a></div>
-<div class="artist" data-name="JEEMBO" data-alt-name="Джеембо"><a href="https://t.me/JEEMBO_musicbox">JEEMBO</a></div>
-<div class="artist" data-name="JENNIE" data-alt-name="Дженни"><a href="https://t.me/JENNIE_musicbox">JENNIE</a></div>
-<div class="artist" data-name="Jennifer Lopez" data-alt-name="Дженнифер Лопес"><a href="https://t.me/Jennifer_Lopez_musicbox">Jennifer Lopez</a></div>
-<div class="artist" data-name="JISOO" data-alt-name="Джису"><a href="https://t.me/jisoo_musicbox">JISOO</a></div>
-<div class="artist" data-name="Johnny Cash" data-alt-name="Джонни Кэш"><a href="https://t.me/Johnny_Cash_musicbox">Johnny Cash</a></div>
-<div class="artist" data-name="Joji" data-alt-name="Джоджи"><a href="https://t.me/Joji_musicbox">Joji</a></div>
-<div class="artist" data-name="Joyner Lucas" data-alt-name="Джойнер Лукас"><a href="https://t.me/Joyner_Lucas_music">Joyner Lucas</a></div>
-<div class="artist" data-name="Juice WRLD" data-alt-name="джуси ворлд"><a href="https://t.me/juice_wrld_musicbox">Juice WRLD</a></div>
-<div class="artist" data-name="Justin Bieber" data-alt-name="джастин бибер"><a href="https://t.me/Justin_Bieber_musicbox">Justin Bieber</a></div>
-<div class="artist" data-name="Justin Timberlake" data-alt-name="Джастин Тимберлейк"><a href="https://t.me/Justin_Timberlake_musicbox">Justin Timberlake</a></div>
-<div class="artist" data-name="KA$HDAMI" data-alt-name="кашдами"><a href="https://t.me/KASHDAMI_musicbox">KA$HDAMI</a></div>
-<div class="artist" data-name="Kai Angel" data-alt-name="Кай Энджел"><a href="https://t.me/Kai_Angel_muscibox">Kai Angel</a></div>
-<div class="artist" data-name="Kanye West" data-alt-name="Канье Уэст"><a href="https://t.me/Kanye_West_musicbox">Kanye West</a></div>
-<div class="artist" data-name="Kay Flock" data-alt-name="кай флок"><a href="https://t.me/kay_flock_music">Kay Flock</a></div>
-<div class="artist" data-name="Kee Nola" data-alt-name="Ки Нола"><a href="https://t.me/Kee_Nola_music">Kee Nola</a></div>
-<div class="artist" data-name="Kelly Rowland" data-alt-name="Келли Роуленд"><a href="https://t.me/Kelly_Rowland_musicbox">Kelly Rowland</a></div>
-<div class="artist" data-name="Ken Carson" data-alt-name="кен карсон"><a href="https://t.me/+dQhFhz9tVWdhZDc0">Ken Carson</a></div>
-<div class="artist" data-name="kendrick lamar" data-alt-name="кендрик ламар"><a href="https://t.me/+rEHIvYIHCxRkNDE0">kendrick lamar</a></div>
-<div class="artist" data-name="Key Glock" data-alt-name="кей глок"><a href="https://t.me/key_glock_music">Key Glock</a></div>
-<div class="artist" data-name="King Von" data-alt-name="Кинг Вон"><a href="https://t.me/King_Von_musicbox">King Von</a></div>
-<div class="artist" data-name="KIRILIK" data-alt-name="Кирилик"><a href="https://t.me/KIRILIK_musicbox">KIRILIK</a></div>
-<div class="artist" data-name="kissesfromeldar" data-alt-name="киссесфромэлдар"><a href="https://t.me/kissesfromeldar_musicbox">kissesfromeldar</a></div>
-<div class="artist" data-name="Kizaru" data-alt-name="кизару"><a href="https://t.me/kizaru_musicbox_rus">Kizaru</a></div>
-<div class="artist" data-name="Kodak Black" data-alt-name="кодак блэк"><a href="https://t.me/+zdemwXZoIwNjMzhk">Kodak Black</a></div>
-<div class="artist" data-name="KRBK" data-alt-name="крбк"><a href="https://t.me/KRBK_musicbox">KRBK</a></div>
-<div class="artist" data-name="KSLV Noh" data-alt-name="КСЛВ Но"><a href="https://t.me/KSLV_Noh_music">KSLV Noh</a></div>
-<div class="artist" data-name="Lady Gaga" data-alt-name="Леди Гага"><a href="https://t.me/Lady_Gaga_musicbox">Lady Gaga</a></div>
-<div class="artist" data-name="Lana Del Rey" data-alt-name="Лана Дель Рей"><a href="https://t.me/Lana_Del_Rey_musicbox">Lana Del Rey</a></div>
-<div class="artist" data-name="LAZER DIM 700" data-alt-name="Лазер Дим 700"><a href="https://t.me/LAZER_DIM_700_music">LAZER DIM 700</a></div>
-<div class="artist" data-name="Lil Baby" data-alt-name="лил бейби"><a href="https://t.me/Lil_Baby_musicbox">Lil Baby</a></div>
-<div class="artist" data-name="Lil Darkie" data-alt-name="Лил Дарки"><a href="https://t.me/Lil_Darkie_music">Lil Darkie</a></div>
-<div class="artist" data-name="Lil Jon" data-alt-name="лил джон"><a href="https://t.me/Lil_Jon_music">Lil Jon</a></div>
-<div class="artist" data-name="LIL KRYSTALLL" data-alt-name="лил кристалл"><a href="https://t.me/lil_kristalll_musicbox">LIL KRYSTALLL</a></div>
-<div class="artist" data-name="Lil Mabu" data-alt-name="Лил Мабу"><a href="https://t.me/Lil_Mabu_musicbox">Lil Mabu</a></div>
-<div class="artist" data-name="Lil Morty" data-alt-name="лил морти"><a href="https://t.me/Lil_Morty_musicbox">Lil Morty</a></div>
-<div class="artist" data-name="Lil Peep" data-alt-name="лил пип"><a href="https://t.me/lil_peep_music">Lil Peep</a></div>
-<div class="artist" data-name="Lil Pump" data-alt-name="лил памп"><a href="https://t.me/lil_pump_music">Lil Pump</a></div>
-<div class="artist" data-name="Lil Tecca" data-alt-name="лил тека"><a href="https://t.me/+ANbgsP42AZhhMmZk">Lil Tecca</a></div>
-<div class="artist" data-name="Lil Uzi Vert" data-alt-name="лил узи верт"><a href="https://t.me/+-ni_vZBTGkhiZDdk">Lil Uzi Vert</a></div>
-<div class="artist" data-name="Lil Wayne" data-alt-name="лил вейн"><a href="https://t.me/+XjM8KmUX6xkxZWM0">Lil Wayne</a></div>
-<div class="artist" data-name="Lil X21" data-alt-name="Лил Икс21"><a href="https://t.me/Lil_X21_musicbox">Lil X21</a></div>
-<div class="artist" data-name="LILDRUGHILL" data-alt-name="лилдрагхил"><a href="https://t.me/LILDRUGHILL_musicbox">LILDRUGHILL</a></div>
-<div class="artist" data-name="Limp Bizkit" data-alt-name="Лимп Бизкит"><a href="https://t.me/Limp_Bizkit_musicbox">Limp Bizkit</a></div>
-<div class="artist" data-name="Linkin Park" data-alt-name="Линкин Парк"><a href="https://t.me/Linkin_Park_musicbox">Linkin Park</a></div>
-<div class="artist" data-name="Lithe" data-alt-name="Лит"><a href="https://t.me/Lithe_musicbox">Lithe</a></div>
-<div class="artist" data-name="LIZER" data-alt-name="лизер"><a href="https://t.me/lizer_musicbox">LIZER</a></div>
-<div class="artist" data-name="LOVV66" data-alt-name="лов66"><a href="https://t.me/LOVV66_musicbox">LOVV66</a></div>
-<div class="artist" data-name="Luis Fonsi" data-alt-name="Луис Фонси"><a href="https://t.me/Luis_Fonsi_musicbox">Luis Fonsi</a></div>
-<div class="artist" data-name="Mac Miller" data-alt-name="Мак Миллер"><a href="https://t.me/Mac_Miller_musicbox">Mac Miller</a></div>
-<div class="artist" data-name="macan" data-alt-name="макан"><a href="https://t.me/macan_musicbox">macan</a></div>
-<div class="artist" data-name="Mariah Carey" data-alt-name="Мэрайя Кэри"><a href="https://t.me/Mariah_Carey_musicbox">Mariah Carey</a></div>
-<div class="artist" data-name="Markul" data-alt-name="маркул"><a href="https://t.me/markul_musicbox">Markul</a></div>
-<div class="artist" data-name="Maroon 5" data-alt-name="Марун 5"><a href="https://t.me/Maroon_5_musicbox">Maroon 5</a></div>
-<div class="artist" data-name="Masked Wolf" data-alt-name="Маскед Вулф"><a href="https://t.me/Masked_Wolf_music">Masked Wolf</a></div>
-<div class="artist" data-name="Mavado" data-alt-name="Мавадо"><a href="https://t.me/Mavado_musicbox">Mavado</a></div>
-<div class="artist" data-name="May Wave$" data-alt-name="май вэйвс"><a href="https://t.me/May_Waves_music">May Wave$</a></div>
-<div class="artist" data-name="MAYOT" data-alt-name="маёт"><a href="https://t.me/mayot_musicbox">MAYOT</a></div>
-<div class="artist" data-name="MEGAHITS" data-alt-name="мегахитс"><a href="https://t.me/musicbox_megahit">MEGAHITS</a></div>
-<div class="artist" data-name="Melody Thorton" data-alt-name="мелоди торнтон"><a href="https://t.me/melody_thornton">Melody Thorton</a></div>
-<div class="artist" data-name="Metallica" data-alt-name="Металлика"><a href="https://t.me/Metallica_musicbox">Metallica</a></div>
-<div class="artist" data-name="Migos" data-alt-name="Мигос"><a href="https://t.me/Migos_music">Migos</a></div>
-<div class="artist" data-name="Miley Cyrus" data-alt-name="Майли Сайрус"><a href="https://t.me/Miley_Cyrus_musicbox">Miley Cyrus</a></div>
-<div class="artist" data-name="MiyaGi" data-alt-name="мияги"><a href="https://t.me/MiyaGi_musicbox">MiyaGi</a></div>
-<div class="artist" data-name="Monatik" data-alt-name="монатик"><a href="https://t.me/monatik_music">Monatik</a></div>
-<div class="artist" data-name="MORGENSHTERN" data-alt-name="моргенштерн"><a href="https://t.me/morgenshtern_musicbox">MORGENSHTERN</a></div>
-<div class="artist" data-name="Mosquit" data-alt-name="москит"><a href="https://t.me/mosquit_musicbox">Mosquit</a></div>
-<div class="artist" data-name="MYTH & ROID" data-alt-name="Миф энд Роид"><a href="https://t.me/MYTH_i_ROID">MYTH & ROID</a></div>
-<div class="artist" data-name="nkeeei" data-alt-name="нкеееи"><a href="https://t.me/nkeeei_musicbox">nkeeei</a></div>
-<div class="artist" data-name="Noize MC" data-alt-name="Нойз МС"><a href="https://t.me/noize_mc_musicbox">Noize MC</a></div>
-<div class="artist" data-name="Obladaet" data-alt-name="обладает"><a href="https://t.me/obladaet_musicbox">Obladaet</a></div>
-<div class="artist" data-name="OG BUDA" data-alt-name="ог буда"><a href="https://t.me/og_buda_musicbox">OG BUDA</a></div>
-<div class="artist" data-name="OHGEESY" data-alt-name="Охджиси"><a href="https://t.me/OHGEESY_music">OHGEESY</a></div>
-<div class="artist" data-name="OM." data-alt-name="ом"><a href="https://t.me/remember_musicbox">OM.</a></div>
-<div class="artist" data-name="Oxxymiron" data-alt-name="оксимирон"><a href="https://t.me/Oxxxymiron_musicbox">Oxxymiron</a></div>
-<div class="artist" data-name="Pa Salieu" data-alt-name="Па Салью"><a href="https://t.me/Pa_Salieu">Pa Salieu</a></div>
-<div class="artist" data-name="Pepel Nahudi" data-alt-name="Пепел Нахуди"><a href="https://t.me/Pepel_Nahudi_musicbox">Pepel Nahudi</a></div>
-<div class="artist" data-name="Pharaoh" data-alt-name="фараон"><a href="https://t.me/pharaoh_music">Pharaoh</a></div>
-<div class="artist" data-name="Pitbull" data-alt-name="Питбуль"><a href="https://t.me/Pitbull_musicbox">Pitbull</a></div>
-<div class="artist" data-name="platina" data-alt-name="Платина"><a href="https://t.me/platina_musicbox">platina</a></div>
-<div class="artist" data-name="Playboi Carti" data-alt-name="Плейбой Карти"><a href="https://t.me/Playboi_Carti_musicbox">Playboi Carti</a></div>
-<div class="artist" data-name="Pop smoke" data-alt-name="Поп Смок"><a href="https://t.me/Pop_smoke_musicbox">Pop smoke</a></div>
-<div class="artist" data-name="Post Malone" data-alt-name="пост малон"><a href="https://t.me/+Cwc2LS6I8UtmM2Jk">Post Malone</a></div>
-<div class="artist" data-name="Public Enemy" data-alt-name="Паблик Энеми"><a href="https://t.me/public_enemy_musicbox">Public Enemy</a></div>
-<div class="artist" data-name="Pusha T" data-alt-name="Пуша Ти"><a href="https://t.me/Pusha_T_music">Pusha T</a></div>
-<div class="artist" data-name="RAUL" data-alt-name="рауль"><a href="https://t.me/Raul_Ando">RAUL</a></div>
-<div class="artist" data-name="REDZED" data-alt-name="редзед"><a href="https://t.me/redzed_music">REDZED</a></div>
-<div class="artist" data-name="Rihanna" data-alt-name="рианна"><a href="https://t.me/+Y2KZz0MuPaQ5YjI0">Rihanna</a></div>
-<div class="artist" data-name="Rob Zombie" data-alt-name="Роб Зомби"><a href="https://t.me/rob_zombie_musicbox">Rob Zombie</a></div>
-<div class="artist" data-name="ROCKET" data-alt-name="рокет"><a href="https://t.me/ROCKET_musicbox">ROCKET</a></div>
-<div class="artist" data-name="Rod Wave" data-alt-name="род вейф"><a href="https://t.me/rod_wave_music">Rod Wave</a></div>
-<div class="artist" data-name="Rosalia" data-alt-name="росалия"><a href="https://t.me/+BYZteZXa7ShhYjE0">Rosalia</a></div>
-<div class="artist" data-name="SAINt JHN" data-alt-name="сент джон"><a href="https://t.me/+txXPWS8Y2ZBjOTRk">SAINt JHN</a></div>
-<div class="artist" data-name="SALUKI" data-alt-name="Салуки"><a href="https://t.me/SALUKI_musicbox">SALUKI</a></div>
-<div class="artist" data-name="Santiz" data-alt-name="сантиз"><a href="https://t.me/santiz_musicbox">Santiz</a></div>
-<div class="artist" data-name="Scally Milano" data-alt-name="скалли милано"><a href="https://t.me/scally_milano_musicbox">Scally Milano</a></div>
-<div class="artist" data-name="Sean Paul" data-alt-name="син пол"><a href="https://t.me/Sean_Paul_musicbox">Sean Paul</a></div>
-<div class="artist" data-name="Selena Gomez" data-alt-name="Селена Гомес"><a href="https://t.me/Selena_Gomez_musicbox">Selena Gomez</a></div>
-<div class="artist" data-name="shadowraze" data-alt-name="шадоурэйз"><a href="https://t.me/shadowraze_musicbox">shadowraze</a></div>
-<div class="artist" data-name="Shaggy" data-alt-name="Шэгги"><a href="https://t.me/Shaggy_musicbox">Shaggy</a></div>
-<div class="artist" data-name="Shakira" data-alt-name="шакира"><a href="https://t.me/shakira_musicbox">Shakira</a></div>
-<div class="artist" data-name="Shallipopi" data-alt-name="Шаллипопи"><a href="https://t.me/Shallipopi_musicbox">Shallipopi</a></div>
-<div class="artist" data-name="Sharma Boy" data-alt-name="Шарма Бой"><a href="https://t.me/Sharma_Boy_musicbox">Sharma Boy</a></div>
-<div class="artist" data-name="Sheck Wes" data-alt-name="Шек Уэс"><a href="https://t.me/Sheck_Wes_music">Sheck Wes</a></div>
-<div class="artist" data-name="Showbiz School" data-alt-name="шоубиз скул"><a href="https://t.me/ShowbizSchool_music">Showbiz School</a></div>
-<div class="artist" data-name="Siavash Ghomayshi" data-alt-name="Сиаваш Гомайши"><a href="https://t.me/Siavash_Ghomayshi_musicbox">Siavash Ghomayshi</a></div>
-<div class="artist" data-name="SIL-A" data-alt-name="Сил-А"><a href="https://t.me/SIL_A_musicbox">SIL-A</a></div>
-<div class="artist" data-name="Sirusho" data-alt-name="Сирушо"><a href="https://t.me/Sirusho_music">Sirusho</a></div>
-<div class="artist" data-name="SLAVA MARLOW" data-alt-name="слава марлоу"><a href="https://t.me/sIava_marIow">SLAVA MARLOW</a></div>
-<div class="artist" data-name="sleepyflock" data-alt-name="слипифлок"><a href="https://t.me/sleepyflock_music">sleepyflock</a></div>
-<div class="artist" data-name="Slimus" data-alt-name="Слимус"><a href="https://t.me/slimus_musicbox">Slimus</a></div>
-<div class="artist" data-name="smokepurpp" data-alt-name="смокпурп"><a href="https://t.me/+eR8eeicBa2czYWNk">smokepurpp</a></div>
-<div class="artist" data-name="Snoop Dogg" data-alt-name="снуп догг"><a href="https://t.me/snoop_dogg_music">Snoop Dogg</a></div>
-<div class="artist" data-name="Snow Strippers" data-alt-name="Сноу Стрипперс"><a href="https://t.me/Snow_Strippers_music">Snow Strippers</a></div>
-<div class="artist" data-name="SODA LOVE" data-alt-name="сода лав"><a href="https://t.me/soda_love_musicbox">SODA LOVE</a></div>
-<div class="artist" data-name="sombr" data-alt-name="Сомбр"><a href="https://t.me/sombr_musicbox">sombr</a></div>
-<div class="artist" data-name="Stray Kids" data-alt-name="стрэй кидс"><a href="https://t.me/stray_kids_musicbox">Stray Kids</a></div>
-<div class="artist" data-name="suei" data-alt-name="Суэй"><a href="https://t.me/suei_musicbox">suei</a></div>
-<div class="artist" data-name="Suicide Boys" data-alt-name="суисайд бойс"><a href="https://t.me/suicide_boys_music">Suicide Boys</a></div>
-<div class="artist" data-name="T-Fest" data-alt-name="т фест"><a href="https://t.me/t_fest_music">T-Fest</a></div>
-<div class="artist" data-name="t.A.T.u" data-alt-name="Тату"><a href="https://t.me/tatu_musicbox">t.A.T.u</a></div>
-<div class="artist" data-name="takeoff" data-alt-name="тейкофф"><a href="https://t.me/takeoff_music">takeoff</a></div>
-<div class="artist" data-name="Taylor Swift" data-alt-name="Тейлор Свифт"><a href="https://t.me/Taylor_Swift_musicbox">Taylor Swift</a></div>
-<div class="artist" data-name="That's Girl" data-alt-name="Зэтс Гёрл"><a href="https://t.me/Thats_Girl_musicbox">That's Girl</a></div>
-<div class="artist" data-name="The Pretty Reckless" data-alt-name="Зе Претти Реклесс"><a href="https://t.me/The_Pretty_Reckless_musicbox">The Pretty Reckless</a></div>
-<div class="artist" data-name="The Weekend" data-alt-name="зе уикенд"><a href="https://t.me/+7FrsMRgQNWY4MjA8">The Weekend</a></div>
-<div class="artist" data-name="Thekidszn" data-alt-name="Зекидзн"><a href="https://t.me/Thekidszn_music">Thekidszn</a></div>
-<div class="artist" data-name="Thomas Mraz" data-alt-name="томас мразь"><a href="https://t.me/thomaz_mraz_music">Thomas Mraz</a></div>
-<div class="artist" data-name="Thrill Pill" data-alt-name="трилл пилл"><a href="https://t.me/Thrill_Pill_musicbox">Thrill Pill</a></div>
-<div class="artist" data-name="Timbaland" data-alt-name="Тимбалэнд"><a href="https://t.me/Timbaland_music">Timbaland</a></div>
-<div class="artist" data-name="Tommy Lee Sparta" data-alt-name="Томми Ли Спарта"><a href="https://t.me/Tommy_Lee_Sparta_musicbox">Tommy Lee Sparta</a></div>
-<div class="artist" data-name="TOMORROW X TOGETHER" data-alt-name="Томорроу Икс Тугезер"><a href="https://t.me/tomorrow_x_together_mb">TOMORROW X TOGETHER</a></div>
-<div class="artist" data-name="Tory Lanez" data-alt-name="Тори Лейнз"><a href="https://t.me/Tory_Lanez_music">Tory Lanez</a></div>
-<div class="artist" data-name="ToxiS" data-alt-name="Токсис"><a href="https://t.me/Toxis_musicbox">ToxiS</a></div>
-<div class="artist" data-name="TRALLFACE PHONK" data-alt-name="Траллфейс Фонк"><a href="https://t.me/TRALLFACE_PHONK">TRALLFACE PHONK</a></div>
-<div class="artist" data-name="Travis Scott" data-alt-name="трэвис скот"><a href="https://t.me/travis_scott_musicbox">Travis Scott</a></div>
-<div class="artist" data-name="Trippie Redd" data-alt-name="триппи редд"><a href="https://t.me/+jCafFhmXw_s2YmE0">Trippie Redd</a></div>
-<div class="artist" data-name="TVETH" data-alt-name="Твет"><a href="https://t.me/TVETH_musicbox">TVETH</a></div>
-<div class="artist" data-name="Tyga" data-alt-name="Тайга"><a href="https://t.me/Tyga_musicbox">Tyga</a></div>
-<div class="artist" data-name="Tyler, The Creator" data-alt-name="Тайлер зе Криэйтор"><a href="https://t.me/Tyler_The_Creator_musicbox">Tyler, The Creator</a></div>
-<div class="artist" data-name="uglysephan" data-alt-name="аглистэфан"><a href="https://t.me/uglystephan_musicbox">uglysephan</a></div>
-<div class="artist" data-name="Unaverage Gang" data-alt-name="унаверадж ганг"><a href="https://t.me/Unaverage_Gang_musicbox">Unaverage Gang</a></div>
-<div class="artist" data-name="Underaiki" data-alt-name="Андераики"><a href="https://t.me/Underaiki_musicbox">Underaiki</a></div>
-<div class="artist" data-name="Vallenatos Rafael Santo" data-alt-name="Вальенатос Рафаэль Санто"><a href="https://t.me/Vallenatos_Rafael_Santo">Vallenatos Rafael Santo</a></div>
-<div class="artist" data-name="VUDOO" data-alt-name="Вуду"><a href="https://t.me/VUDOO_musicbox">VUDOO</a></div>
-<div class="artist" data-name="VXSV Prince" data-alt-name="Вск Принц"><a href="https://t.me/VSXV_PRINCE_musicbox">VXSV Prince</a></div>
-<div class="artist" data-name="Waka Focka Flame" data-alt-name="Вака Флока Флейм"><a href="https://t.me/Waka_Focka_Flame">Waka Focka Flame</a></div>
-<div class="artist" data-name="XCho" data-alt-name="Иксчо"><a href="https://t.me/XCho_musicbox">XCho</a></div>
-<div class="artist" data-name="xtsy" data-alt-name="Икстси"><a href="https://t.me/xtsy_musicbox">xtsy</a></div>
-<div class="artist" data-name="XXXTentacion" data-alt-name="тентасьон"><a href="https://t.me/xxxtentacion_artist">XXXTentacion</a></div>
-<div class="artist" data-name="Yanix" data-alt-name="яникс"><a href="https://t.me/yanix_musicbox">Yanix</a></div>
-<div class="artist" data-name="YBN Nahmir" data-alt-name="убн намир"><a href="https://t.me/ybn_nahmir_music">YBN Nahmir</a></div>
-<div class="artist" data-name="Yeat" data-alt-name="йет"><a href="https://t.me/+EkvNorDaR7RjNWY0">Yeat</a></div>
-<div class="artist" data-name="YNW Melly" data-alt-name="Вайэндаблъю Мелли"><a href="https://t.me/YNW_Melly_music">YNW Melly</a></div>
-<div class="artist" data-name="Young Mix" data-alt-name="Янг Микс"><a href="https://t.me/Young_Mix_musicbox">Young Mix</a></div>
-<div class="artist" data-name="Yung Hurn" data-alt-name="янг хёрн"><a href="https://t.me/Yung_Hurn_music">Yung Hurn</a></div>
-<div class="artist" data-name="Yung Thug" data-alt-name="янг таг"><a href="https://t.me/Young_Thug_music">Yung Thug</a></div>
-<div class="artist" data-name="YUNG TRAPPA" data-alt-name="янг трэппа"><a href="https://t.me/yung_trappa_musicbox">YUNG TRAPPA</a></div>
-<div class="artist" data-name="zemfira" data-alt-name="Земфира"><a href="https://t.me/zemfira_musicbox">zemfira</a></div>
-<div class="artist" data-name="Zillakami" data-alt-name="Зиллаками"><a href="https://t.me/Zillakami_music">Zillakami</a></div>
-<div class="artist" data-name="zxcursed" data-alt-name="Зикскёрсед"><a href="https://t.me/zxcursed_music">zxcursed</a></div>
-<div class="artist" data-name="Автостопом по фазе сна" data-alt-name="Avtostopom po faze sna"><a href="https://t.me/Avtostopom_po_faze_sna_music">Автостопом по фазе сна</a></div>
-<div class="artist" data-name="Алла Пугачёва" data-alt-name="Alla Pugachova"><a href="https://t.me/Alla_Pugachova_music">Алла Пугачёва</a></div>
-<div class="artist" data-name="Баста" data-alt-name="Basta"><a href="https://t.me/basta_musicbox">Баста</a></div>
-<div class="artist" data-name="Витя АК-47" data-alt-name="vitya ak47"><a href="https://t.me/ak47_musicbox">Витя АК-47</a></div>
-<div class="artist" data-name="вышел покурить" data-alt-name="vyshel pokurit"><a href="https://t.me/vyshel_pokurit_music">вышел покурить</a></div>
-<div class="artist" data-name="Гио пика" data-alt-name="Gio Pika"><a href="https://t.me/Gio_Pika_musicbox">Гио пика</a></div>
-<div class="artist" data-name="Грибы" data-alt-name="Griby"><a href="https://t.me/Griby_musicbox">Грибы</a></div>
-<div class="artist" data-name="Дельфин" data-alt-name="dolphin"><a href="https://t.me/dolphin_musicbox">Дельфин</a></div>
-<div class="artist" data-name="Дети Rave" data-alt-name="Deti Rave"><a href="https://t.me/Deti_Rave_musicbox">Дети Rave</a></div>
-<div class="artist" data-name="Жак Энтони" data-alt-name="zhak entoni"><a href="https://t.me/jak_entoni">Жак Энтони</a></div>
-<div class="artist" data-name="Ирина Аллегрова" data-alt-name="Irina Allegrova"><a href="https://t.me/Irina_Allegrova_music">Ирина Аллегрова</a></div>
-<div class="artist" data-name="Каспер" data-alt-name="Kasper"><a href="https://t.me/Kasper_musicbox">Каспер</a></div>
-<div class="artist" data-name="Каспийский Груз" data-alt-name="Kaspiyskiy Gruz"><a href="https://t.me/kaspijskij_gruz_musicbox">Каспийский Груз</a></div>
-<div class="artist" data-name="Кишлак" data-alt-name="Kishlak"><a href="https://t.me/kishlak_musicbox">Кишлак</a></div>
-<div class="artist" data-name="королевский XVII" data-alt-name="korolevskiy XVII"><a href="https://t.me/korolevskij_XVII">королевский XVII</a></div>
-<div class="artist" data-name="Кравц" data-alt-name="Kravts"><a href="https://t.me/Kravts_musicbox">Кравц</a></div>
-<div class="artist" data-name="Красное дерево" data-alt-name="krasnoe derevo"><a href="https://t.me/krasnoe_derevo_music">Красное дерево</a></div>
-<div class="artist" data-name="ЛСП" data-alt-name="lsp"><a href="https://t.me/lsp_music">ЛСП</a></div>
-<div class="artist" data-name="Макс Корж" data-alt-name="maks korzh"><a href="https://t.me/maks_korz_music">Макс Корж</a></div>
-<div class="artist" data-name="масло черного тмина" data-alt-name="maslo chernogo tmina"><a href="https://t.me/maslo_czernogo_tmina">масло черного тмина</a></div>
-<div class="artist" data-name="МЕЙБИ БЕЙБИ" data-alt-name="meybi beybi"><a href="https://t.me/maybe_baby_musicbox">МЕЙБИ БЕЙБИ</a></div>
-<div class="artist" data-name="Минин" data-alt-name="minin"><a href="https://t.me/minin_music">Минин</a></div>
-<div class="artist" data-name="Монеточка" data-alt-name="Monetochka"><a href="https://t.me/monetochka_musicbox">Монеточка</a></div>
-<div class="artist" data-name="Овсянкин" data-alt-name="Ovsyankin"><a href="https://t.me/Ovsyankin_musicbox">Овсянкин</a></div>
-<div class="artist" data-name="Ольга Бузова" data-alt-name="olga buzova"><a href="https://t.me/olga_buzova_music">Ольга Бузова</a></div>
-<div class="artist" data-name="Паша Техник" data-alt-name="Pasha Tekhnik"><a href="https://t.me/pasha_texnik_musicbox">Паша Техник</a></div>
-<div class="artist" data-name="ПОЛМАТЕРИ" data-alt-name="Polmateri"><a href="https://t.me/Polmateri_musicbox">ПОЛМАТЕРИ</a></div>
-<div class="artist" data-name="ПОШЛАЯ МОЛЛИ" data-alt-name="poshlaya molli"><a href="https://t.me/poshlaya_molly_musicbox">ПОШЛАЯ МОЛЛИ</a></div>
-<div class="artist" data-name="Сardi B" data-alt-name="карди би"><a href="https://t.me/+CFxrygZQRkM2YzI0">Сardi B</a></div>
-<div class="artist" data-name="Сектор газа" data-alt-name="Sektor Gaza"><a href="https://t.me/Sektor_Gaza_music">Сектор газа</a></div>
-<div class="artist" data-name="Скриптонит" data-alt-name="skriptonit"><a href="https://t.me/musicbox_skriptonit">Скриптонит</a></div>
-<div class="artist" data-name="снялцепи" data-alt-name="snyaltsepi"><a href="https://t.me/snyal_tsepi_music">снялцепи</a></div>
-<div class="artist" data-name="Тёмный Принц" data-alt-name="Temnyy Prints"><a href="https://t.me/Temnyy_Prints_musicbox">Тёмный Принц</a></div>
-<div class="artist" data-name="Тима Белорусских" data-alt-name="Tima Belorusskikh"><a href="https://t.me/tima_belorusskich_musicbox">Тима Белорусских</a></div>
-<div class="artist" data-name="Тимати" data-alt-name="Timati"><a href="https://t.me/Timati_musicbox">Тимати</a></div>
-<div class="artist" data-name="Триагрутрика" data-alt-name="Триагрутрика"><a href="https://t.me/triagrytrika_music">Триагрутрика</a></div>
-<div class="artist" data-name="Тяжёлая Атлетика" data-alt-name="Tyazhelaya Atletika"><a href="https://t.me/Tyazhelaya_Atletika_musicbox">Тяжёлая Атлетика</a></div>
-<div class="artist" data-name="УННВ" data-alt-name="ynnv"><a href="https://t.me/YNNB_music">УННВ</a></div>
-<div class="artist" data-name="Хаски" data-alt-name="xaski"><a href="https://t.me/xaski_music">Хаски</a></div>
-<div class="artist" data-name="ШАЙНИ" data-alt-name="shaini"><a href="https://t.me/Shyney_musicbox">ШАЙНИ</a></div>
-<div class="artist" data-name="Элджей" data-alt-name="eldzhey"><a href="https://t.me/eldjei_music">Элджей</a></div>
+        <div class="artist" data-name="044 Rose" data-alt-name="044 rose"><a href="https://t.me/O44_ROSE_musicbox" target="_blank">044 Rose</a></div>
+        <div class="artist" data-name="10age" data-alt-name="10age"><a href="https://t.me/ten10AGE_musicbox" target="_blank">10age</a></div>
+        <div class="artist" data-name="163ONMYNECK" data-alt-name="163onmyneck"><a href="https://t.me/I_163ONMYNECK" target="_blank">163ONMYNECK</a></div>
+        <div class="artist" data-name="21 Savage" data-alt-name="21 savage"><a href="-1002533004413" target="_blank">21 Savage</a></div>
+        <div class="artist" data-name="2Pac" data-alt-name="2pac"><a href="-1002512025724" target="_blank">2Pac</a></div>
+        <div class="artist" data-name="2hollis" data-alt-name="2hollis"><a href="https://t.me/two_hollis_music" target="_blank">2hollis</a></div>
+        <div class="artist" data-name="4n Way" data-alt-name="4n way"><a href="https://t.me/music_4n_Way" target="_blank">4n Way</a></div>
+        <div class="artist" data-name="50 Cent" data-alt-name="50 cent"><a href="-1002505170866" target="_blank">50 Cent</a></div>
+        <div class="artist" data-name="6ix9ine" data-alt-name="6ix9ine"><a href="https://t.me/music6ix9ine" target="_blank">6ix9ine</a></div>
+        <div class="artist" data-name="9mice" data-alt-name="9mice"><a href="https://t.me/nine9mice_music" target="_blank">9mice</a></div>
+        <div class="artist" data-name="AC/DC" data-alt-name="ac/dc"><a href="https://t.me/acdc_musicbox" target="_blank">AC/DC</a></div>
+        <div class="artist" data-name="ALBLACK 52" data-alt-name="alblack 52"><a href="https://t.me/ALBLACK_52_musicbox" target="_blank">ALBLACK 52</a></div>
+        <div class="artist" data-name="ASAP Ferg" data-alt-name="asap ferg"><a href="https://t.me/ASAP_Ferg_musicbox" target="_blank">ASAP Ferg</a></div>
+        <div class="artist" data-name="ASAP Mob" data-alt-name="asap mob"><a href="https://t.me/ASAP_Mob_music" target="_blank">ASAP Mob</a></div>
+        <div class="artist" data-name="ASAP Rocky" data-alt-name="asap rocky"><a href="https://t.me/asap_rocky_music" target="_blank">ASAP Rocky</a></div>
+        <div class="artist" data-name="ATL" data-alt-name="atl"><a href="https://t.me/ATL_musicbox" target="_blank">ATL</a></div>
+        <div class="artist" data-name="Aarne" data-alt-name="aarne"><a href="https://t.me/aarne_musicbox" target="_blank">Aarne</a></div>
+        <div class="artist" data-name="Accha" data-alt-name="accha"><a href="https://t.me/Accha_music" target="_blank">Accha</a></div>
+        <div class="artist" data-name="Akon" data-alt-name="akon"><a href="https://t.me/Akon_musicbox" target="_blank">Akon</a></div>
+        <div class="artist" data-name="Amy winehouse" data-alt-name="amy winehouse"><a href="https://t.me/amy_winehouse_music" target="_blank">Amy winehouse</a></div>
+        <div class="artist" data-name="Anet Sai" data-alt-name="anet sai"><a href="https://t.me/Anet_Sai_musicbox" target="_blank">Anet Sai</a></div>
+        <div class="artist" data-name="Arctic Monkeys" data-alt-name="arctic monkeys"><a href="https://t.me/Arctic_Monkeys_musicbox" target="_blank">Arctic Monkeys</a></div>
+        <div class="artist" data-name="Ariana Grande" data-alt-name="ariana grande"><a href="https://t.me/Ariana_Grande_musicbox" target="_blank">Ariana Grande</a></div>
+        <div class="artist" data-name="Avril Lavigne" data-alt-name="avril lavigne"><a href="https://t.me/Avril_Lavigne_musicbox" target="_blank">Avril Lavigne</a></div>
+        <div class="artist" data-name="BATO" data-alt-name="bato"><a href="https://t.me/BATO_musicbox" target="_blank">BATO</a></div>
+        <div class="artist" data-name="BIGBANG" data-alt-name="bigbang"><a href="https://t.me/BIGBANG_musicbox" target="_blank">BIGBANG</a></div>
+        <div class="artist" data-name="BLACKPINK" data-alt-name="blackpink"><a href="https://t.me/BLACKPINK_musicbox" target="_blank">BLACKPINK</a></div>
+        <div class="artist" data-name="BONES" data-alt-name="bones"><a href="https://t.me/bones_musicbox" target="_blank">BONES</a></div>
+        <div class="artist" data-name="BTS" data-alt-name="bts"><a href="https://t.me/BTS_musicbox" target="_blank">BTS</a></div>
+        <div class="artist" data-name="BUSHIDO ZHO" data-alt-name="bushido zho"><a href="https://t.me/bushido_zho_musicbox" target="_blank">BUSHIDO ZHO</a></div>
+        <div class="artist" data-name="Baby Melo" data-alt-name="baby melo"><a href="https://t.me/Baby_Melo_musicbox" target="_blank">Baby Melo</a></div>
+        <div class="artist" data-name="Basta" data-alt-name="basta"><a href="-1003180114222" target="_blank">Basta</a></div>
+        <div class="artist" data-name="Beyonce" data-alt-name="beyonce"><a href="-1002664783415" target="_blank">Beyonce</a></div>
+        <div class="artist" data-name="Bhad Bhabie" data-alt-name="bhad bhabie"><a href="https://t.me/bhad_bhabie_music" target="_blank">Bhad Bhabie</a></div>
+        <div class="artist" data-name="Big Baby Tape" data-alt-name="big baby tape"><a href="https://t.me/bigbabytape_musicbox" target="_blank">Big Baby Tape</a></div>
+        <div class="artist" data-name="Billie Eilish" data-alt-name="billie eilish"><a href="https://t.me/Billie_Eilish_musicbox" target="_blank">Billie Eilish</a></div>
+        <div class="artist" data-name="Black Eyed Peas" data-alt-name="black eyed peas"><a href="https://t.me/Black_Eyed_Peas_musicbox" target="_blank">Black Eyed Peas</a></div>
+        <div class="artist" data-name="Bladee" data-alt-name="bladee"><a href="https://t.me/Bladee_musicbox" target="_blank">Bladee</a></div>
+        <div class="artist" data-name="Boulevard Depo" data-alt-name="boulevard depo"><a href="https://t.me/boulevard_depo_musicbox" target="_blank">Boulevard Depo</a></div>
+        <div class="artist" data-name="Bruno Mars" data-alt-name="bruno mars"><a href="-1002997772075" target="_blank">Bruno Mars</a></div>
+        <div class="artist" data-name="Busta Rhymes" data-alt-name="busta rhymes"><a href="https://t.me/Busta_Rhymes_musicbox" target="_blank">Busta Rhymes</a></div>
+        <div class="artist" data-name="CAKEBOY" data-alt-name="cakeboy"><a href="https://t.me/cakeboy_musicbox" target="_blank">CAKEBOY</a></div>
+        <div class="artist" data-name="CAPTOWN" data-alt-name="captown"><a href="https://t.me/CAPTOWN_musicbox" target="_blank">CAPTOWN</a></div>
+        <div class="artist" data-name="Charli xcx" data-alt-name="charli xcx"><a href="https://t.me/Charli_xcx_musicbox" target="_blank">Charli xcx</a></div>
+        <div class="artist" data-name="Chief Keef" data-alt-name="chief keef"><a href="https://t.me/chief_keef_music" target="_blank">Chief Keef</a></div>
+        <div class="artist" data-name="Chris Browm" data-alt-name="chris browm"><a href="https://t.me/chris_brown_music" target="_blank">Chris Browm</a></div>
+        <div class="artist" data-name="Cigarettes After Sex" data-alt-name="cigarettes after sex"><a href="https://t.me/Cigarettes_After_Sex_musicbox" target="_blank">Cigarettes After Sex</a></div>
+        <div class="artist" data-name="City Morgue" data-alt-name="city morgue"><a href="https://t.me/City_Morgue_music" target="_blank">City Morgue</a></div>
+        <div class="artist" data-name="Cleffy" data-alt-name="cleffy"><a href="https://t.me/Cleffy_musicbox" target="_blank">Cleffy</a></div>
+        <div class="artist" data-name="Coldplay" data-alt-name="coldplay"><a href="https://t.me/Coldplay_musicbox" target="_blank">Coldplay</a></div>
+        <div class="artist" data-name="Cypis" data-alt-name="cypis"><a href="https://t.me/Cypis_musicbox" target="_blank">Cypis</a></div>
+        <div class="artist" data-name="D.Masta" data-alt-name="d.masta"><a href="https://t.me/D_Masta_music" target="_blank">D.Masta</a></div>
+        <div class="artist" data-name="DJ Asul" data-alt-name="dj asul"><a href="https://t.me/DJ_Asul" target="_blank">DJ Asul</a></div>
+        <div class="artist" data-name="DK" data-alt-name="dk"><a href="https://t.me/DK_musicbox" target="_blank">DK</a></div>
+        <div class="artist" data-name="DOROFEEVA" data-alt-name="dorofeeva"><a href="https://t.me/DOROFEEVA_music" target="_blank">DOROFEEVA</a></div>
+        <div class="artist" data-name="Deftones" data-alt-name="deftones"><a href="https://t.me/Deftones_musicbox" target="_blank">Deftones</a></div>
+        <div class="artist" data-name="Denzel Curry" data-alt-name="denzel curry"><a href="https://t.me/Denzel_Curry_music" target="_blank">Denzel Curry</a></div>
+        <div class="artist" data-name="Destroy Lonely" data-alt-name="destroy lonely"><a href="https://t.me/destroy_lonely_musicbox" target="_blank">Destroy Lonely</a></div>
+        <div class="artist" data-name="Diamond" data-alt-name="diamond"><a href="https://t.me/Diamond_musicbox" target="_blank">Diamond</a></div>
+        <div class="artist" data-name="Doja Cat" data-alt-name="doja cat"><a href="https://t.me/Doja_Cat_music" target="_blank">Doja Cat</a></div>
+        <div class="artist" data-name="Don Toliver" data-alt-name="don toliver"><a href="https://t.me/Don_Toliver_musicbox" target="_blank">Don Toliver</a></div>
+        <div class="artist" data-name="Drake" data-alt-name="drake"><a href="https://t.me/Drake_musicbox" target="_blank">Drake</a></div>
+        <div class="artist" data-name="Dua Lipa" data-alt-name="dua lipa"><a href="https://t.me/Dua_Lipa_musicbox" target="_blank">Dua Lipa</a></div>
+        <div class="artist" data-name="Duft Punk" data-alt-name="duft punk"><a href="https://t.me/Duft_Punk_music" target="_blank">Duft Punk</a></div>
+        <div class="artist" data-name="Dutch Melrose" data-alt-name="dutch melrose"><a href="https://t.me/Dutch_Melrose_music" target="_blank">Dutch Melrose</a></div>
+        <div class="artist" data-name="Ed Sheeran" data-alt-name="ed sheeran"><a href="https://t.me/Ed_Sheeran_musicbox" target="_blank">Ed Sheeran</a></div>
+        <div class="artist" data-name="Effie" data-alt-name="effie"><a href="https://t.me/Effie_musicbox" target="_blank">Effie</a></div>
+        <div class="artist" data-name="Electroforez" data-alt-name="electroforez"><a href="https://t.me/Electroforez_musicbox" target="_blank">Electroforez</a></div>
+        <div class="artist" data-name="Eminem" data-alt-name="eminem"><a href="-1002298964257" target="_blank">Eminem</a></div>
+        <div class="artist" data-name="Eyedress" data-alt-name="eyedress"><a href="https://t.me/Eyedress_music" target="_blank">Eyedress</a></div>
+        <div class="artist" data-name="Eгор Крид" data-alt-name="eгор крид"><a href="https://t.me/egor_krid_music" target="_blank">Eгор Крид</a></div>
+        <div class="artist" data-name="FENDIGLOCK" data-alt-name="fendiglock"><a href="https://t.me/FENDIGLOCK_music" target="_blank">FENDIGLOCK</a></div>
+        <div class="artist" data-name="FRESHTIMMER" data-alt-name="freshtimmer"><a href="https://t.me/freshtimmer" target="_blank">FRESHTIMMER</a></div>
+        <div class="artist" data-name="Face" data-alt-name="face"><a href="https://t.me/face_music" target="_blank">Face</a></div>
+        <div class="artist" data-name="Famous Dexter" data-alt-name="famous dexter"><a href="https://t.me/fam0us_dexter" target="_blank">Famous Dexter</a></div>
+        <div class="artist" data-name="Freddie Gibbs" data-alt-name="freddie gibbs"><a href="https://t.me/Freddie_Gibbs_music" target="_blank">Freddie Gibbs</a></div>
+        <div class="artist" data-name="Friendly Thug 52 NGG" data-alt-name="friendly thug 52 ngg"><a href="https://t.me/Friendly_Thug_52_NGG_music" target="_blank">Friendly Thug 52 NGG</a></div>
+        <div class="artist" data-name="Future" data-alt-name="future"><a href="https://t.me/future_musicbox" target="_blank">Future</a></div>
+        <div class="artist" data-name="GONE.Fludd" data-alt-name="gone.fludd"><a href="https://t.me/gone_fludd_musicbox" target="_blank">GONE.Fludd</a></div>
+        <div class="artist" data-name="GSPD" data-alt-name="gspd"><a href="https://t.me/GSPD_musicbox" target="_blank">GSPD</a></div>
+        <div class="artist" data-name="Ghostemane" data-alt-name="ghostemane"><a href="https://t.me/ghostemane_musicbox" target="_blank">Ghostemane</a></div>
+        <div class="artist" data-name="GloRilla" data-alt-name="glorilla"><a href="https://t.me/GloRilla_music" target="_blank">GloRilla</a></div>
+        <div class="artist" data-name="Grimes" data-alt-name="grimes"><a href="https://t.me/Grimes_music" target="_blank">Grimes</a></div>
+        <div class="artist" data-name="Guf" data-alt-name="guf"><a href="https://t.me/guf_musicbox" target="_blank">Guf</a></div>
+        <div class="artist" data-name="Gunna" data-alt-name="gunna"><a href="https://t.me/Gunna_music" target="_blank">Gunna</a></div>
+        <div class="artist" data-name="Guns N Roses" data-alt-name="guns n roses"><a href="https://t.me/Guns_N_Roses_music" target="_blank">Guns N Roses</a></div>
+        <div class="artist" data-name="INSTASAMKA" data-alt-name="instasamka"><a href="https://t.me/instasamka_music" target="_blank">INSTASAMKA</a></div>
+        <div class="artist" data-name="Icegergert" data-alt-name="icegergert"><a href="https://t.me/Icegergert_musicbox" target="_blank">Icegergert</a></div>
+        <div class="artist" data-name="J.Cole" data-alt-name="j.cole"><a href="https://t.me/J_Cole_music" target="_blank">J.Cole</a></div>
+        <div class="artist" data-name="JAY-Z" data-alt-name="jay-z"><a href="https://t.me/JAY_Z_music" target="_blank">JAY-Z</a></div>
+        <div class="artist" data-name="JEEMBO" data-alt-name="jeembo"><a href="https://t.me/JEEMBO_musicbox" target="_blank">JEEMBO</a></div>
+        <div class="artist" data-name="JENNIE" data-alt-name="jennie"><a href="https://t.me/JENNIE_musicbox" target="_blank">JENNIE</a></div>
+        <div class="artist" data-name="JISOO" data-alt-name="jisoo"><a href="https://t.me/jisoo_musicbox" target="_blank">JISOO</a></div>
+        <div class="artist" data-name="Jade LeMac" data-alt-name="jade lemac"><a href="https://t.me/Jade_LeMac_musicbox" target="_blank">Jade LeMac</a></div>
+        <div class="artist" data-name="Jah Khalib" data-alt-name="jah khalib"><a href="https://t.me/jan_khalib_music" target="_blank">Jah Khalib</a></div>
+        <div class="artist" data-name="Jamik" data-alt-name="jamik"><a href="https://t.me/JAMIK_musicbox" target="_blank">Jamik</a></div>
+        <div class="artist" data-name="Jay Roxxx" data-alt-name="jay roxxx"><a href="https://t.me/Jay_Roxxx_music" target="_blank">Jay Roxxx</a></div>
+        <div class="artist" data-name="Jennifer Lopez" data-alt-name="jennifer lopez"><a href="https://t.me/Jennifer_Lopez_musicbox" target="_blank">Jennifer Lopez</a></div>
+        <div class="artist" data-name="Johnny Cash" data-alt-name="johnny cash"><a href="https://t.me/Johnny_Cash_musicbox" target="_blank">Johnny Cash</a></div>
+        <div class="artist" data-name="Joji" data-alt-name="joji"><a href="https://t.me/Joji_musicbox" target="_blank">Joji</a></div>
+        <div class="artist" data-name="Joyner Lucas" data-alt-name="joyner lucas"><a href="https://t.me/Joyner_Lucas_music" target="_blank">Joyner Lucas</a></div>
+        <div class="artist" data-name="Juice WRLD" data-alt-name="juice wrld"><a href="https://t.me/juice_wrld_musicbox" target="_blank">Juice WRLD</a></div>
+        <div class="artist" data-name="Justin Bieber" data-alt-name="justin bieber"><a href="https://t.me/Justin_Bieber_musicbox" target="_blank">Justin Bieber</a></div>
+        <div class="artist" data-name="Justin Timberlake" data-alt-name="justin timberlake"><a href="https://t.me/Justin_Timberlake_musicbox" target="_blank">Justin Timberlake</a></div>
+        <div class="artist" data-name="KA$HDAMI" data-alt-name="ka$hdami"><a href="https://t.me/KASHDAMI_musicbox" target="_blank">KA$HDAMI</a></div>
+        <div class="artist" data-name="KIRILIK" data-alt-name="kirilik"><a href="https://t.me/KIRILIK_musicbox" target="_blank">KIRILIK</a></div>
+        <div class="artist" data-name="KRBK" data-alt-name="krbk"><a href="https://t.me/KRBK_musicbox" target="_blank">KRBK</a></div>
+        <div class="artist" data-name="KSLV Noh" data-alt-name="kslv noh"><a href="https://t.me/KSLV_Noh_music" target="_blank">KSLV Noh</a></div>
+        <div class="artist" data-name="Kai Angel" data-alt-name="kai angel"><a href="https://t.me/Kai_Angel_muscibox" target="_blank">Kai Angel</a></div>
+        <div class="artist" data-name="Kanye West" data-alt-name="kanye west"><a href="https://t.me/Kanye_West_musicbox" target="_blank">Kanye West</a></div>
+        <div class="artist" data-name="Kay Flock" data-alt-name="kay flock"><a href="https://t.me/kay_flock_music" target="_blank">Kay Flock</a></div>
+        <div class="artist" data-name="Kee Nola" data-alt-name="kee nola"><a href="https://t.me/Kee_Nola_music" target="_blank">Kee Nola</a></div>
+        <div class="artist" data-name="Kelly Rowland" data-alt-name="kelly rowland"><a href="https://t.me/Kelly_Rowland_musicbox" target="_blank">Kelly Rowland</a></div>
+        <div class="artist" data-name="Ken Carson" data-alt-name="ken carson"><a href="-1002505455068" target="_blank">Ken Carson</a></div>
+        <div class="artist" data-name="Key Glock" data-alt-name="key glock"><a href="https://t.me/key_glock_music" target="_blank">Key Glock</a></div>
+        <div class="artist" data-name="King Von" data-alt-name="king von"><a href="https://t.me/King_Von_musicbox" target="_blank">King Von</a></div>
+        <div class="artist" data-name="Kizaru" data-alt-name="kizaru"><a href="https://t.me/kizaru_musicbox_rus" target="_blank">Kizaru</a></div>
+        <div class="artist" data-name="Kodak Black" data-alt-name="kodak black"><a href="-1002862538692" target="_blank">Kodak Black</a></div>
+        <div class="artist" data-name="LAZER DIM 700" data-alt-name="lazer dim 700"><a href="https://t.me/LAZER_DIM_700_music" target="_blank">LAZER DIM 700</a></div>
+        <div class="artist" data-name="LIL KRYSTALLL" data-alt-name="lil krystalll"><a href="https://t.me/lil_kristalll_musicbox" target="_blank">LIL KRYSTALLL</a></div>
+        <div class="artist" data-name="LILDRUGHILL" data-alt-name="lildrughill"><a href="https://t.me/LILDRUGHILL_musicbox" target="_blank">LILDRUGHILL</a></div>
+        <div class="artist" data-name="LIZER" data-alt-name="lizer"><a href="https://t.me/lizer_musicbox" target="_blank">LIZER</a></div>
+        <div class="artist" data-name="LOVV66" data-alt-name="lovv66"><a href="https://t.me/LOVV66_musicbox" target="_blank">LOVV66</a></div>
+        <div class="artist" data-name="Lady Gaga" data-alt-name="lady gaga"><a href="https://t.me/Lady_Gaga_musicbox" target="_blank">Lady Gaga</a></div>
+        <div class="artist" data-name="Lana Del Rey" data-alt-name="lana del rey"><a href="https://t.me/Lana_Del_Rey_musicbox" target="_blank">Lana Del Rey</a></div>
+        <div class="artist" data-name="Lil Baby" data-alt-name="lil baby"><a href="https://t.me/Lil_Baby_musicbox" target="_blank">Lil Baby</a></div>
+        <div class="artist" data-name="Lil Darkie" data-alt-name="lil darkie"><a href="https://t.me/Lil_Darkie_music" target="_blank">Lil Darkie</a></div>
+        <div class="artist" data-name="Lil Jon" data-alt-name="lil jon"><a href="https://t.me/Lil_Jon_music" target="_blank">Lil Jon</a></div>
+        <div class="artist" data-name="Lil Mabu" data-alt-name="lil mabu"><a href="https://t.me/Lil_Mabu_musicbox" target="_blank">Lil Mabu</a></div>
+        <div class="artist" data-name="Lil Morty" data-alt-name="lil morty"><a href="https://t.me/Lil_Morty_musicbox" target="_blank">Lil Morty</a></div>
+        <div class="artist" data-name="Lil Peep" data-alt-name="lil peep"><a href="https://t.me/lil_peep_music" target="_blank">Lil Peep</a></div>
+        <div class="artist" data-name="Lil Pump" data-alt-name="lil pump"><a href="https://t.me/lil_pump_music" target="_blank">Lil Pump</a></div>
+        <div class="artist" data-name="Lil Tecca" data-alt-name="lil tecca"><a href="-1003075725139" target="_blank">Lil Tecca</a></div>
+        <div class="artist" data-name="Lil Uzi Vert" data-alt-name="lil uzi vert"><a href="-1002500497631" target="_blank">Lil Uzi Vert</a></div>
+        <div class="artist" data-name="Lil Wayne" data-alt-name="lil wayne"><a href="-1002539387708" target="_blank">Lil Wayne</a></div>
+        <div class="artist" data-name="Lil X21" data-alt-name="lil x21"><a href="https://t.me/Lil_X21_musicbox" target="_blank">Lil X21</a></div>
+        <div class="artist" data-name="Limp Bizkit" data-alt-name="limp bizkit"><a href="https://t.me/Limp_Bizkit_musicbox" target="_blank">Limp Bizkit</a></div>
+        <div class="artist" data-name="Linkin Park" data-alt-name="linkin park"><a href="https://t.me/Linkin_Park_musicbox" target="_blank">Linkin Park</a></div>
+        <div class="artist" data-name="Lithe" data-alt-name="lithe"><a href="https://t.me/Lithe_musicbox" target="_blank">Lithe</a></div>
+        <div class="artist" data-name="Luis Fonsi" data-alt-name="luis fonsi"><a href="https://t.me/Luis_Fonsi_musicbox" target="_blank">Luis Fonsi</a></div>
+        <div class="artist" data-name="MAYOT" data-alt-name="mayot"><a href="https://t.me/mayot_musicbox" target="_blank">MAYOT</a></div>
+        <div class="artist" data-name="MEGAHITS" data-alt-name="megahits"><a href="https://t.me/musicbox_megahit" target="_blank">MEGAHITS</a></div>
+        <div class="artist" data-name="MORGENSHTERN" data-alt-name="morgenshtern"><a href="https://t.me/morgenshtern_musicbox" target="_blank">MORGENSHTERN</a></div>
+        <div class="artist" data-name="MYTH & ROID" data-alt-name="myth & roid"><a href="https://t.me/MYTH_i_ROID" target="_blank">MYTH & ROID</a></div>
+        <div class="artist" data-name="Mac Miller" data-alt-name="mac miller"><a href="https://t.me/Mac_Miller_musicbox" target="_blank">Mac Miller</a></div>
+        <div class="artist" data-name="Mariah Carey" data-alt-name="mariah carey"><a href="https://t.me/Mariah_Carey_musicbox" target="_blank">Mariah Carey</a></div>
+        <div class="artist" data-name="Markul" data-alt-name="markul"><a href="https://t.me/markul_musicbox" target="_blank">Markul</a></div>
+        <div class="artist" data-name="Maroon 5" data-alt-name="maroon 5"><a href="https://t.me/Maroon_5_musicbox" target="_blank">Maroon 5</a></div>
+        <div class="artist" data-name="Masked Wolf" data-alt-name="masked wolf"><a href="https://t.me/Masked_Wolf_music" target="_blank">Masked Wolf</a></div>
+        <div class="artist" data-name="Mavado" data-alt-name="mavado"><a href="https://t.me/Mavado_musicbox" target="_blank">Mavado</a></div>
+        <div class="artist" data-name="May Wave$" data-alt-name="may wave$"><a href="https://t.me/May_Waves_music" target="_blank">May Wave$</a></div>
+        <div class="artist" data-name="Melody Thorton" data-alt-name="melody thorton"><a href="https://t.me/melody_thornton" target="_blank">Melody Thorton</a></div>
+        <div class="artist" data-name="Metallica" data-alt-name="metallica"><a href="https://t.me/Metallica_musicbox" target="_blank">Metallica</a></div>
+        <div class="artist" data-name="Migos" data-alt-name="migos"><a href="https://t.me/Migos_music" target="_blank">Migos</a></div>
+        <div class="artist" data-name="Miley Cyrus" data-alt-name="miley cyrus"><a href="https://t.me/Miley_Cyrus_musicbox" target="_blank">Miley Cyrus</a></div>
+        <div class="artist" data-name="MiyaGi" data-alt-name="miyagi"><a href="https://t.me/MiyaGi_musicbox" target="_blank">MiyaGi</a></div>
+        <div class="artist" data-name="Monatik" data-alt-name="monatik"><a href="https://t.me/monatik_music" target="_blank">Monatik</a></div>
+        <div class="artist" data-name="Mosquit" data-alt-name="mosquit"><a href="https://t.me/mosquit_musicbox" target="_blank">Mosquit</a></div>
+        <div class="artist" data-name="Noize MC" data-alt-name="noize mc"><a href="https://t.me/noize_mc_musicbox" target="_blank">Noize MC</a></div>
+        <div class="artist" data-name="OG BUDA" data-alt-name="og buda"><a href="https://t.me/og_buda_musicbox" target="_blank">OG BUDA</a></div>
+        <div class="artist" data-name="OHGEESY" data-alt-name="ohgeesy"><a href="https://t.me/OHGEESY_music" target="_blank">OHGEESY</a></div>
+        <div class="artist" data-name="OM." data-alt-name="om."><a href="https://t.me/remember_musicbox" target="_blank">OM.</a></div>
+        <div class="artist" data-name="Obladaet" data-alt-name="obladaet"><a href="https://t.me/obladaet_musicbox" target="_blank">Obladaet</a></div>
+        <div class="artist" data-name="Oxxymiron" data-alt-name="oxxymiron"><a href="https://t.me/Oxxxymiron_musicbox" target="_blank">Oxxymiron</a></div>
+        <div class="artist" data-name="Pa Salieu" data-alt-name="pa salieu"><a href="https://t.me/Pa_Salieu" target="_blank">Pa Salieu</a></div>
+        <div class="artist" data-name="Pepel Nahudi" data-alt-name="pepel nahudi"><a href="https://t.me/Pepel_Nahudi_musicbox" target="_blank">Pepel Nahudi</a></div>
+        <div class="artist" data-name="Pharaoh" data-alt-name="pharaoh"><a href="https://t.me/pharaoh_music" target="_blank">Pharaoh</a></div>
+        <div class="artist" data-name="Pitbull" data-alt-name="pitbull"><a href="https://t.me/Pitbull_musicbox" target="_blank">Pitbull</a></div>
+        <div class="artist" data-name="Playboi Carti" data-alt-name="playboi carti"><a href="https://t.me/Playboi_Carti_musicbox" target="_blank">Playboi Carti</a></div>
+        <div class="artist" data-name="Pop smoke" data-alt-name="pop smoke"><a href="https://t.me/Pop_smoke_musicbox" target="_blank">Pop smoke</a></div>
+        <div class="artist" data-name="Post Malone" data-alt-name="post malone"><a href="-1002656099309" target="_blank">Post Malone</a></div>
+        <div class="artist" data-name="Public Enemy" data-alt-name="public enemy"><a href="https://t.me/public_enemy_musicbox" target="_blank">Public Enemy</a></div>
+        <div class="artist" data-name="Pusha T" data-alt-name="pusha t"><a href="https://t.me/Pusha_T_music" target="_blank">Pusha T</a></div>
+        <div class="artist" data-name="RAUL" data-alt-name="raul"><a href="https://t.me/Raul_Ando" target="_blank">RAUL</a></div>
+        <div class="artist" data-name="REDZED" data-alt-name="redzed"><a href="https://t.me/redzed_music" target="_blank">REDZED</a></div>
+        <div class="artist" data-name="ROCKET" data-alt-name="rocket"><a href="https://t.me/ROCKET_musicbox" target="_blank">ROCKET</a></div>
+        <div class="artist" data-name="Rihanna" data-alt-name="rihanna"><a href="-1002625209428" target="_blank">Rihanna</a></div>
+        <div class="artist" data-name="Rob Zombie" data-alt-name="rob zombie"><a href="https://t.me/rob_zombie_musicbox" target="_blank">Rob Zombie</a></div>
+        <div class="artist" data-name="Rod Wave" data-alt-name="rod wave"><a href="https://t.me/rod_wave_music" target="_blank">Rod Wave</a></div>
+        <div class="artist" data-name="Rosalia" data-alt-name="rosalia"><a href="-1002603486402" target="_blank">Rosalia</a></div>
+        <div class="artist" data-name="SAINt JHN" data-alt-name="saint jhn"><a href="-1002717076101" target="_blank">SAINt JHN</a></div>
+        <div class="artist" data-name="SALUKI" data-alt-name="saluki"><a href="https://t.me/SALUKI_musicbox" target="_blank">SALUKI</a></div>
+        <div class="artist" data-name="SIL-A" data-alt-name="sil-a"><a href="https://t.me/SIL_A_musicbox" target="_blank">SIL-A</a></div>
+        <div class="artist" data-name="SLAVA MARLOW" data-alt-name="slava marlow"><a href="https://t.me/sIava_marIow" target="_blank">SLAVA MARLOW</a></div>
+        <div class="artist" data-name="SODA LOVE" data-alt-name="soda love"><a href="https://t.me/soda_love_musicbox" target="_blank">SODA LOVE</a></div>
+        <div class="artist" data-name="Santiz" data-alt-name="santiz"><a href="https://t.me/santiz_musicbox" target="_blank">Santiz</a></div>
+        <div class="artist" data-name="Scally Milano" data-alt-name="scally milano"><a href="https://t.me/scally_milano_musicbox" target="_blank">Scally Milano</a></div>
+        <div class="artist" data-name="Sean Paul" data-alt-name="sean paul"><a href="https://t.me/Sean_Paul_musicbox" target="_blank">Sean Paul</a></div>
+        <div class="artist" data-name="Selena Gomez" data-alt-name="selena gomez"><a href="https://t.me/Selena_Gomez_musicbox" target="_blank">Selena Gomez</a></div>
+        <div class="artist" data-name="Shaggy" data-alt-name="shaggy"><a href="https://t.me/Shaggy_musicbox" target="_blank">Shaggy</a></div>
+        <div class="artist" data-name="Shakira" data-alt-name="shakira"><a href="https://t.me/shakira_musicbox" target="_blank">Shakira</a></div>
+        <div class="artist" data-name="Shallipopi" data-alt-name="shallipopi"><a href="https://t.me/Shallipopi_musicbox" target="_blank">Shallipopi</a></div>
+        <div class="artist" data-name="Sharma Boy" data-alt-name="sharma boy"><a href="https://t.me/Sharma_Boy_musicbox" target="_blank">Sharma Boy</a></div>
+        <div class="artist" data-name="Sheck Wes" data-alt-name="sheck wes"><a href="https://t.me/Sheck_Wes_music" target="_blank">Sheck Wes</a></div>
+        <div class="artist" data-name="Showbiz School" data-alt-name="showbiz school"><a href="https://t.me/ShowbizSchool_music" target="_blank">Showbiz School</a></div>
+        <div class="artist" data-name="Siavash Ghomayshi" data-alt-name="siavash ghomayshi"><a href="https://t.me/Siavash_Ghomayshi_musicbox" target="_blank">Siavash Ghomayshi</a></div>
+        <div class="artist" data-name="Sirusho" data-alt-name="sirusho"><a href="https://t.me/Sirusho_music" target="_blank">Sirusho</a></div>
+        <div class="artist" data-name="Slimus" data-alt-name="slimus"><a href="https://t.me/slimus_musicbox" target="_blank">Slimus</a></div>
+        <div class="artist" data-name="Snoop Dogg" data-alt-name="snoop dogg"><a href="https://t.me/snoop_dogg_music" target="_blank">Snoop Dogg</a></div>
+        <div class="artist" data-name="Snow Strippers" data-alt-name="snow strippers"><a href="https://t.me/Snow_Strippers_music" target="_blank">Snow Strippers</a></div>
+        <div class="artist" data-name="Stray Kids" data-alt-name="stray kids"><a href="https://t.me/stray_kids_musicbox" target="_blank">Stray Kids</a></div>
+        <div class="artist" data-name="Suicide Boys" data-alt-name="suicide boys"><a href="https://t.me/suicide_boys_music" target="_blank">Suicide Boys</a></div>
+        <div class="artist" data-name="T-Fest" data-alt-name="t-fest"><a href="https://t.me/t_fest_music" target="_blank">T-Fest</a></div>
+        <div class="artist" data-name="TOMORROW X TOGETHER" data-alt-name="tomorrow x together"><a href="https://t.me/tomorrow_x_together_mb" target="_blank">TOMORROW X TOGETHER</a></div>
+        <div class="artist" data-name="TRALLFACE PHONK" data-alt-name="trallface phonk"><a href="https://t.me/TRALLFACE_PHONK" target="_blank">TRALLFACE PHONK</a></div>
+        <div class="artist" data-name="TVETH" data-alt-name="tveth"><a href="https://t.me/TVETH_musicbox" target="_blank">TVETH</a></div>
+        <div class="artist" data-name="Taylor Swift" data-alt-name="taylor swift"><a href="https://t.me/Taylor_Swift_musicbox" target="_blank">Taylor Swift</a></div>
+        <div class="artist" data-name="That's Girl" data-alt-name="that's girl"><a href="https://t.me/Thats_Girl_musicbox" target="_blank">That's Girl</a></div>
+        <div class="artist" data-name="The Pretty Reckless" data-alt-name="the pretty reckless"><a href="https://t.me/The_Pretty_Reckless_musicbox" target="_blank">The Pretty Reckless</a></div>
+        <div class="artist" data-name="The Weekend" data-alt-name="the weekend"><a href="-1002605347775" target="_blank">The Weekend</a></div>
+        <div class="artist" data-name="Thekidszn" data-alt-name="thekidszn"><a href="https://t.me/Thekidszn_music" target="_blank">Thekidszn</a></div>
+        <div class="artist" data-name="Thomas Mraz" data-alt-name="thomas mraz"><a href="https://t.me/thomaz_mraz_music" target="_blank">Thomas Mraz</a></div>
+        <div class="artist" data-name="Thrill Pill" data-alt-name="thrill pill"><a href="https://t.me/Thrill_Pill_musicbox" target="_blank">Thrill Pill</a></div>
+        <div class="artist" data-name="Timbaland" data-alt-name="timbaland"><a href="https://t.me/Timbaland_music" target="_blank">Timbaland</a></div>
+        <div class="artist" data-name="Tommy Lee Sparta" data-alt-name="tommy lee sparta"><a href="https://t.me/Tommy_Lee_Sparta_musicbox" target="_blank">Tommy Lee Sparta</a></div>
+        <div class="artist" data-name="Tory Lanez" data-alt-name="tory lanez"><a href="https://t.me/Tory_Lanez_music" target="_blank">Tory Lanez</a></div>
+        <div class="artist" data-name="ToxiS" data-alt-name="toxis"><a href="https://t.me/Toxis_musicbox" target="_blank">ToxiS</a></div>
+        <div class="artist" data-name="Travis Scott" data-alt-name="travis scott"><a href="https://t.me/travis_scott_musicbox" target="_blank">Travis Scott</a></div>
+        <div class="artist" data-name="Trippie Redd" data-alt-name="trippie redd"><a href="-1002681274476" target="_blank">Trippie Redd</a></div>
+        <div class="artist" data-name="Tyga" data-alt-name="tyga"><a href="https://t.me/Tyga_musicbox" target="_blank">Tyga</a></div>
+        <div class="artist" data-name="Tyler, The Creator" data-alt-name="tyler, the creator"><a href="https://t.me/Tyler_The_Creator_musicbox" target="_blank">Tyler, The Creator</a></div>
+        <div class="artist" data-name="Unaverage Gang" data-alt-name="unaverage gang"><a href="https://t.me/Unaverage_Gang_musicbox" target="_blank">Unaverage Gang</a></div>
+        <div class="artist" data-name="Underaiki" data-alt-name="underaiki"><a href="https://t.me/Underaiki_musicbox" target="_blank">Underaiki</a></div>
+        <div class="artist" data-name="VUDOO" data-alt-name="vudoo"><a href="https://t.me/VUDOO_musicbox" target="_blank">VUDOO</a></div>
+        <div class="artist" data-name="VXSV Prince" data-alt-name="vxsv prince"><a href="https://t.me/VSXV_PRINCE_musicbox" target="_blank">VXSV Prince</a></div>
+        <div class="artist" data-name="Vallenatos Rafael Santo" data-alt-name="vallenatos rafael santo"><a href="https://t.me/Vallenatos_Rafael_Santo" target="_blank">Vallenatos Rafael Santo</a></div>
+        <div class="artist" data-name="Vsx Prince" data-alt-name="vsx prince"><a href="https://t.me/VSXV_PRINCE_musicbox" target="_blank">Vsx Prince</a></div>
+        <div class="artist" data-name="Waka Focka Flame" data-alt-name="waka focka flame"><a href="https://t.me/Waka_Focka_Flame" target="_blank">Waka Focka Flame</a></div>
+        <div class="artist" data-name="XCho" data-alt-name="xcho"><a href="https://t.me/XCho_musicbox" target="_blank">XCho</a></div>
+        <div class="artist" data-name="XXXTentacion" data-alt-name="xxxtentacion"><a href="https://t.me/xxxtentacion_artist" target="_blank">XXXTentacion</a></div>
+        <div class="artist" data-name="YBN Nahmir" data-alt-name="ybn nahmir"><a href="https://t.me/ybn_nahmir_music" target="_blank">YBN Nahmir</a></div>
+        <div class="artist" data-name="YNW Melly" data-alt-name="ynw melly"><a href="https://t.me/YNW_Melly_music" target="_blank">YNW Melly</a></div>
+        <div class="artist" data-name="YUNG TRAPPA" data-alt-name="yung trappa"><a href="https://t.me/yung_trappa_musicbox" target="_blank">YUNG TRAPPA</a></div>
+        <div class="artist" data-name="Yanix" data-alt-name="yanix"><a href="https://t.me/yanix_musicbox" target="_blank">Yanix</a></div>
+        <div class="artist" data-name="Yeat" data-alt-name="yeat"><a href="-1002524224416" target="_blank">Yeat</a></div>
+        <div class="artist" data-name="Young Mix" data-alt-name="young mix"><a href="https://t.me/Young_Mix_musicbox" target="_blank">Young Mix</a></div>
+        <div class="artist" data-name="Yung Hurn" data-alt-name="yung hurn"><a href="https://t.me/Yung_Hurn_music" target="_blank">Yung Hurn</a></div>
+        <div class="artist" data-name="Yung Thug" data-alt-name="yung thug"><a href="https://t.me/Young_Thug_music" target="_blank">Yung Thug</a></div>
+        <div class="artist" data-name="Zillakami" data-alt-name="zillakami"><a href="https://t.me/Zillakami_music" target="_blank">Zillakami</a></div>
+        <div class="artist" data-name="ak47" data-alt-name="ak47"><a href="https://t.me/ak47_musikboxx" target="_blank">ak47</a></div>
+        <div class="artist" data-name="gorod 312" data-alt-name="gorod 312"><a href="https://t.me/gorod312_music" target="_blank">gorod 312</a></div>
+        <div class="artist" data-name="ilyTOMMY" data-alt-name="ilytommy"><a href="https://t.me/ilyTOMMY_music" target="_blank">ilyTOMMY</a></div>
+        <div class="artist" data-name="kendrick lamar" data-alt-name="kendrick lamar"><a href="-1002512299764" target="_blank">kendrick lamar</a></div>
+        <div class="artist" data-name="kissesfromeldar" data-alt-name="kissesfromeldar"><a href="https://t.me/kissesfromeldar_musicbox" target="_blank">kissesfromeldar</a></div>
+        <div class="artist" data-name="macan" data-alt-name="macan"><a href="https://t.me/macan_musicbox" target="_blank">macan</a></div>
+        <div class="artist" data-name="nkeeei" data-alt-name="nkeeei"><a href="https://t.me/nkeeei_musicbox" target="_blank">nkeeei</a></div>
+        <div class="artist" data-name="platina" data-alt-name="platina"><a href="https://t.me/platina_musicbox" target="_blank">platina</a></div>
+        <div class="artist" data-name="shadowraze" data-alt-name="shadowraze"><a href="https://t.me/shadowraze_musicbox" target="_blank">shadowraze</a></div>
+        <div class="artist" data-name="sleepyflock" data-alt-name="sleepyflock"><a href="https://t.me/sleepyflock_music" target="_blank">sleepyflock</a></div>
+        <div class="artist" data-name="smokepurpp" data-alt-name="smokepurpp"><a href="-1002947849540" target="_blank">smokepurpp</a></div>
+        <div class="artist" data-name="sombr" data-alt-name="sombr"><a href="https://t.me/sombr_musicbox" target="_blank">sombr</a></div>
+        <div class="artist" data-name="suei" data-alt-name="suei"><a href="https://t.me/suei_musicbox" target="_blank">suei</a></div>
+        <div class="artist" data-name="t.A.T.u" data-alt-name="t.a.t.u"><a href="https://t.me/tatu_musicbox" target="_blank">t.A.T.u</a></div>
+        <div class="artist" data-name="takeoff" data-alt-name="takeoff"><a href="https://t.me/takeoff_music" target="_blank">takeoff</a></div>
+        <div class="artist" data-name="uglysephan" data-alt-name="uglysephan"><a href="https://t.me/uglystephan_musicbox" target="_blank">uglysephan</a></div>
+        <div class="artist" data-name="xtsy" data-alt-name="xtsy"><a href="https://t.me/xtsy_musicbox" target="_blank">xtsy</a></div>
+        <div class="artist" data-name="zemfira" data-alt-name="zemfira"><a href="https://t.me/zemfira_musicbox" target="_blank">zemfira</a></div>
+        <div class="artist" data-name="zxcursed" data-alt-name="zxcursed"><a href="https://t.me/zxcursed_music" target="_blank">zxcursed</a></div>
+        <div class="artist" data-name="Автостопом по фазе сна" data-alt-name="автостопом по фазе сна"><a href="https://t.me/Avtostopom_po_faze_sna_music" target="_blank">Автостопом по фазе сна</a></div>
+        <div class="artist" data-name="Алла Пугачёва" data-alt-name="алла пугачёва"><a href="https://t.me/Alla_Pugachova_music" target="_blank">Алла Пугачёва</a></div>
+        <div class="artist" data-name="Баста" data-alt-name="баста"><a href="https://t.me/basta_musicbox" target="_blank">Баста</a></div>
+        <div class="artist" data-name="Витя АК-47" data-alt-name="витя ак-47"><a href="https://t.me/ak47_musicbox" target="_blank">Витя АК-47</a></div>
+        <div class="artist" data-name="Гио пика" data-alt-name="гио пика"><a href="https://t.me/Gio_Pika_musicbox" target="_blank">Гио пика</a></div>
+        <div class="artist" data-name="Грибы" data-alt-name="грибы"><a href="https://t.me/Griby_musicbox" target="_blank">Грибы</a></div>
+        <div class="artist" data-name="Дельфин" data-alt-name="дельфин"><a href="https://t.me/dolphin_musicbox" target="_blank">Дельфин</a></div>
+        <div class="artist" data-name="Дети Rave" data-alt-name="дети rave"><a href="https://t.me/Deti_Rave_musicbox" target="_blank">Дети Rave</a></div>
+        <div class="artist" data-name="Жак Энтони" data-alt-name="жак энтони"><a href="https://t.me/jak_entoni" target="_blank">Жак Энтони</a></div>
+        <div class="artist" data-name="Ирина Аллегрова" data-alt-name="ирина аллегрова"><a href="https://t.me/Irina_Allegrova_music" target="_blank">Ирина Аллегрова</a></div>
+        <div class="artist" data-name="Каспер" data-alt-name="каспер"><a href="https://t.me/Kasper_musicbox" target="_blank">Каспер</a></div>
+        <div class="artist" data-name="Каспийский Груз" data-alt-name="каспийский груз"><a href="https://t.me/kaspijskij_gruz_musicbox" target="_blank">Каспийский Груз</a></div>
+        <div class="artist" data-name="Кишлак" data-alt-name="кишлак"><a href="https://t.me/kishlak_musicbox" target="_blank">Кишлак</a></div>
+        <div class="artist" data-name="Кравц" data-alt-name="кравц"><a href="https://t.me/Kravts_musicbox" target="_blank">Кравц</a></div>
+        <div class="artist" data-name="Красное дерево" data-alt-name="красное дерево"><a href="https://t.me/krasnoe_derevo_music" target="_blank">Красное дерево</a></div>
+        <div class="artist" data-name="ЛСП" data-alt-name="лсп"><a href="https://t.me/lsp_music" target="_blank">ЛСП</a></div>
+        <div class="artist" data-name="МЕЙБИ БЕЙБИ" data-alt-name="мейби бейби"><a href="https://t.me/maybe_baby_musicbox" target="_blank">МЕЙБИ БЕЙБИ</a></div>
+        <div class="artist" data-name="Макс Корж" data-alt-name="макс корж"><a href="https://t.me/maks_korz_music" target="_blank">Макс Корж</a></div>
+        <div class="artist" data-name="Минин" data-alt-name="минин"><a href="https://t.me/minin_music" target="_blank">Минин</a></div>
+        <div class="artist" data-name="Монеточка" data-alt-name="монеточка"><a href="https://t.me/monetochka_musicbox" target="_blank">Монеточка</a></div>
+        <div class="artist" data-name="Овсянкин" data-alt-name="овсянкин"><a href="https://t.me/Ovsyankin_musicbox" target="_blank">Овсянкин</a></div>
+        <div class="artist" data-name="Ольга Бузова" data-alt-name="ольга бузова"><a href="https://t.me/olga_buzova_music" target="_blank">Ольга Бузова</a></div>
+        <div class="artist" data-name="ПОЛМАТЕРИ" data-alt-name="полматери"><a href="https://t.me/Polmateri_musicbox" target="_blank">ПОЛМАТЕРИ</a></div>
+        <div class="artist" data-name="ПОШЛАЯ МОЛЛИ" data-alt-name="пошлая молли"><a href="https://t.me/poshlaya_molly_musicbox" target="_blank">ПОШЛАЯ МОЛЛИ</a></div>
+        <div class="artist" data-name="Паша Техник" data-alt-name="паша техник"><a href="https://t.me/pasha_texnik_musicbox" target="_blank">Паша Техник</a></div>
+        <div class="artist" data-name="Сardi B" data-alt-name="сardi b"><a href="-1002590948551" target="_blank">Сardi B</a></div>
+        <div class="artist" data-name="Сектор газа" data-alt-name="сектор газа"><a href="https://t.me/Sektor_Gaza_music" target="_blank">Сектор газа</a></div>
+        <div class="artist" data-name="Скриптонит" data-alt-name="скриптонит"><a href="https://t.me/musicbox_skriptonit" target="_blank">Скриптонит</a></div>
+        <div class="artist" data-name="Тима Белорусских" data-alt-name="тима белорусских"><a href="https://t.me/tima_belorusskich_musicbox" target="_blank">Тима Белорусских</a></div>
+        <div class="artist" data-name="Тимати" data-alt-name="тимати"><a href="https://t.me/Timati_musicbox" target="_blank">Тимати</a></div>
+        <div class="artist" data-name="Триагрутрика" data-alt-name="триагрутрика"><a href="https://t.me/triagrytrika_music" target="_blank">Триагрутрика</a></div>
+        <div class="artist" data-name="Тяжёлая Атлетика" data-alt-name="тяжёлая атлетика"><a href="https://t.me/Tyazhelaya_Atletika_musicbox" target="_blank">Тяжёлая Атлетика</a></div>
+        <div class="artist" data-name="Тёмный Принц" data-alt-name="тёмный принц"><a href="https://t.me/Temnyy_Prints_musicbox" target="_blank">Тёмный Принц</a></div>
+        <div class="artist" data-name="УННВ" data-alt-name="уннв"><a href="https://t.me/YNNB_music" target="_blank">УННВ</a></div>
+        <div class="artist" data-name="Хаски" data-alt-name="хаски"><a href="https://t.me/xaski_music" target="_blank">Хаски</a></div>
+        <div class="artist" data-name="ШАЙНИ" data-alt-name="шайни"><a href="https://t.me/Shyney_musicbox" target="_blank">ШАЙНИ</a></div>
+        <div class="artist" data-name="Элджей" data-alt-name="элджей"><a href="https://t.me/eldjei_music" target="_blank">Элджей</a></div>
+        <div class="artist" data-name="вышел покурить" data-alt-name="вышел покурить"><a href="https://t.me/vyshel_pokurit_music" target="_blank">вышел покурить</a></div>
+        <div class="artist" data-name="королевский XVII" data-alt-name="королевский xvii"><a href="https://t.me/korolevskij_XVII" target="_blank">королевский XVII</a></div>
+        <div class="artist" data-name="масло черного тмина" data-alt-name="масло черного тмина"><a href="https://t.me/maslo_czernogo_tmina" target="_blank">масло черного тмина</a></div>
+        <div class="artist" data-name="снялцепи" data-alt-name="снялцепи"><a href="https://t.me/snyal_tsepi_music" target="_blank">снялцепи</a></div>
     </div>
+    
     <footer>
         <div class="contact-info">
             <p data-lang="en">
                 Didn't find your favorite artist? Message us in the bot, and we'll definitely add them: <a href="https://t.me/musicboxrus_bot" target="_blank">t.me/musicboxrus_bot</a>
             </p>
             <p data-lang="ru">
-                Не нашли вашего любимого исполнителя? Напишите нам в бот,и мы обязательно добавим его: <a href="https://t.me/musicboxrus_bot" target="_blank">t.me/musicboxrus_bot</a>
+                Не нашли вашего любимого исполнителя? Напишите нам в бот, и мы обязательно добавим его: <a href="https://t.me/musicboxrus_bot" target="_blank">t.me/musicboxrus_bot</a>
             </p>
             <p data-lang="ua">
                 Не знайшли вашого улюбленого виконавця? Напишіть нам у бот, і ми обов’язково додамо його: <a href="https://t.me/musicboxrus_bot" target="_blank">t.me/musicboxrus_bot</a>
             </p>
         </div>
     </footer>
-    <!-- Включение внешнего скрипта для статистики -->
+    
     <script src="//codice.shinystat.com/cgi-bin/getcod.cgi?USER=SS-51041999-2282b"></script>
     <noscript>
-        <!-- Запасной вариант для браузеров без поддержки JavaScript -->
         <a href="https://www.shinystat.com/it/" target="_top">
             <img src="//www.shinystat.com/cgi-bin/shinystat.cgi?USER=SS-51041999-2282b" alt="Statistiche web" style="border:0px" />
         </a>
     </noscript>
-    <!-- JavaScript код -->
+    
     <script>
-        // Глобальная переменная для хранения текущего языка
         var currentLanguage = 'ru';
 
-        // Функция для смены языка
         function setLanguage(language) {
             currentLanguage = language;
             var elements = document.querySelectorAll('[data-lang]');
@@ -492,80 +500,45 @@
             };
             searchInput.placeholder = placeholders[language];
 
-            // Выделение активной кнопки языка
             var languageButtons = document.querySelectorAll('.language-switcher button');
             languageButtons.forEach(function(button) {
                 button.classList.toggle('active', button.innerText.toLowerCase() === language);
             });
         }
 
-        // Функция для открытия/закрытия модального окна
-        function toggleMenu() {
-            var menu = document.getElementById('menu');
-            var menuText = document.getElementById('menuText');
-
-            if (menu.style.display === 'block') {
-                menu.style.display = 'none';
-            } else {
-                var content = {
-                    'en': "Didn't find your favorite artist? Message us in the bot, and we'll definitely add them: <a href='https://t.me/musicboxrus_bot' target='_blank'>t.me/musicboxrus_bot</a>",
-                    'ru': "Не нашли вашего любимого исполнителя? Напишите нам в бот,и мы обязательно добавим его: <a href='https://t.me/musicboxrus_bot' target='_blank'>t.me/musicboxrus_bot</a>",
-                    'ua': "Не знайшли вашого улюбленого виконавця? Напишіть нам у бот, і ми обов’язково додамо його: <a href='https://t.me/musicboxrus_bot' target='_blank'>t.me/musicboxrus_bot</a>"
-                };
-                menuText.innerHTML = content[currentLanguage];
-                menu.style.display = 'block';
-            }
-
-            // Включение/выключение размытия на других элементах
-            var blurElements = document.querySelectorAll('body > *:not(.dropdown)');
-            blurElements.forEach(function(element) {
-                element.style.filter = menu.style.display === 'block' ? 'blur(5px)' : 'none';
-                element.style.pointerEvents = menu.style.display === 'block' ? 'none' : 'auto';
-            });
-        }
-
-        // Функция для фильтрации списка артистов по введенному тексту
         function filterArtists() {
             var input = document.getElementById('searchInput');
             var filter = input.value.toLowerCase();
-            var artistList = document.getElementById('artistList');
-            var artists = artistList.getElementsByClassName('artist');
+            var artists = document.getElementsByClassName('artist');
 
             Array.from(artists).forEach(function(artist) {
                 var artistName = artist.getAttribute('data-name').toLowerCase();
-                var artistAltName = artist.getAttribute('data-alt-name').toLowerCase();
-                artist.style.display = artistName.includes(filter) || artistAltName.includes(filter) ? '' : 'none';
+                var artistAltName = (artist.getAttribute('data-alt-name') || '').toLowerCase();
+                if (artistName.includes(filter) || artistAltName.includes(filter)) {
+                    artist.style.display = '';
+                } else {
+                    artist.style.display = 'none';
+                }
             });
         }
 
-        // Установка языка по умолчанию (русский) при загрузке страницы
         document.addEventListener('DOMContentLoaded', function() {
             setLanguage('ru');
+            
+            // Allow clicking anywhere on the artist card
+            const cards = document.querySelectorAll('.artist');
+            cards.forEach(card => {
+                card.addEventListener('click', () => {
+                    const linkElem = card.querySelector('a');
+                    if (linkElem) {
+                        window.location.href = linkElem.getAttribute('href');
+                    }
+                });
+            });
         });
 
-        // JavaScript для запрета копирования и контекстного меню
-        document.addEventListener('contextmenu', function(e) {
-            e.preventDefault();
-        });
-
-        document.addEventListener('selectstart', function(e) {
-            e.preventDefault();
-        });
+        document.addEventListener('contextmenu', function(e) { e.preventDefault(); });
+        document.addEventListener('selectstart', function(e) { e.preventDefault(); });
     </script>
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
