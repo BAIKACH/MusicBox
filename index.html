@@ -2,395 +2,555 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>MusicBox - Artists</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MusicBox App</title>
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
-        :root {
-            --bg-color: #0f172a;
-            --surface-color: rgba(30, 41, 59, 0.7);
-            --accent-color: #6366f1;
-            --text-main: #f8fafc;
-            --text-muted: #94a3b8;
-            --glass-border: rgba(255, 255, 255, 0.1);
-            --safe-area-inset-bottom: env(safe-area-inset-bottom);
-        }
-
-        * {
-            box-sizing: border-box;
-            -webkit-tap-highlight-color: transparent;
-        }
-
         body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-            background-color: var(--bg-color);
-            background-image: 
-                radial-gradient(circle at 0% 0%, rgba(99, 102, 241, 0.15) 0%, transparent 50%),
-                radial-gradient(circle at 100% 100%, rgba(168, 85, 247, 0.15) 0%, transparent 50%);
-            background-attachment: fixed;
-            color: var(--text-main);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #fff;
+            color: #333;
+            text-align: center;
             margin: 0;
             padding: 0;
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            overflow-x: hidden;
+            user-select: none;
+            touch-action: manipulation;
+            -ms-touch-action: manipulation;
         }
-
-        /* Telegram Theme Integration */
-        body.tg-mode {
-            background-color: var(--tg-theme-bg-color, #0f172a);
-            color: var(--tg-theme-text-color, #f8fafc);
-        }
-
-        .container {
-            width: 100%;
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 20px;
-            flex: 1;
-        }
-
-        header {
-            text-align: center;
-            margin-bottom: 30px;
-            animation: fadeInDown 0.8s ease-out;
-        }
-
-        .logo-text {
-            font-size: 28px;
-            font-weight: 800;
-            background: linear-gradient(135deg, #818cf8 0%, #c084fc 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            margin-bottom: 8px;
-            letter-spacing: -0.5px;
-        }
-
-        .description-box {
-            font-size: 14px;
-            color: var(--text-muted);
-            line-height: 1.6;
-            margin-bottom: 20px;
-        }
-
-        .description-box a {
-            color: var(--accent-color);
-            text-decoration: none;
-            font-weight: 600;
-        }
-
-        /* Controls Section */
-        .controls {
-            position: sticky;
-            top: 10px;
-            z-index: 100;
-            background: rgba(15, 23, 42, 0.8);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            padding: 12px;
-            border-radius: 16px;
-            border: 1px solid var(--glass-border);
-            margin-bottom: 25px;
-            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3);
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-        }
-
-        .search-wrapper {
-            position: relative;
-            width: 100%;
-        }
-
-        .search-icon {
-            position: absolute;
-            left: 12px;
-            top: 50%;
-            transform: translateY(-50%);
-            color: var(--text-muted);
-            pointer-events: none;
-        }
-
-        #searchInput {
-            width: 100%;
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid var(--glass-border);
-            border-radius: 10px;
-            padding: 12px 12px 12px 40px;
+        .header {
+            background: linear-gradient(90deg, #ff5f6d, #ffc371);
             color: white;
-            font-size: 15px;
-            outline: none;
-            transition: all 0.3s;
-        }
-
-        #searchInput:focus {
-            border-color: var(--accent-color);
-            background: rgba(255, 255, 255, 0.08);
-            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.2);
-        }
-
-        .language-tabs {
-            display: flex;
-            gap: 8px;
-            justify-content: center;
-        }
-
-        .lang-btn {
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid var(--glass-border);
-            color: var(--text-muted);
-            padding: 6px 14px;
-            border-radius: 8px;
-            font-size: 12px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.2s;
-        }
-
-        .lang-btn.active {
-            background: var(--accent-color);
-            color: white;
-            border-color: var(--accent-color);
-            box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
-        }
-
-        /* Artist Grid */
-        .artist-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
-            gap: 16px;
-            padding-bottom: 40px;
-        }
-
-        .artist-card {
-            background: var(--surface-color);
-            border: 1px solid var(--glass-border);
-            border-radius: 16px;
-            padding: 12px;
-            text-align: center;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            cursor: pointer;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            animation: cardEntrance 0.5s ease-out backwards;
-            text-decoration: none;
-        }
-
-        .artist-card:active {
-            transform: scale(0.92);
-            background: rgba(255, 255, 255, 0.1);
-        }
-
-        .artist-image-container {
-            width: 100%;
-            aspect-ratio: 1/1;
-            border-radius: 12px;
-            overflow: hidden;
+            padding: 5px 0;
             margin-bottom: 10px;
-            background: rgba(255, 255, 255, 0.1);
-            display: flex;
-            align-items: center;
-            justify-content: center;
         }
-
-        .artist-image-container img {
+        .description {
+            margin: 20px;
+            font-size: 12px;
+        }
+        .description a {
+            color: #333;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        .description a:hover {
+            text-decoration: underline;
+        }
+        .language-switcher, .search-bar {
+            margin: 14.4px;
+        }
+        .language-switcher button {
+            margin: 0 3.6px;
+            padding: 8.1px 16.2px;
+            font-size: 12.96px;
+            cursor: pointer;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background-color: #fff;
+            color: #333;
+        }
+        .language-switcher button.active {
+            background-color: #ccc;
+        }
+        .search-bar input {
+            padding: 8.1px;
+            width: 80%;
+            max-width: 500px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 12.96px;
+        }
+        .artist-list {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            padding: 0;
+            margin: 0;
+        }
+        .artist {
+            background-color: #f9f9f9;
+            margin: 8px;
+            padding: 0; /* Убираем паддинг, чтобы ссылка занимала всё пространство */
+            border-radius: 10px;
+            width: 100px; /* Немного увеличим для удобства */
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            transition: transform 0.2s, box-shadow 0.2s;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden; /* Чтобы скругления работали для вложенных элементов */
+            cursor: pointer;
+        }
+        .artist:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+        }
+        .artist a {
+            color: #000;
+            text-decoration: none;
+            font-weight: bold;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
             width: 100%;
             height: 100%;
-            object-fit: cover;
+            padding: 10px;
+            box-sizing: border-box;
+            font-size: 11px;
         }
-
-        .artist-image-placeholder {
-            font-size: 24px;
-            opacity: 0.5;
-        }
-
-        .artist-name {
-            font-size: 13px;
-            font-weight: 600;
-            color: var(--text-main);
-            overflow: hidden;
-            text-overflow: ellipsis;
-            white-space: nowrap;
+        .artist img {
             width: 100%;
+            border-radius: 6px;
+            margin-bottom: 8px;
+            object-fit: cover;
+            aspect-ratio: 1/1;
         }
-
-        /* Empty State */
-        #emptyState {
-            display: none;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            padding: 60px 20px;
-            color: var(--text-muted);
-        }
-
-        /* Footer */
         footer {
-            padding: 30px 20px;
+            background-color: #fff;
+            color: #333;
+            padding: 20px 0;
             text-align: center;
-            font-size: 13px;
-            color: var(--text-muted);
-            border-top: 1px solid var(--glass-border);
-            background: rgba(0, 0, 0, 0.2);
         }
-
-        footer a {
-            color: var(--accent-color);
+        .contact-info {
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: #fff;
+            color: #333;
+            padding: 10px 20px;
+            border-radius: 10px;
+            font-size: 12px;
+        }
+        .contact-info p {
+            margin: 10px 0;
+        }
+        .contact-info a {
+            color: #333;
+            text-decoration: underline;
+        }
+        .contact-info a:hover {
             text-decoration: none;
-            font-weight: 600;
-        }
-
-        /* Animations */
-        @keyframes fadeInDown {
-            from { opacity: 0; transform: translateY(-20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        @keyframes cardEntrance {
-            from { opacity: 0; transform: scale(0.85) translateY(10px); }
-            to { opacity: 1; transform: scale(1) translateY(0); }
-        }
-
-        @media (max-width: 400px) {
-            .artist-grid {
-                grid-template-columns: repeat(auto-fill, minmax(85px, 1fr));
-                gap: 12px;
-            }
         }
     </style>
 </head>
-<body class="tg-mode">
-    <div class="container">
-        <header>
-            <div class="logo-text">MusicBox 🎧</div>
-            <div class="description-box" id="headerDesc">
-                <!-- Data from JS -->
-            </div>
-            <div class="language-tabs">
-                <button class="lang-btn active" onclick="setLanguage('ru')">RU</button>
-                <button class="lang-btn" onclick="setLanguage('ua')">UA</button>
-                <button class="lang-btn" onclick="setLanguage('en')">EN</button>
-            </div>
-        </header>
-
-        <div class="controls">
-            <div class="search-wrapper">
-                <span class="search-icon">🔍</span>
-                <input type="text" id="searchInput" placeholder="Поиск артиста..." oninput="filterArtists()">
-            </div>
-        </div>
-
-        <div class="artist-grid" id="artistGrid">
-            <a href="javascript:void(0)" onclick="openChannel('-1001515287554', '044 Rose')" class="artist-card" data-name="044 Rose">\n    <div class="artist-image-container">\n        <div class="artist-image-placeholder">🎧</div>\n    </div>\n    <div class="artist-name">044 Rose</div>\n</a>\n        <a href="javascript:void(0)" onclick="openChannel('-1001725449408', '10age')" class="artist-card" data-name="10age">\n    <div class="artist-image-container">\n        <div class="artist-image-placeholder">🎧</div>\n    </div>\n    <div class="artist-name">10age</div>\n</a>\n        <a href="javascript:void(0)" onclick="openChannel('-1001672379897', '163ONMYNECK')" class="artist-card" data-name="163ONMYNECK">\n    <div class="artist-image-container">\n        <div class="artist-image-placeholder">🎧</div>\n    </div>\n    <div class="artist-name">163ONMYNECK</div>\n</a>\n        <a href="javascript:void(0)" onclick="openChannel('-1002533004413', '21 Savage')" class="artist-card" data-name="21 Savage">\n    <div class="artist-image-container">\n        <div class="artist-image-placeholder">🎧</div>\n    </div>\n    <div class="artist-name">21 Savage</div>\n</a>\n        <a href="javascript:void(0)" onclick="openChannel('-1002512025724', '2Pac')" class="artist-card" data-name="2Pac">\n    <div class="artist-image-container">\n        <div class="artist-image-placeholder">🎧</div>\n    </div>\n    <div class="artist-name">2Pac</div>\n</a>\n        <a href="javascript:void(0)" onclick="openChannel('-1003114960526', '2hollis')" class="artist-card" data-name="2hollis">\n    <div class="artist-image-container">\n        <div class="artist-image-placeholder">🎧</div>\n    </div>\n    <div class="artist-name">2hollis</div>\n</a>\n        <a href="javascript:void(0)" onclick="openChannel('-1001786437504', '4n Way')" class="artist-card" data-name="4n Way">\n    <div class="artist-image-container">\n        <div class="artist-image-placeholder">🎧</div>\n    </div>\n    <div class="artist-name">4n Way</div>\n</a>\n        <a href="javascript:void(0)" onclick="openChannel('-1002505170866', '50 Cent')" class="artist-card" data-name="50 Cent">\n    <div class="artist-image-container">\n        <div class="artist-image-placeholder">🎧</div>\n    </div>\n    <div class="artist-name">50 Cent</div>\n</a>\n        <a href="javascript:void(0)" onclick="openChannel('-1001127381104', '6ix9ine')" class="artist-card" data-name="6ix9ine">\n    <div class="artist-image-container">\n        <div class="artist-image-placeholder">🎧</div>\n    </div>\n    <div class="artist-name">6ix9ine</div>\n</a>\n        <a href="javascript:void(0)" onclick="openChannel('-1002690291041', '9mice')" class="artist-card" data-name="9mice">\n    <div class="artist-image-container">\n        <div class="artist-image-placeholder">🎧</div>\n    </div>\n    <div class="artist-name">9mice</div>\n</a>\n        <a href="javascript:void(0)" onclick="openChannel('-1002558275883', 'AC/DC')" class="artist-card" data-name="AC/DC">\n    <div class="artist-image-container">\n        <div class="artist-image-placeholder">🎧</div>\n    </div>\n    <div class="artist-name">AC/DC</div>\n</a>\n        <a href="javascript:void(0)" onclick="openChannel('-1003015289788', 'ALBLACK 52')" class="artist-card" data-name="ALBLACK 52">\n    <div class="artist-image-container">\n        <div class="artist-image-placeholder">🎧</div>\n    </div>\n    <div class="artist-name">ALBLACK 52</div>\n</a>\n        <a href="javascript:void(0)" onclick="openChannel('-1003174132628', 'ASAP Ferg')" class="artist-card" data-name="ASAP Ferg">\n    <div class="artist-image-container">\n        <div class="artist-image-placeholder">🎧</div>\n    </div>\n    <div class="artist-name">ASAP Ferg</div>\n</a>\n        <a href="javascript:void(0)" onclick="openChannel('-1003100544099', 'ASAP Mob')" class="artist-card" data-name="ASAP Mob">\n    <div class="artist-image-container">\n        <div class="artist-image-placeholder">🎧</div>\n    </div>\n    <div class="artist-name">ASAP Mob</div>\n</a>\n        <a href="javascript:void(0)" onclick="openChannel('-1001279830188', 'ASAP Rocky')" class="artist-card" data-name="ASAP Rocky">\n    <div class="artist-image-container">\n        <div class="artist-image-placeholder">🎧</div>\n    </div>\n    <div class="artist-name">ASAP Rocky</div>\n</a>\n        <a href="javascript:void(0)" onclick="openChannel('-1003073845499', 'ATL')" class="artist-card" data-name="ATL">\n    <div class="artist-image-container">\n        <div class="artist-image-placeholder">🎧</div>\n    </div>\n    <div class="artist-name">ATL</div>\n</a>\n        <a href="javascript:void(0)" onclick="openChannel('-1002543812363', 'Aarne')" class="artist-card" data-name="Aarne">\n    <div class="artist-image-container">\n        <div class="artist-image-placeholder">🎧</div>\n    </div>\n    <div class="artist-name">Aarne</div>\n</a>\n        <a href="javascript:void(0)" onclick="openChannel('-1002936931741', 'Accha')" class="artist-card" data-name="Accha">\n    <div class="artist-image-container">\n        <div class="artist-image-placeholder">🎧</div>\n    </div>\n    <div class="artist-name">Accha</div>\n</a>\n        <a href="javascript:void(0)" onclick="openChannel('-1003036147242', 'Akon')" class="artist-card" data-name="Akon">\n    <div class="artist-image-container">\n        <div class="artist-image-placeholder">🎧</div>\n    </div>\n    <div class="artist-name">Akon</div>\n</a>\n        <a href="javascript:void(0)" onclick="openChannel('-1002654398311', 'Amy winehouse')" class="artist-card" data-name="Amy winehouse">\n    <div class="artist-image-container">\n        <div class="artist-image-placeholder">🎧</div>\n    </div>\n    <div class="artist-name">Amy winehouse</div>\n</a>\n        <a href="javascript:void(0)" onclick="openChannel('-1003065203377', 'Anet Sai')" class="artist-card" data-name="Anet Sai">\n    <div class="artist-image-container">\n        <div class="artist-image-placeholder">🎧</div>\n    </div>\n    <div class="artist-name">Anet Sai</div>\n</a>\n        <a href="javascript:void(0)" onclick="openChannel('-1002940550055', 'Arctic Monkeys')" class="artist-card" data-name="Arctic Monkeys">\n    <div class="artist-image-container">\n        <div class="artist-image-placeholder">🎧</div>\n    </div>\n    <div class="artist-name">Arctic Monkeys</div>\n</a>\n        <a href="javascript:void(0)" onclick="openChannel('-1002934261113', 'Ariana Grande')" class="artist-card" data-name="Ariana Grande">\n    <div class="artist-image-container">\n        <div class="artist-image-placeholder">🎧</div>\n    </div>\n    <div class="artist-name">Ariana Grande</div>\n</a>\n        <a href="javascript:void(0)" onclick="openChannel('-1002646976562', 'Avril Lavigne')" class="artist-card" data-name="Avril Lavigne">\n    <div class="artist-image-container">\n        <div class="artist-image-placeholder">🎧</div>\n    </div>\n    <div class="artist-name">Avril Lavigne</div>\n</a>\n        <a href="javascript:void(0)" onclick="openChannel('-1003041034672', 'BATO')" class="artist-card" data-name="BATO">\n    <div class="artist-image-container">\n        <div class="artist-image-placeholder">🎧</div>\n    </div>\n    <div class="artist-name">BATO</div>\n</a>\n        <a href="javascript:void(0)" onclick="openChannel('-1003076520266', 'BIGBANG')" class="artist-card" data-name="BIGBANG">\n    <div class="artist-image-container">\n        <div class="artist-image-placeholder">🎧</div>\n    </div>\n    <div class="artist-name">BIGBANG</div>\n</a>\n        <a href="javascript:void(0)" onclick="openChannel('-1002960568345', 'BLACKPINK')" class="artist-card" data-name="BLACKPINK">\n    <div class="artist-image-container">\n        <div class="artist-image-placeholder">🎧</div>\n    </div>\n    <div class="artist-name">BLACKPINK</div>\n</a>\n        <a href="javascript:void(0)" onclick="openChannel('-1001797886950', 'BONES')" class="artist-card" data-name="BONES">\n    <div class="artist-image-container">\n        <div class="artist-image-placeholder">🎧</div>\n    </div>\n    <div class="artist-name">BONES</div>\n</a>\n        <a href="javascript:void(0)" onclick="openChannel('-1003195646994', 'BTS')" class="artist-card" data-name="BTS">\n    <div class="artist-image-container">\n        <div class="artist-image-placeholder">🎧</div>\n    </div>\n    <div class="artist-name">BTS</div>\n</a>\n        <a href="javascript:void(0)" onclick="openChannel('-1001732929236', 'BUSHIDO ZHO')" class="artist-card" data-name="BUSHIDO ZHO">\n    <div class="artist-image-container">\n        <div class="artist-image-placeholder">🎧</div>\n    </div>\n    <div class="artist-name">BUSHIDO ZHO</div>\n</a>\n        <a href="javascript:void(0)" onclick="openChannel('-1002949040805', 'Baby Melo')" class="artist-card" data-name="Baby Melo">\n    <div class="artist-image-container">\n        <div class="artist-image-placeholder">🎧</div>\n    </div>\n    <div class="artist-name">Baby Melo</div>\n</a>\n        <a href="javascript:void(0)" onclick="openChannel('1', 'Basta')" class="artist-card" data-name="Basta">\n    <div class="artist-image-container">\n        <div class="artist-image-placeholder">🎧</div>\n    </div>\n    <div class="artist-name">Basta</div>\n</a>\n        <a href="javascript:void(0)" onclick="openChannel('-1002664783415', 'Beyonce')" class="artist-card" data-name="Beyonce">\n    <div class="artist-image-container">\n        <div class="artist-image-placeholder">🎧</div>\n    </div>\n    <div class="artist-name">Beyonce</div>\n</a>\n        <a href="javascript:void(0)" onclick="openChannel('-1001442060673', 'Bhad Bhabie')" class="artist-card" data-name="Bhad Bhabie">\n    <div class="artist-image-container">\n        <div class="artist-image-placeholder">🎧</div>\n    </div>\n    <div class="artist-name">Bhad Bhabie</div>\n</a>\n        <a href="javascript:void(0)" onclick="openChannel('-1001531478250', 'Big Baby Tape')" class="artist-card" data-name="Big Baby Tape">\n    <div class="artist-image-container">\n        <div class="artist-image-placeholder">🎧</div>\n    </div>\n    <div class="artist-name">Big Baby Tape</div>\n</a>\n        <a href="javascript:void(0)" onclick="openChannel('-1001846565601', 'Billie Eilish')" class="artist-card" data-name="Billie Eilish">\n    <div class="artist-image-container">\n        <div class="artist-image-placeholder">🎧</div>\n    </div>\n    <div class="artist-name">Billie Eilish</div>\n</a>\n        <a href="javascript:void(0)" onclick="openChannel('-1002973268022', 'Black Eyed Peas')" class="artist-card" data-name="Black Eyed Peas">\n    <div class="artist-image-container">\n        <div class="artist-image-placeholder">🎧</div>\n    </div>\n    <div class="artist-name">Black Eyed Peas</div>\n</a>\n        <a href="javascript:void(0)" onclick="openChannel('-1003157944406', 'Bladee')" class="artist-card" data-name="Bladee">\n    <div class="artist-image-container">\n        <div class="artist-image-placeholder">🎧</div>\n    </div>\n    <div class="artist-name">Bladee</div>\n</a>\n        <a href="javascript:void(0)" onclick="openChannel('-1001551301622', 'Boulevard Depo')" class="artist-card" data-name="Boulevard Depo">\n    <div class="artist-image-container">\n        <div class="artist-image-placeholder">🎧</div>\n    </div>\n    <div class="artist-name">Boulevard Depo</div>\n</a>\n        <a href="javascript:void(0)" onclick="openChannel('-1002997772075', 'Bruno Mars')" class="artist-card" data-name="Bruno Mars">\n    <div class="artist-image-container">\n        <div class="artist-image-placeholder">🎧</div>\n    </div>\n    <div class="artist-name">Bruno Mars</div>\n</a>\n        <a href="javascript:void(0)" onclick="openChannel('-1002959126260', 'Busta Rhymes')" class="artist-card" data-name="Busta Rhymes">\n    <div class="artist-image-container">\n        <div class="artist-image-placeholder">🎧</div>\n    </div>\n    <div class="artist-name">Busta Rhymes</div>\n</a>\n        <a href="javascript:void(0)" onclick="openChannel('-1001596526062', 'CAKEBOY')" class="artist-card" data-name="CAKEBOY">\n    <div class="artist-image-container">\n        <div class="artist-image-placeholder">🎧</div>\n    </div>\n    <div class="artist-name">CAKEBOY</div>\n</a>\n        <a href="javascript:void(0)" onclick="openChannel('-1001836379656', 'CAPTOWN')" class="artist-card" data-name="CAPTOWN">\n    <div class="artist-image-container">\n        <div class="artist-image-placeholder">🎧</div>\n    </div>\n    <div class="artist-name">CAPTOWN</div>\n</a>\n        <a href="javascript:void(0)" onclick="openChannel('-1003184861989', 'Charli xcx')" class="artist-card" data-name="Charli xcx">\n    <div class="artist-image-container">\n        <div class="artist-image-placeholder">🎧</div>\n    </div>\n    <div class="artist-name">Charli xcx</div>\n</a>\n        <a href="javascript:void(0)" onclick="openChannel('-1002450918578', 'Chief Keef')" class="artist-card" data-name="Chief Keef">\n    <div class="artist-image-container">\n        <div class="artist-image-placeholder">🎧</div>\n    </div>\n    <div class="artist-name">Chief Keef</div>\n</a>\n        <a href="javascript:void(0)" onclick="openChannel('-1002655155091', 'Chris Browm')" class="artist-card" data-name="Chris Browm">\n    <div class="artist-image-container">\n        <div class="artist-image-placeholder">🎧</div>\n    </div>\n    <div class="artist-name">Chris Browm</div>\n</a>\n        <a href="javascript:void(0)" onclick="openChannel('-1002494275860', 'Cigarettes After Sex')" class="artist-card" data-name="Cigarettes After Sex">\n    <div class="artist-image-container">\n        <div class="artist-image-placeholder">🎧</div>\n    </div>\n    <div class="artist-name">Cigarettes After Sex</div>\n</a>\n        <a href="javascript:void(0)" onclick="openChannel('-1001574327971', 'City Morgue')" class="artist-card" data-name="City Morgue">\n    <div class="artist-image-container">\n        <div class="artist-image-placeholder">🎧</div>\n    </div>\n    <div class="artist-name">City Morgue</div>\n</a>\n        <a href="javascript:void(0)" onclick="openChannel('-1003028751318', 'Cleffy')" class="artist-card" data-name="Cleffy">\n    <div class="artist-image-container">\n        <div class="artist-image-placeholder">🎧</div>\n    </div>\n    <div class="artist-name">Cleffy</div>\n</a>\n        <a href="javascript:void(0)" onclick="openChannel('-1002942204555', 'Coldplay')" class="artist-card" data-name="Coldplay">\n    <div class="artist-image-container">\n        <div class="artist-image-placeholder">🎧</div>\n    </div>\n    <div class="artist-name">Coldplay</div>\n</a>\n        <a href="javascript:void(0)" onclick="openChannel('-1001663648836', 'Cypis')" class="artist-card" data-name="Cypis">\n    <div class="artist-image-container">\n        <div class="artist-image-placeholder">🎧</div>\n    </div>\n    <div class="artist-name">Cypis</div>\n</a>\n        <a href="javascript:void(0)" onclick="openChannel('-1002990991974', 'D.Masta')" class="artist-card" data-name="D.Masta">\n    <div class="artist-image-container">\n        <div class="artist-image-placeholder">🎧</div>\n    </div>\n    <div class="artist-name">D.Masta</div>\n</a>\n        <a href="javascript:void(0)" onclick="openChannel('-1003124713154', 'DJ Asul')" class="artist-card" data-name="DJ Asul">\n    <div class="artist-image-container">\n        <div class="artist-image-placeholder">🎧</div>\n    </div>\n    <div class="artist-name">DJ Asul</div>\n</a>\n        <a href="javascript:void(0)" onclick="openChannel('-1003004882465', 'DK')" class="artist-card" data-name="DK">\n    <div class="artist-image-container">\n        <div class="artist-image-placeholder">🎧</div>\n    </div>\n    <div class="artist-name">DK</div>\n</a>\n        <a href="javascript:void(0)" onclick="openChannel('-1003167276862', 'DOROFEEVA')" class="artist-card" data-name="DOROFEEVA">\n    <div class="artist-image-container">\n        <div class="artist-image-placeholder">🎧</div>\n    </div>\n    <div class="artist-name">DOROFEEVA</div>\n</a>\n        <a href="javascript:void(0)" onclick="openChannel('-1003005364182', 'Deftones')" class="artist-card" data-name="Deftones">\n    <div class="artist-image-container">\n        <div class="artist-image-placeholder">🎧</div>\n    </div>\n    <div class="artist-name">Deftones</div>\n</a>\n        <a href="javascript:void(0)" onclick="openChannel('-1001724626824', 'Denzel Curry')" class="artist-card" data-name="Denzel Curry">\n    <div class="artist-image-container">\n        <div class="artist-image-placeholder">🎧</div>\n    </div>\n    <div class="artist-name">Denzel Curry</div>\n</a>\n        <a href="javascript:void(0)" onclick="openChannel('-1002806168011', 'Destroy Lonely')" class="artist-card" data-name="Destroy Lonely">\n    <div class="artist-image-container">\n        <div class="artist-image-placeholder">🎧</div>\n    </div>\n    <div class="artist-name">Destroy Lonely</div>\n</a>\n        <a href="javascript:void(0)" onclick="openChannel('-1002991130442', 'Diamond')" class="artist-card" data-name="Diamond">\n    <div class="artist-image-container">\n        <div class="artist-image-placeholder">🎧</div>\n    </div>\n    <div class="artist-name">Diamond</div>\n</a>\n        <a href="javascript:void(0)" onclick="openChannel('-1003174854634', 'Doja Cat')" class="artist-card" data-name="Doja Cat">\n    <div class="artist-image-container">\n        <div class="artist-image-placeholder">🎧</div>\n    </div>\n    <div class="artist-name">Doja Cat</div>\n</a>\n        <a href="javascript:void(0)" onclick="openChannel('-1003164231634', 'Don Toliver')" class="artist-card" data-name="Don Toliver">\n    <div class="artist-image-container">\n        <div class="artist-image-placeholder">🎧</div>\n    </div>\n    <div class="artist-name">Don Toliver</div>\n</a>\n        <a href="javascript:void(0)" onclick="openChannel('-1001784245787', 'Drake')" class="artist-card" data-name="Drake">\n    <div class="artist-image-container">\n        <div class="artist-image-placeholder">🎧</div>\n    </div>\n    <div class="artist-name">Drake</div>\n</a>\n        <a href="javascript:void(0)" onclick="openChannel('-1002938728117', 'Dua Lipa')" class="artist-card" data-name="Dua Lipa">\n    <div class="artist-image-container">\n        <div class="artist-image-placeholder">🎧</div>\n    </div>\n    <div class="artist-name">Dua Lipa</div>\n</a>\n        <a href="javascript:void(0)" onclick="openChannel('-1003030236200', 'Duft Punk')" class="artist-card" data-name="Duft Punk">\n    <div class="artist-image-container">\n        <div class="artist-image-placeholder">🎧</div>\n    </div>\n    <div class="artist-name">Duft Punk</div>\n</a>\n        <a href="javascript:void(0)" onclick="openChannel('-1003141769573', 'Dutch Melrose')" class="artist-card" data-name="Dutch Melrose">\n    <div class="artist-image-container">\n        <div class="artist-image-placeholder">🎧</div>\n    </div>\n    <div class="artist-name">Dutch Melrose</div>\n</a>\n        <a href="javascript:void(0)" onclick="openChannel('-1002594100013', 'Ed Sheeran')" class="artist-card" data-name="Ed Sheeran">\n    <div class="artist-image-container">\n        <div class="artist-image-placeholder">🎧</div>\n    </div>\n    <div class="artist-name">Ed Sheeran</div>\n</a>\n        <a href="javascript:void(0)" onclick="openChannel('-1003060742314', 'Effie')" class="artist-card" data-name="Effie">\n    <div class="artist-image-container">\n        <div class="artist-image-placeholder">🎧</div>\n    </div>\n    <div class="artist-name">Effie</div>\n</a>\n        <a href="javascript:void(0)" onclick="openChannel('-1002971391187', 'Electroforez')" class="artist-card" data-name="Electroforez">\n    <div class="artist-image-container">\n        <div class="artist-image-placeholder">🎧</div>\n    </div>\n    <div class="artist-name">Electroforez</div>\n</a>\n        <a href="javascript:void(0)" onclick="openChannel('-1002298964257', 'Eminem')" class="artist-card" data-name="Eminem">\n    <div class="artist-image-container">\n        <div class="artist-image-placeholder">🎧</div>\n    </div>\n    <div class="artist-name">Eminem</div>\n</a>\n        <a href="javascript:void(0)" onclick="openChannel('-1002912004220', 'Eyedress')" class="artist-card" data-name="Eyedress">\n    <div class="artist-image-container">\n        <div class="artist-image-placeholder">🎧</div>\n    </div>\n    <div class="artist-name">Eyedress</div>\n</a>\n        <a href="javascript:void(0)" onclick="openChannel('-1001110422244', 'Eгор Крид')" class="artist-card" data-name="Eгор Крид">\n    <div class="artist-image-container">\n        <div class="artist-image-placeholder">🎧</div>\n    </div>\n    <div class="artist-name">Eгор Крид</div>\n</a>\n        <a href="javascript:void(0)" onclick="openChannel('-1001875466223', 'FENDIGLOCK')" class="artist-card" data-name="FENDIGLOCK">\n    <div class="artist-image-container">\n        <div class="artist-image-placeholder">🎧</div>\n    </div>\n    <div class="artist-name">FENDIGLOCK</div>\n</a>\n        <a href="javascript:void(0)" onclick="openChannel('-1001798835173', 'FRESHTIMMER')" class="artist-card" data-name="FRESHTIMMER">\n    <div class="artist-image-container">\n        <div class="artist-image-placeholder">🎧</div>\n    </div>\n    <div class="artist-name">FRESHTIMMER</div>\n</a>\n        <a href="javascript:void(0)" onclick="openChannel('-1001112676414', 'Face')" class="artist-card" data-name="Face">\n    <div class="artist-image-container">\n        <div class="artist-image-placeholder">🎧</div>\n    </div>\n    <div class="artist-name">Face</div>\n</a>\n        <a href="javascript:void(0)" onclick="openChannel('-1001202628079', 'Famous Dexter')" class="artist-card" data-name="Famous Dexter">\n    <div class="artist-image-container">\n        <div class="artist-image-placeholder">🎧</div>\n    </div>\n    <div class="artist-name">Famous Dexter</div>\n</a>\n        <a href="javascript:void(0)" onclick="openChannel('-1003112164747', 'Freddie Gibbs')" class="artist-card" data-name="Freddie Gibbs">\n    <div class="artist-image-container">\n        <div class="artist-image-placeholder">🎧</div>\n    </div>\n    <div class="artist-name">Freddie Gibbs</div>\n</a>\n        <a href="javascript:void(0)" onclick="openChannel('-1003109627207', 'Friendly Thug 52 NGG')" class="artist-card" data-name="Friendly Thug 52 NGG">\n    <div class="artist-image-container">\n        <div class="artist-image-placeholder">🎧</div>\n    </div>\n    <div class="artist-name">Friendly Thug 52 NGG</div>\n</a>\n        <a href="javascript:void(0)" onclick="openChannel('-1002620094289', 'Future')" class="artist-card" data-name="Future">\n    <div class="artist-image-container">\n        <div class="artist-image-placeholder">🎧</div>\n    </div>\n    <div class="artist-name">Future</div>\n</a>\n        <a href="javascript:void(0)" onclick="openChannel('-1001290050665', 'GONE.Fludd')" class="artist-card" data-name="GONE.Fludd">\n    <div class="artist-image-container">\n        <div class="artist-image-placeholder">🎧</div>\n    </div>\n    <div class="artist-name">GONE.Fludd</div>\n</a>\n        <a href="javascript:void(0)" onclick="openChannel('-1002931239249', 'GSPD')" class="artist-card" data-name="GSPD">\n    <div class="artist-image-container">\n        <div class="artist-image-placeholder">🎧</div>\n    </div>\n    <div class="artist-name">GSPD</div>\n</a>\n        <a href="javascript:void(0)" onclick="openChannel('-1002603433371', 'Ghostemane')" class="artist-card" data-name="Ghostemane">\n    <div class="artist-image-container">\n        <div class="artist-image-placeholder">🎧</div>\n    </div>\n    <div class="artist-name">Ghostemane</div>\n</a>\n        <a href="javascript:void(0)" onclick="openChannel('-1003119876274', 'GloRilla')" class="artist-card" data-name="GloRilla">\n    <div class="artist-image-container">\n        <div class="artist-image-placeholder">🎧</div>\n    </div>\n    <div class="artist-name">GloRilla</div>\n</a>\n        <a href="javascript:void(0)" onclick="openChannel('-1002695708391', 'Grimes')" class="artist-card" data-name="Grimes">\n    <div class="artist-image-container">\n        <div class="artist-image-placeholder">🎧</div>\n    </div>\n    <div class="artist-name">Grimes</div>\n</a>\n        <a href="javascript:void(0)" onclick="openChannel('-1001833128359', 'Guf')" class="artist-card" data-name="Guf">\n    <div class="artist-image-container">\n        <div class="artist-image-placeholder">🎧</div>\n    </div>\n    <div class="artist-name">Guf</div>\n</a>\n        <a href="javascript:void(0)" onclick="openChannel('-1003127832755', 'Gunna')" class="artist-card" data-name="Gunna">\n    <div class="artist-image-container">\n        <div class="artist-image-placeholder">🎧</div>\n    </div>\n    <div class="artist-name">Gunna</div>\n</a>\n        <a href="javascript:void(0)" onclick="openChannel('-1003169940754', 'Guns N Roses')" class="artist-card" data-name="Guns N Roses">\n    <div class="artist-image-container">\n        <div class="artist-image-placeholder">🎧</div>\n    </div>\n    <div class="artist-name">Guns N Roses</div>\n</a>\n        <a href="javascript:void(0)" onclick="openChannel('-1001768915547', 'INSTASAMKA')" class="artist-card" data-name="INSTASAMKA">\n    <div class="artist-image-container">\n        <div class="artist-image-placeholder">🎧</div>\n    </div>\n    <div class="artist-name">INSTASAMKA</div>\n</a>\n        <a href="javascript:void(0)" onclick="openChannel('-1003139971521', 'Icegergert')" class="artist-card" data-name="Icegergert">\n    <div class="artist-image-container">\n        <div class="artist-image-placeholder">🎧</div>\n    </div>\n    <div class="artist-name">Icegergert</div>\n</a>\n        <a href="javascript:void(0)" onclick="openChannel('-1003122229552', 'J.Cole')" class="artist-card" data-name="J.Cole">\n    <div class="artist-image-container">\n        <div class="artist-image-placeholder">🎧</div>\n    </div>\n    <div class="artist-name">J.Cole</div>\n</a>\n        <a href="javascript:void(0)" onclick="openChannel('-1003052690499', 'JAY-Z')" class="artist-card" data-name="JAY-Z">\n    <div class="artist-image-container">\n        <div class="artist-image-placeholder">🎧</div>\n    </div>\n    <div class="artist-name">JAY-Z</div>\n</a>\n        <a href="javascript:void(0)" onclick="openChannel('-1002999357740', 'JEEMBO')" class="artist-card" data-name="JEEMBO">\n    <div class="artist-image-container">\n        <div class="artist-image-placeholder">🎧</div>\n    </div>\n    <div class="artist-name">JEEMBO</div>\n</a>\n        <a href="javascript:void(0)" onclick="openChannel('-1003148301850', 'JENNIE')" class="artist-card" data-name="JENNIE">\n    <div class="artist-image-container">\n        <div class="artist-image-placeholder">🎧</div>\n    </div>\n    <div class="artist-name">JENNIE</div>\n</a>\n        <a href="javascript:void(0)" onclick="openChannel('-1003001058770', 'JISOO')" class="artist-card" data-name="JISOO">\n    <div class="artist-image-container">\n        <div class="artist-image-placeholder">🎧</div>\n    </div>\n    <div class="artist-name">JISOO</div>\n</a>\n        <a href="javascript:void(0)" onclick="openChannel('-1002905578794', 'Jade LeMac')" class="artist-card" data-name="Jade LeMac">\n    <div class="artist-image-container">\n        <div class="artist-image-placeholder">🎧</div>\n    </div>\n    <div class="artist-name">Jade LeMac</div>\n</a>\n        <a href="javascript:void(0)" onclick="openChannel('-1001143810885', 'Jah Khalib')" class="artist-card" data-name="Jah Khalib">\n    <div class="artist-image-container">\n        <div class="artist-image-placeholder">🎧</div>\n    </div>\n    <div class="artist-name">Jah Khalib</div>\n</a>\n        <a href="javascript:void(0)" onclick="openChannel('-1001520765697', 'Jamik')" class="artist-card" data-name="Jamik">\n    <div class="artist-image-container">\n        <div class="artist-image-placeholder">🎧</div>\n    </div>\n    <div class="artist-name">Jamik</div>\n</a>\n        <a href="javascript:void(0)" onclick="openChannel('-1003179799857', 'Jay Roxxx')" class="artist-card" data-name="Jay Roxxx">\n    <div class="artist-image-container">\n        <div class="artist-image-placeholder">🎧</div>\n    </div>\n    <div class="artist-name">Jay Roxxx</div>\n</a>\n        <a href="javascript:void(0)" onclick="openChannel('-1002774539346', 'Jennifer Lopez')" class="artist-card" data-name="Jennifer Lopez">\n    <div class="artist-image-container">\n        <div class="artist-image-placeholder">🎧</div>\n    </div>\n    <div class="artist-name">Jennifer Lopez</div>\n</a>\n        <a href="javascript:void(0)" onclick="openChannel('-1003026692430', 'Johnny Cash')" class="artist-card" data-name="Johnny Cash">\n    <div class="artist-image-container">\n        <div class="artist-image-placeholder">🎧</div>\n    </div>\n    <div class="artist-name">Johnny Cash</div>\n</a>\n        <a href="javascript:void(0)" onclick="openChannel('-1002761796047', 'Joji')" class="artist-card" data-name="Joji">\n    <div class="artist-image-container">\n        <div class="artist-image-placeholder">🎧</div>\n    </div>\n    <div class="artist-name">Joji</div>\n</a>\n        <a href="javascript:void(0)" onclick="openChannel('-1003108754954', 'Joyner Lucas')" class="artist-card" data-name="Joyner Lucas">\n    <div class="artist-image-container">\n        <div class="artist-image-placeholder">🎧</div>\n    </div>\n    <div class="artist-name">Joyner Lucas</div>\n</a>\n        <a href="javascript:void(0)" onclick="openChannel('-1001590407452', 'Juice WRLD')" class="artist-card" data-name="Juice WRLD">\n    <div class="artist-image-container">\n        <div class="artist-image-placeholder">🎧</div>\n    </div>\n    <div class="artist-name">Juice WRLD</div>\n</a>\n        <a href="javascript:void(0)" onclick="openChannel('-1001602349909', 'Justin Bieber')" class="artist-card" data-name="Justin Bieber">\n    <div class="artist-image-container">\n        <div class="artist-image-placeholder">🎧</div>\n    </div>\n    <div class="artist-name">Justin Bieber</div>\n</a>\n        <a href="javascript:void(0)" onclick="openChannel('-1002929129087', 'Justin Timberlake')" class="artist-card" data-name="Justin Timberlake">\n    <div class="artist-image-container">\n        <div class="artist-image-placeholder">🎧</div>\n    </div>\n    <div class="artist-name">Justin Timberlake</div>\n</a>\n        <a href="javascript:void(0)" onclick="openChannel('-1001849878196', 'KA$HDAMI')" class="artist-card" data-name="KA$HDAMI">\n    <div class="artist-image-container">\n        <div class="artist-image-placeholder">🎧</div>\n    </div>\n    <div class="artist-name">KA$HDAMI</div>\n</a>\n        <a href="javascript:void(0)" onclick="openChannel('-1002964169758', 'KIRILIK')" class="artist-card" data-name="KIRILIK">\n    <div class="artist-image-container">\n        <div class="artist-image-placeholder">🎧</div>\n    </div>\n    <div class="artist-name">KIRILIK</div>\n</a>\n        <a href="javascript:void(0)" onclick="openChannel('-1002596333811', 'KRBK')" class="artist-card" data-name="KRBK">\n    <div class="artist-image-container">\n        <div class="artist-image-placeholder">🎧</div>\n    </div>\n    <div class="artist-name">KRBK</div>\n</a>\n        <a href="javascript:void(0)" onclick="openChannel('-1003001302905', 'KSLV Noh')" class="artist-card" data-name="KSLV Noh">\n    <div class="artist-image-container">\n        <div class="artist-image-placeholder">🎧</div>\n    </div>\n    <div class="artist-name">KSLV Noh</div>\n</a>\n        <a href="javascript:void(0)" onclick="openChannel('-1003155697695', 'Kai Angel')" class="artist-card" data-name="Kai Angel">\n    <div class="artist-image-container">\n        <div class="artist-image-placeholder">🎧</div>\n    </div>\n    <div class="artist-name">Kai Angel</div>\n</a>\n        <a href="javascript:void(0)" onclick="openChannel('-1002925812937', 'Kanye West')" class="artist-card" data-name="Kanye West">\n    <div class="artist-image-container">\n        <div class="artist-image-placeholder">🎧</div>\n    </div>\n    <div class="artist-name">Kanye West</div>\n</a>\n        <a href="javascript:void(0)" onclick="openChannel('-1002650118101', 'Kay Flock')" class="artist-card" data-name="Kay Flock">\n    <div class="artist-image-container">\n        <div class="artist-image-placeholder">🎧</div>\n    </div>\n    <div class="artist-name">Kay Flock</div>\n</a>\n        <a href="javascript:void(0)" onclick="openChannel('-1003174193118', 'Kee Nola')" class="artist-card" data-name="Kee Nola">\n    <div class="artist-image-container">\n        <div class="artist-image-placeholder">🎧</div>\n    </div>\n    <div class="artist-name">Kee Nola</div>\n</a>\n        <a href="javascript:void(0)" onclick="openChannel('-1002764986150', 'Kelly Rowland')" class="artist-card" data-name="Kelly Rowland">\n    <div class="artist-image-container">\n        <div class="artist-image-placeholder">🎧</div>\n    </div>\n    <div class="artist-name">Kelly Rowland</div>\n</a>\n        <a href="javascript:void(0)" onclick="openChannel('-1002505455068', 'Ken Carson')" class="artist-card" data-name="Ken Carson">\n    <div class="artist-image-container">\n        <div class="artist-image-placeholder">🎧</div>\n    </div>\n    <div class="artist-name">Ken Carson</div>\n</a>\n        <a href="javascript:void(0)" onclick="openChannel('-1002679460763', 'Key Glock')" class="artist-card" data-name="Key Glock">\n    <div class="artist-image-container">\n        <div class="artist-image-placeholder">🎧</div>\n    </div>\n    <div class="artist-name">Key Glock</div>\n</a>\n        <a href="javascript:void(0)" onclick="openChannel('-1003088407832', 'King Von')" class="artist-card" data-name="King Von">\n    <div class="artist-image-container">\n        <div class="artist-image-placeholder">🎧</div>\n    </div>\n    <div class="artist-name">King Von</div>\n</a>\n        <a href="javascript:void(0)" onclick="openChannel('-1001201646104', 'Kizaru')" class="artist-card" data-name="Kizaru">\n    <div class="artist-image-container">\n        <div class="artist-image-placeholder">🎧</div>\n    </div>\n    <div class="artist-name">Kizaru</div>\n</a>\n        <a href="javascript:void(0)" onclick="openChannel('-1002862538692', 'Kodak Black')" class="artist-card" data-name="Kodak Black">\n    <div class="artist-image-container">\n        <div class="artist-image-placeholder">🎧</div>\n    </div>\n    <div class="artist-name">Kodak Black</div>\n</a>\n        <a href="javascript:void(0)" onclick="openChannel('-1003198859279', 'LAZER DIM 700')" class="artist-card" data-name="LAZER DIM 700">\n    <div class="artist-image-container">\n        <div class="artist-image-placeholder">🎧</div>\n    </div>\n    <div class="artist-name">LAZER DIM 700</div>\n</a>\n        <a href="javascript:void(0)" onclick="openChannel('-1001780739932', 'LIL KRYSTALLL')" class="artist-card" data-name="LIL KRYSTALLL">\n    <div class="artist-image-container">\n        <div class="artist-image-placeholder">🎧</div>\n    </div>\n    <div class="artist-name">LIL KRYSTALLL</div>\n</a>\n        <a href="javascript:void(0)" onclick="openChannel('-1001892148611', 'LILDRUGHILL')" class="artist-card" data-name="LILDRUGHILL">\n    <div class="artist-image-container">\n        <div class="artist-image-placeholder">🎧</div>\n    </div>\n    <div class="artist-name">LILDRUGHILL</div>\n</a>\n        <a href="javascript:void(0)" onclick="openChannel('-1001702591993', 'LIZER')" class="artist-card" data-name="LIZER">\n    <div class="artist-image-container">\n        <div class="artist-image-placeholder">🎧</div>\n    </div>\n    <div class="artist-name">LIZER</div>\n</a>\n        <a href="javascript:void(0)" onclick="openChannel('-1001501042656', 'LOVV66')" class="artist-card" data-name="LOVV66">\n    <div class="artist-image-container">\n        <div class="artist-image-placeholder">🎧</div>\n    </div>\n    <div class="artist-name">LOVV66</div>\n</a>\n        <a href="javascript:void(0)" onclick="openChannel('-1002722458750', 'Lady Gaga')" class="artist-card" data-name="Lady Gaga">\n    <div class="artist-image-container">\n        <div class="artist-image-placeholder">🎧</div>\n    </div>\n    <div class="artist-name">Lady Gaga</div>\n</a>\n        <a href="javascript:void(0)" onclick="openChannel('-1002847078184', 'Lana Del Rey')" class="artist-card" data-name="Lana Del Rey">\n    <div class="artist-image-container">\n        <div class="artist-image-placeholder">🎧</div>\n    </div>\n    <div class="artist-name">Lana Del Rey</div>\n</a>\n        <a href="javascript:void(0)" onclick="openChannel('-1002589388626', 'Lil Baby')" class="artist-card" data-name="Lil Baby">\n    <div class="artist-image-container">\n        <div class="artist-image-placeholder">🎧</div>\n    </div>\n    <div class="artist-name">Lil Baby</div>\n</a>\n        <a href="javascript:void(0)" onclick="openChannel('-1003144633471', 'Lil Darkie')" class="artist-card" data-name="Lil Darkie">\n    <div class="artist-image-container">\n        <div class="artist-image-placeholder">🎧</div>\n    </div>\n    <div class="artist-name">Lil Darkie</div>\n</a>\n        <a href="javascript:void(0)" onclick="openChannel('-1001822648274', 'Lil Jon')" class="artist-card" data-name="Lil Jon">\n    <div class="artist-image-container">\n        <div class="artist-image-placeholder">🎧</div>\n    </div>\n    <div class="artist-name">Lil Jon</div>\n</a>\n        <a href="javascript:void(0)" onclick="openChannel('-1003060051249', 'Lil Mabu')" class="artist-card" data-name="Lil Mabu">\n    <div class="artist-image-container">\n        <div class="artist-image-placeholder">🎧</div>\n    </div>\n    <div class="artist-name">Lil Mabu</div>\n</a>\n        <a href="javascript:void(0)" onclick="openChannel('-1001685610287', 'Lil Morty')" class="artist-card" data-name="Lil Morty">\n    <div class="artist-image-container">\n        <div class="artist-image-placeholder">🎧</div>\n    </div>\n    <div class="artist-name">Lil Morty</div>\n</a>\n        <a href="javascript:void(0)" onclick="openChannel('-1001181112670', 'Lil Peep')" class="artist-card" data-name="Lil Peep">\n    <div class="artist-image-container">\n        <div class="artist-image-placeholder">🎧</div>\n    </div>\n    <div class="artist-name">Lil Peep</div>\n</a>\n        <a href="javascript:void(0)" onclick="openChannel('-1001130857236', 'Lil Pump')" class="artist-card" data-name="Lil Pump">\n    <div class="artist-image-container">\n        <div class="artist-image-placeholder">🎧</div>\n    </div>\n    <div class="artist-name">Lil Pump</div>\n</a>\n        <a href="javascript:void(0)" onclick="openChannel('-1003075725139', 'Lil Tecca')" class="artist-card" data-name="Lil Tecca">\n    <div class="artist-image-container">\n        <div class="artist-image-placeholder">🎧</div>\n    </div>\n    <div class="artist-name">Lil Tecca</div>\n</a>\n        <a href="javascript:void(0)" onclick="openChannel('-1002500497631', 'Lil Uzi Vert')" class="artist-card" data-name="Lil Uzi Vert">\n    <div class="artist-image-container">\n        <div class="artist-image-placeholder">🎧</div>\n    </div>\n    <div class="artist-name">Lil Uzi Vert</div>\n</a>\n        <a href="javascript:void(0)" onclick="openChannel('-1002539387708', 'Lil Wayne')" class="artist-card" data-name="Lil Wayne">\n    <div class="artist-image-container">\n        <div class="artist-image-placeholder">🎧</div>\n    </div>\n    <div class="artist-name">Lil Wayne</div>\n</a>\n        <a href="javascript:void(0)" onclick="openChannel('-1002776200639', 'Lil X21')" class="artist-card" data-name="Lil X21">\n    <div class="artist-image-container">\n        <div class="artist-image-placeholder">🎧</div>\n    </div>\n    <div class="artist-name">Lil X21</div>\n</a>\n        <a href="javascript:void(0)" onclick="openChannel('-1003124695409', 'Limp Bizkit')" class="artist-card" data-name="Limp Bizkit">\n    <div class="artist-image-container">\n        <div class="artist-image-placeholder">🎧</div>\n    </div>\n    <div class="artist-name">Limp Bizkit</div>\n</a>\n        <a href="javascript:void(0)" onclick="openChannel('-1003139426779', 'Linkin Park')" class="artist-card" data-name="Linkin Park">\n    <div class="artist-image-container">\n        <div class="artist-image-placeholder">🎧</div>\n    </div>\n    <div class="artist-name">Linkin Park</div>\n</a>\n        <a href="javascript:void(0)" onclick="openChannel('-1002964386316', 'Lithe')" class="artist-card" data-name="Lithe">\n    <div class="artist-image-container">\n        <div class="artist-image-placeholder">🎧</div>\n    </div>\n    <div class="artist-name">Lithe</div>\n</a>\n        <a href="javascript:void(0)" onclick="openChannel('-1003007760801', 'Luis Fonsi')" class="artist-card" data-name="Luis Fonsi">\n    <div class="artist-image-container">\n        <div class="artist-image-placeholder">🎧</div>\n    </div>\n    <div class="artist-name">Luis Fonsi</div>\n</a>\n        <a href="javascript:void(0)" onclick="openChannel('-1001509531629', 'MAYOT')" class="artist-card" data-name="MAYOT">\n    <div class="artist-image-container">\n        <div class="artist-image-placeholder">🎧</div>\n    </div>\n    <div class="artist-name">MAYOT</div>\n</a>\n        <a href="javascript:void(0)" onclick="openChannel('https://t.me/musicbox_megahit', 'MEGAHITS')" class="artist-card" data-name="MEGAHITS">\n    <div class="artist-image-container">\n        <div class="artist-image-placeholder">🎧</div>\n    </div>\n    <div class="artist-name">MEGAHITS</div>\n</a>\n        <a href="javascript:void(0)" onclick="openChannel('-1001456661121', 'MORGENSHTERN')" class="artist-card" data-name="MORGENSHTERN">\n    <div class="artist-image-container">\n        <div class="artist-image-placeholder">🎧</div>\n    </div>\n    <div class="artist-name">MORGENSHTERN</div>\n</a>\n        <a href="javascript:void(0)" onclick="openChannel('-1003091260665', 'MYTH &amp; ROID')" class="artist-card" data-name="MYTH &amp; ROID">\n    <div class="artist-image-container">\n        <div class="artist-image-placeholder">🎧</div>\n    </div>\n    <div class="artist-name">MYTH &amp; ROID</div>\n</a>\n        <a href="javascript:void(0)" onclick="openChannel('-1003147836574', 'Mac Miller')" class="artist-card" data-name="Mac Miller">\n    <div class="artist-image-container">\n        <div class="artist-image-placeholder">🎧</div>\n    </div>\n    <div class="artist-name">Mac Miller</div>\n</a>\n        <a href="javascript:void(0)" onclick="openChannel('-1002962403586', 'Mariah Carey')" class="artist-card" data-name="Mariah Carey">\n    <div class="artist-image-container">\n        <div class="artist-image-placeholder">🎧</div>\n    </div>\n    <div class="artist-name">Mariah Carey</div>\n</a>\n        <a href="javascript:void(0)" onclick="openChannel('-1002662653245', 'Markul')" class="artist-card" data-name="Markul">\n    <div class="artist-image-container">\n        <div class="artist-image-placeholder">🎧</div>\n    </div>\n    <div class="artist-name">Markul</div>\n</a>\n        <a href="javascript:void(0)" onclick="openChannel('-1002980959445', 'Maroon 5')" class="artist-card" data-name="Maroon 5">\n    <div class="artist-image-container">\n        <div class="artist-image-placeholder">🎧</div>\n    </div>\n    <div class="artist-name">Maroon 5</div>\n</a>\n        <a href="javascript:void(0)" onclick="openChannel('-1002996116429', 'Masked Wolf')" class="artist-card" data-name="Masked Wolf">\n    <div class="artist-image-container">\n        <div class="artist-image-placeholder">🎧</div>\n    </div>\n    <div class="artist-name">Masked Wolf</div>\n</a>\n        <a href="javascript:void(0)" onclick="openChannel('-1002908117020', 'Mavado')" class="artist-card" data-name="Mavado">\n    <div class="artist-image-container">\n        <div class="artist-image-placeholder">🎧</div>\n    </div>\n    <div class="artist-name">Mavado</div>\n</a>\n        <a href="javascript:void(0)" onclick="openChannel('-1001686898448', 'May Wave$')" class="artist-card" data-name="May Wave$">\n    <div class="artist-image-container">\n        <div class="artist-image-placeholder">🎧</div>\n    </div>\n    <div class="artist-name">May Wave$</div>\n</a>\n        <a href="javascript:void(0)" onclick="openChannel('-1002608490798', 'Melody Thorton')" class="artist-card" data-name="Melody Thorton">\n    <div class="artist-image-container">\n        <div class="artist-image-placeholder">🎧</div>\n    </div>\n    <div class="artist-name">Melody Thorton</div>\n</a>\n        <a href="javascript:void(0)" onclick="openChannel('-1002991312909', 'Metallica')" class="artist-card" data-name="Metallica">\n    <div class="artist-image-container">\n        <div class="artist-image-placeholder">🎧</div>\n    </div>\n    <div class="artist-name">Metallica</div>\n</a>\n        <a href="javascript:void(0)" onclick="openChannel('-1002924320655', 'Migos')" class="artist-card" data-name="Migos">\n    <div class="artist-image-container">\n        <div class="artist-image-placeholder">🎧</div>\n    </div>\n    <div class="artist-name">Migos</div>\n</a>\n        <a href="javascript:void(0)" onclick="openChannel('-1002970780546', 'Miley Cyrus')" class="artist-card" data-name="Miley Cyrus">\n    <div class="artist-image-container">\n        <div class="artist-image-placeholder">🎧</div>\n    </div>\n    <div class="artist-name">Miley Cyrus</div>\n</a>\n        <a href="javascript:void(0)" onclick="openChannel('-1001669689858', 'MiyaGi')" class="artist-card" data-name="MiyaGi">\n    <div class="artist-image-container">\n        <div class="artist-image-placeholder">🎧</div>\n    </div>\n    <div class="artist-name">MiyaGi</div>\n</a>\n        <a href="javascript:void(0)" onclick="openChannel('-1001089576623', 'Monatik')" class="artist-card" data-name="Monatik">\n    <div class="artist-image-container">\n        <div class="artist-image-placeholder">🎧</div>\n    </div>\n    <div class="artist-name">Monatik</div>\n</a>\n        <a href="javascript:void(0)" onclick="openChannel('-1001758312024', 'Mosquit')" class="artist-card" data-name="Mosquit">\n    <div class="artist-image-container">\n        <div class="artist-image-placeholder">🎧</div>\n    </div>\n    <div class="artist-name">Mosquit</div>\n</a>\n        <a href="javascript:void(0)" onclick="openChannel('-1002940101247', 'Noize MC')" class="artist-card" data-name="Noize MC">\n    <div class="artist-image-container">\n        <div class="artist-image-placeholder">🎧</div>\n    </div>\n    <div class="artist-name">Noize MC</div>\n</a>\n        <a href="javascript:void(0)" onclick="openChannel('-1001281072338', 'OG BUDA')" class="artist-card" data-name="OG BUDA">\n    <div class="artist-image-container">\n        <div class="artist-image-placeholder">🎧</div>\n    </div>\n    <div class="artist-name">OG BUDA</div>\n</a>\n        <a href="javascript:void(0)" onclick="openChannel('-1003030989366', 'OHGEESY')" class="artist-card" data-name="OHGEESY">\n    <div class="artist-image-container">\n        <div class="artist-image-placeholder">🎧</div>\n    </div>\n    <div class="artist-name">OHGEESY</div>\n</a>\n        <a href="javascript:void(0)" onclick="openChannel('-1001827083619', 'OM.')" class="artist-card" data-name="OM.">\n    <div class="artist-image-container">\n        <div class="artist-image-placeholder">🎧</div>\n    </div>\n    <div class="artist-name">OM.</div>\n</a>\n        <a href="javascript:void(0)" onclick="openChannel('-1001291262698', 'Obladaet')" class="artist-card" data-name="Obladaet">\n    <div class="artist-image-container">\n        <div class="artist-image-placeholder">🎧</div>\n    </div>\n    <div class="artist-name">Obladaet</div>\n</a>\n        <a href="javascript:void(0)" onclick="openChannel('-1001550821944', 'Oxxymiron')" class="artist-card" data-name="Oxxymiron">\n    <div class="artist-image-container">\n        <div class="artist-image-placeholder">🎧</div>\n    </div>\n    <div class="artist-name">Oxxymiron</div>\n</a>\n        <a href="javascript:void(0)" onclick="openChannel('-1003197858707', 'Pa Salieu')" class="artist-card" data-name="Pa Salieu">\n    <div class="artist-image-container">\n        <div class="artist-image-placeholder">🎧</div>\n    </div>\n    <div class="artist-name">Pa Salieu</div>\n</a>\n        <a href="javascript:void(0)" onclick="openChannel('-1002560587323', 'Pepel Nahudi')" class="artist-card" data-name="Pepel Nahudi">\n    <div class="artist-image-container">\n        <div class="artist-image-placeholder">🎧</div>\n    </div>\n    <div class="artist-name">Pepel Nahudi</div>\n</a>\n        <a href="javascript:void(0)" onclick="openChannel('-1001072243785', 'Pharaoh')" class="artist-card" data-name="Pharaoh">\n    <div class="artist-image-container">\n        <div class="artist-image-placeholder">🎧</div>\n    </div>\n    <div class="artist-name">Pharaoh</div>\n</a>\n        <a href="javascript:void(0)" onclick="openChannel('-1003158667705', 'Pitbull')" class="artist-card" data-name="Pitbull">\n    <div class="artist-image-container">\n        <div class="artist-image-placeholder">🎧</div>\n    </div>\n    <div class="artist-name">Pitbull</div>\n</a>\n        <a href="javascript:void(0)" onclick="openChannel('-1003050179754', 'Playboi Carti')" class="artist-card" data-name="Playboi Carti">\n    <div class="artist-image-container">\n        <div class="artist-image-placeholder">🎧</div>\n    </div>\n    <div class="artist-name">Playboi Carti</div>\n</a>\n        <a href="javascript:void(0)" onclick="openChannel('-1003162494371', 'Pop smoke')" class="artist-card" data-name="Pop smoke">\n    <div class="artist-image-container">\n        <div class="artist-image-placeholder">🎧</div>\n    </div>\n    <div class="artist-name">Pop smoke</div>\n</a>\n        <a href="javascript:void(0)" onclick="openChannel('-1002656099309', 'Post Malone')" class="artist-card" data-name="Post Malone">\n    <div class="artist-image-container">\n        <div class="artist-image-placeholder">🎧</div>\n    </div>\n    <div class="artist-name">Post Malone</div>\n</a>\n        <a href="javascript:void(0)" onclick="openChannel('-1003067764909', 'Public Enemy')" class="artist-card" data-name="Public Enemy">\n    <div class="artist-image-container">\n        <div class="artist-image-placeholder">🎧</div>\n    </div>\n    <div class="artist-name">Public Enemy</div>\n</a>\n        <a href="javascript:void(0)" onclick="openChannel('-1003023644192', 'Pusha T')" class="artist-card" data-name="Pusha T">\n    <div class="artist-image-container">\n        <div class="artist-image-placeholder">🎧</div>\n    </div>\n    <div class="artist-name">Pusha T</div>\n</a>\n        <a href="javascript:void(0)" onclick="openChannel('-1001630968576', 'RAUL')" class="artist-card" data-name="RAUL">\n    <div class="artist-image-container">\n        <div class="artist-image-placeholder">🎧</div>\n    </div>\n    <div class="artist-name">RAUL</div>\n</a>\n        <a href="javascript:void(0)" onclick="openChannel('-1001897647141', 'REDZED')" class="artist-card" data-name="REDZED">\n    <div class="artist-image-container">\n        <div class="artist-image-placeholder">🎧</div>\n    </div>\n    <div class="artist-name">REDZED</div>\n</a>\n        <a href="javascript:void(0)" onclick="openChannel('-1001525462632', 'ROCKET')" class="artist-card" data-name="ROCKET">\n    <div class="artist-image-container">\n        <div class="artist-image-placeholder">🎧</div>\n    </div>\n    <div class="artist-name">ROCKET</div>\n</a>\n        <a href="javascript:void(0)" onclick="openChannel('-1002625209428', 'Rihanna')" class="artist-card" data-name="Rihanna">\n    <div class="artist-image-container">\n        <div class="artist-image-placeholder">🎧</div>\n    </div>\n    <div class="artist-name">Rihanna</div>\n</a>\n        <a href="javascript:void(0)" onclick="openChannel('-1003038110490', 'Rob Zombie')" class="artist-card" data-name="Rob Zombie">\n    <div class="artist-image-container">\n        <div class="artist-image-placeholder">🎧</div>\n    </div>\n    <div class="artist-name">Rob Zombie</div>\n</a>\n        <a href="javascript:void(0)" onclick="openChannel('-1002592489933', 'Rod Wave')" class="artist-card" data-name="Rod Wave">\n    <div class="artist-image-container">\n        <div class="artist-image-placeholder">🎧</div>\n    </div>\n    <div class="artist-name">Rod Wave</div>\n</a>\n        <a href="javascript:void(0)" onclick="openChannel('-1002603486402', 'Rosalia')" class="artist-card" data-name="Rosalia">\n    <div class="artist-image-container">\n        <div class="artist-image-placeholder">🎧</div>\n    </div>\n    <div class="artist-name">Rosalia</div>\n</a>\n        <a href="javascript:void(0)" onclick="openChannel('-1002717076101', 'SAINt JHN')" class="artist-card" data-name="SAINt JHN">\n    <div class="artist-image-container">\n        <div class="artist-image-placeholder">🎧</div>\n    </div>\n    <div class="artist-name">SAINt JHN</div>\n</a>\n        <a href="javascript:void(0)" onclick="openChannel('-1003020119951', 'SALUKI')" class="artist-card" data-name="SALUKI">\n    <div class="artist-image-container">\n        <div class="artist-image-placeholder">🎧</div>\n    </div>\n    <div class="artist-name">SALUKI</div>\n</a>\n        <a href="javascript:void(0)" onclick="openChannel('-1003150408087', 'SIL-A')" class="artist-card" data-name="SIL-A">\n    <div class="artist-image-container">\n        <div class="artist-image-placeholder">🎧</div>\n    </div>\n    <div class="artist-name">SIL-A</div>\n</a>\n        <a href="javascript:void(0)" onclick="openChannel('-1001358911045', 'SLAVA MARLOW')" class="artist-card" data-name="SLAVA MARLOW">\n    <div class="artist-image-container">\n        <div class="artist-image-placeholder">🎧</div>\n    </div>\n    <div class="artist-name">SLAVA MARLOW</div>\n</a>\n        <a href="javascript:void(0)" onclick="openChannel('-1001658159495', 'SODA LOVE')" class="artist-card" data-name="SODA LOVE">\n    <div class="artist-image-container">\n        <div class="artist-image-placeholder">🎧</div>\n    </div>\n    <div class="artist-name">SODA LOVE</div>\n</a>\n        <a href="javascript:void(0)" onclick="openChannel('-1001926098487', 'Santiz')" class="artist-card" data-name="Santiz">\n    <div class="artist-image-container">\n        <div class="artist-image-placeholder">🎧</div>\n    </div>\n    <div class="artist-name">Santiz</div>\n</a>\n        <a href="javascript:void(0)" onclick="openChannel('-1001336172779', 'Scally Milano')" class="artist-card" data-name="Scally Milano">\n    <div class="artist-image-container">\n        <div class="artist-image-placeholder">🎧</div>\n    </div>\n    <div class="artist-name">Scally Milano</div>\n</a>\n        <a href="javascript:void(0)" onclick="openChannel('-1002916188331', 'Sean Paul')" class="artist-card" data-name="Sean Paul">\n    <div class="artist-image-container">\n        <div class="artist-image-placeholder">🎧</div>\n    </div>\n    <div class="artist-name">Sean Paul</div>\n</a>\n        <a href="javascript:void(0)" onclick="openChannel('-1003048321274', 'Selena Gomez')" class="artist-card" data-name="Selena Gomez">\n    <div class="artist-image-container">\n        <div class="artist-image-placeholder">🎧</div>\n    </div>\n    <div class="artist-name">Selena Gomez</div>\n</a>\n        <a href="javascript:void(0)" onclick="openChannel('-1002982361131', 'Shaggy')" class="artist-card" data-name="Shaggy">\n    <div class="artist-image-container">\n        <div class="artist-image-placeholder">🎧</div>\n    </div>\n    <div class="artist-name">Shaggy</div>\n</a>\n        <a href="javascript:void(0)" onclick="openChannel('-1001907247595', 'Shakira')" class="artist-card" data-name="Shakira">\n    <div class="artist-image-container">\n        <div class="artist-image-placeholder">🎧</div>\n    </div>\n    <div class="artist-name">Shakira</div>\n</a>\n        <a href="javascript:void(0)" onclick="openChannel('-1003103926729', 'Shallipopi')" class="artist-card" data-name="Shallipopi">\n    <div class="artist-image-container">\n        <div class="artist-image-placeholder">🎧</div>\n    </div>\n    <div class="artist-name">Shallipopi</div>\n</a>\n        <a href="javascript:void(0)" onclick="openChannel('-1003183327669', 'Sharma Boy')" class="artist-card" data-name="Sharma Boy">\n    <div class="artist-image-container">\n        <div class="artist-image-placeholder">🎧</div>\n    </div>\n    <div class="artist-name">Sharma Boy</div>\n</a>\n        <a href="javascript:void(0)" onclick="openChannel('-1003177216482', 'Sheck Wes')" class="artist-card" data-name="Sheck Wes">\n    <div class="artist-image-container">\n        <div class="artist-image-placeholder">🎧</div>\n    </div>\n    <div class="artist-name">Sheck Wes</div>\n</a>\n        <a href="javascript:void(0)" onclick="openChannel('-1001608386287', 'Showbiz School')" class="artist-card" data-name="Showbiz School">\n    <div class="artist-image-container">\n        <div class="artist-image-placeholder">🎧</div>\n    </div>\n    <div class="artist-name">Showbiz School</div>\n</a>\n        <a href="javascript:void(0)" onclick="openChannel('-1002994485685', 'Siavash Ghomayshi')" class="artist-card" data-name="Siavash Ghomayshi">\n    <div class="artist-image-container">\n        <div class="artist-image-placeholder">🎧</div>\n    </div>\n    <div class="artist-name">Siavash Ghomayshi</div>\n</a>\n        <a href="javascript:void(0)" onclick="openChannel('-1002916533693', 'Sirusho')" class="artist-card" data-name="Sirusho">\n    <div class="artist-image-container">\n        <div class="artist-image-placeholder">🎧</div>\n    </div>\n    <div class="artist-name">Sirusho</div>\n</a>\n        <a href="javascript:void(0)" onclick="openChannel('-1002736996881', 'Slimus')" class="artist-card" data-name="Slimus">\n    <div class="artist-image-container">\n        <div class="artist-image-placeholder">🎧</div>\n    </div>\n    <div class="artist-name">Slimus</div>\n</a>\n        <a href="javascript:void(0)" onclick="openChannel('-1001621959709', 'Snoop Dogg')" class="artist-card" data-name="Snoop Dogg">\n    <div class="artist-image-container">\n        <div class="artist-image-placeholder">🎧</div>\n    </div>\n    <div class="artist-name">Snoop Dogg</div>\n</a>\n        <a href="javascript:void(0)" onclick="openChannel('-1003156349931', 'Snow Strippers')" class="artist-card" data-name="Snow Strippers">\n    <div class="artist-image-container">\n        <div class="artist-image-placeholder">🎧</div>\n    </div>\n    <div class="artist-name">Snow Strippers</div>\n</a>\n        <a href="javascript:void(0)" onclick="openChannel('-1001831812426', 'Stray Kids')" class="artist-card" data-name="Stray Kids">\n    <div class="artist-image-container">\n        <div class="artist-image-placeholder">🎧</div>\n    </div>\n    <div class="artist-name">Stray Kids</div>\n</a>\n        <a href="javascript:void(0)" onclick="openChannel('-1001187860602', 'Suicide Boys')" class="artist-card" data-name="Suicide Boys">\n    <div class="artist-image-container">\n        <div class="artist-image-placeholder">🎧</div>\n    </div>\n    <div class="artist-name">Suicide Boys</div>\n</a>\n        <a href="javascript:void(0)" onclick="openChannel('-1001143796711', 'T-Fest')" class="artist-card" data-name="T-Fest">\n    <div class="artist-image-container">\n        <div class="artist-image-placeholder">🎧</div>\n    </div>\n    <div class="artist-name">T-Fest</div>\n</a>\n        <a href="javascript:void(0)" onclick="openChannel('-1002831950788', 'TOMORROW X TOGETHER')" class="artist-card" data-name="TOMORROW X TOGETHER">\n    <div class="artist-image-container">\n        <div class="artist-image-placeholder">🎧</div>\n    </div>\n    <div class="artist-name">TOMORROW X TOGETHER</div>\n</a>\n        <a href="javascript:void(0)" onclick="openChannel('-1003105021767', 'TRALLFACE PHONK')" class="artist-card" data-name="TRALLFACE PHONK">\n    <div class="artist-image-container">\n        <div class="artist-image-placeholder">🎧</div>\n    </div>\n    <div class="artist-name">TRALLFACE PHONK</div>\n</a>\n        <a href="javascript:void(0)" onclick="openChannel('-1003150386811', 'TVETH')" class="artist-card" data-name="TVETH">\n    <div class="artist-image-container">\n        <div class="artist-image-placeholder">🎧</div>\n    </div>\n    <div class="artist-name">TVETH</div>\n</a>\n        <a href="javascript:void(0)" onclick="openChannel('-1003138170654', 'Taylor Swift')" class="artist-card" data-name="Taylor Swift">\n    <div class="artist-image-container">\n        <div class="artist-image-placeholder">🎧</div>\n    </div>\n    <div class="artist-name">Taylor Swift</div>\n</a>\n        <a href="javascript:void(0)" onclick="openChannel('-1003187802484', 'That&#x27;s Girl')" class="artist-card" data-name="That&#x27;s Girl">\n    <div class="artist-image-container">\n        <div class="artist-image-placeholder">🎧</div>\n    </div>\n    <div class="artist-name">That&#x27;s Girl</div>\n</a>\n        <a href="javascript:void(0)" onclick="openChannel('-1002984653203', 'The Pretty Reckless')" class="artist-card" data-name="The Pretty Reckless">\n    <div class="artist-image-container">\n        <div class="artist-image-placeholder">🎧</div>\n    </div>\n    <div class="artist-name">The Pretty Reckless</div>\n</a>\n        <a href="javascript:void(0)" onclick="openChannel('-1002605347775', 'The Weekend')" class="artist-card" data-name="The Weekend">\n    <div class="artist-image-container">\n        <div class="artist-image-placeholder">🎧</div>\n    </div>\n    <div class="artist-name">The Weekend</div>\n</a>\n        <a href="javascript:void(0)" onclick="openChannel('-1003184937335', 'Thekidszn')" class="artist-card" data-name="Thekidszn">\n    <div class="artist-image-container">\n        <div class="artist-image-placeholder">🎧</div>\n    </div>\n    <div class="artist-name">Thekidszn</div>\n</a>\n        <a href="javascript:void(0)" onclick="openChannel('-1001135888665', 'Thomas Mraz')" class="artist-card" data-name="Thomas Mraz">\n    <div class="artist-image-container">\n        <div class="artist-image-placeholder">🎧</div>\n    </div>\n    <div class="artist-name">Thomas Mraz</div>\n</a>\n        <a href="javascript:void(0)" onclick="openChannel('-1001779770776', 'Thrill Pill')" class="artist-card" data-name="Thrill Pill">\n    <div class="artist-image-container">\n        <div class="artist-image-placeholder">🎧</div>\n    </div>\n    <div class="artist-name">Thrill Pill</div>\n</a>\n        <a href="javascript:void(0)" onclick="openChannel('-1003085612061', 'Timbaland')" class="artist-card" data-name="Timbaland">\n    <div class="artist-image-container">\n        <div class="artist-image-placeholder">🎧</div>\n    </div>\n    <div class="artist-name">Timbaland</div>\n</a>\n        <a href="javascript:void(0)" onclick="openChannel('-1002754921177', 'Tommy Lee Sparta')" class="artist-card" data-name="Tommy Lee Sparta">\n    <div class="artist-image-container">\n        <div class="artist-image-placeholder">🎧</div>\n    </div>\n    <div class="artist-name">Tommy Lee Sparta</div>\n</a>\n        <a href="javascript:void(0)" onclick="openChannel('-1003163217885', 'Tory Lanez')" class="artist-card" data-name="Tory Lanez">\n    <div class="artist-image-container">\n        <div class="artist-image-placeholder">🎧</div>\n    </div>\n    <div class="artist-name">Tory Lanez</div>\n</a>\n        <a href="javascript:void(0)" onclick="openChannel('-1003165776512', 'ToxiS')" class="artist-card" data-name="ToxiS">\n    <div class="artist-image-container">\n        <div class="artist-image-placeholder">🎧</div>\n    </div>\n    <div class="artist-name">ToxiS</div>\n</a>\n        <a href="javascript:void(0)" onclick="openChannel('-1002511902724', 'Travis Scott')" class="artist-card" data-name="Travis Scott">\n    <div class="artist-image-container">\n        <div class="artist-image-placeholder">🎧</div>\n    </div>\n    <div class="artist-name">Travis Scott</div>\n</a>\n        <a href="javascript:void(0)" onclick="openChannel('-1002681274476', 'Trippie Redd')" class="artist-card" data-name="Trippie Redd">\n    <div class="artist-image-container">\n        <div class="artist-image-placeholder">🎧</div>\n    </div>\n    <div class="artist-name">Trippie Redd</div>\n</a>\n        <a href="javascript:void(0)" onclick="openChannel('-1002721788784', 'Tyga')" class="artist-card" data-name="Tyga">\n    <div class="artist-image-container">\n        <div class="artist-image-placeholder">🎧</div>\n    </div>\n    <div class="artist-name">Tyga</div>\n</a>\n        <a href="javascript:void(0)" onclick="openChannel('-1002941821539', 'Tyler, The Creator')" class="artist-card" data-name="Tyler, The Creator">\n    <div class="artist-image-container">\n        <div class="artist-image-placeholder">🎧</div>\n    </div>\n    <div class="artist-name">Tyler, The Creator</div>\n</a>\n        <a href="javascript:void(0)" onclick="openChannel('-1001656619311', 'Unaverage Gang')" class="artist-card" data-name="Unaverage Gang">\n    <div class="artist-image-container">\n        <div class="artist-image-placeholder">🎧</div>\n    </div>\n    <div class="artist-name">Unaverage Gang</div>\n</a>\n        <a href="javascript:void(0)" onclick="openChannel('-1003015453479', 'Underaiki')" class="artist-card" data-name="Underaiki">\n    <div class="artist-image-container">\n        <div class="artist-image-placeholder">🎧</div>\n    </div>\n    <div class="artist-name">Underaiki</div>\n</a>\n        <a href="javascript:void(0)" onclick="openChannel('-1002935444176', 'VUDOO')" class="artist-card" data-name="VUDOO">\n    <div class="artist-image-container">\n        <div class="artist-image-placeholder">🎧</div>\n    </div>\n    <div class="artist-name">VUDOO</div>\n</a>\n        <a href="javascript:void(0)" onclick="openChannel('https://t.me/VSXV_PRINCE_musicbox', 'VXSV Prince')" class="artist-card" data-name="VXSV Prince">\n    <div class="artist-image-container">\n        <div class="artist-image-placeholder">🎧</div>\n    </div>\n    <div class="artist-name">VXSV Prince</div>\n</a>\n        <a href="javascript:void(0)" onclick="openChannel('-1003066894249', 'Vallenatos Rafael Santo')" class="artist-card" data-name="Vallenatos Rafael Santo">\n    <div class="artist-image-container">\n        <div class="artist-image-placeholder">🎧</div>\n    </div>\n    <div class="artist-name">Vallenatos Rafael Santo</div>\n</a>\n        <a href="javascript:void(0)" onclick="openChannel('-1002780894233', 'Vsx Prince')" class="artist-card" data-name="Vsx Prince">\n    <div class="artist-image-container">\n        <div class="artist-image-placeholder">🎧</div>\n    </div>\n    <div class="artist-name">Vsx Prince</div>\n</a>\n        <a href="javascript:void(0)" onclick="openChannel('-1003184211102', 'Waka Focka Flame')" class="artist-card" data-name="Waka Focka Flame">\n    <div class="artist-image-container">\n        <div class="artist-image-placeholder">🎧</div>\n    </div>\n    <div class="artist-name">Waka Focka Flame</div>\n</a>\n        <a href="javascript:void(0)" onclick="openChannel('-1002654207592', 'XCho')" class="artist-card" data-name="XCho">\n    <div class="artist-image-container">\n        <div class="artist-image-placeholder">🎧</div>\n    </div>\n    <div class="artist-name">XCho</div>\n</a>\n        <a href="javascript:void(0)" onclick="openChannel('-1001186294203', 'XXXTentacion')" class="artist-card" data-name="XXXTentacion">\n    <div class="artist-image-container">\n        <div class="artist-image-placeholder">🎧</div>\n    </div>\n    <div class="artist-name">XXXTentacion</div>\n</a>\n        <a href="javascript:void(0)" onclick="openChannel('-1002562077253', 'YBN Nahmir')" class="artist-card" data-name="YBN Nahmir">\n    <div class="artist-image-container">\n        <div class="artist-image-placeholder">🎧</div>\n    </div>\n    <div class="artist-name">YBN Nahmir</div>\n</a>\n        <a href="javascript:void(0)" onclick="openChannel('-1003071518649', 'YNW Melly')" class="artist-card" data-name="YNW Melly">\n    <div class="artist-image-container">\n        <div class="artist-image-placeholder">🎧</div>\n    </div>\n    <div class="artist-name">YNW Melly</div>\n</a>\n        <a href="javascript:void(0)" onclick="openChannel('-1001212223088', 'YUNG TRAPPA')" class="artist-card" data-name="YUNG TRAPPA">\n    <div class="artist-image-container">\n        <div class="artist-image-placeholder">🎧</div>\n    </div>\n    <div class="artist-name">YUNG TRAPPA</div>\n</a>\n        <a href="javascript:void(0)" onclick="openChannel('-1001755349259', 'Yanix')" class="artist-card" data-name="Yanix">\n    <div class="artist-image-container">\n        <div class="artist-image-placeholder">🎧</div>\n    </div>\n    <div class="artist-name">Yanix</div>\n</a>\n        <a href="javascript:void(0)" onclick="openChannel('-1002524224416', 'Yeat')" class="artist-card" data-name="Yeat">\n    <div class="artist-image-container">\n        <div class="artist-image-placeholder">🎧</div>\n    </div>\n    <div class="artist-name">Yeat</div>\n</a>\n        <a href="javascript:void(0)" onclick="openChannel('-1002972769072', 'Young Mix')" class="artist-card" data-name="Young Mix">\n    <div class="artist-image-container">\n        <div class="artist-image-placeholder">🎧</div>\n    </div>\n    <div class="artist-name">Young Mix</div>\n</a>\n        <a href="javascript:void(0)" onclick="openChannel('-1001880532008', 'Yung Hurn')" class="artist-card" data-name="Yung Hurn">\n    <div class="artist-image-container">\n        <div class="artist-image-placeholder">🎧</div>\n    </div>\n    <div class="artist-name">Yung Hurn</div>\n</a>\n        <a href="javascript:void(0)" onclick="openChannel('-1001887977238', 'Yung Thug')" class="artist-card" data-name="Yung Thug">\n    <div class="artist-image-container">\n        <div class="artist-image-placeholder">🎧</div>\n    </div>\n    <div class="artist-name">Yung Thug</div>\n</a>\n        <a href="javascript:void(0)" onclick="openChannel('-1003152755682', 'Zillakami')" class="artist-card" data-name="Zillakami">\n    <div class="artist-image-container">\n        <div class="artist-image-placeholder">🎧</div>\n    </div>\n    <div class="artist-name">Zillakami</div>\n</a>\n        <a href="javascript:void(0)" onclick="openChannel('-1002563099021', 'ak47')" class="artist-card" data-name="ak47">\n    <div class="artist-image-container">\n        <div class="artist-image-placeholder">🎧</div>\n    </div>\n    <div class="artist-name">ak47</div>\n</a>\n        <a href="javascript:void(0)" onclick="openChannel('-1002584758913', 'gorod 312')" class="artist-card" data-name="gorod 312">\n    <div class="artist-image-container">\n        <div class="artist-image-placeholder">🎧</div>\n    </div>\n    <div class="artist-name">gorod 312</div>\n</a>\n        <a href="javascript:void(0)" onclick="openChannel('-1003061725039', 'ilyTOMMY')" class="artist-card" data-name="ilyTOMMY">\n    <div class="artist-image-container">\n        <div class="artist-image-placeholder">🎧</div>\n    </div>\n    <div class="artist-name">ilyTOMMY</div>\n</a>\n        <a href="javascript:void(0)" onclick="openChannel('-1002512299764', 'kendrick lamar')" class="artist-card" data-name="kendrick lamar">\n    <div class="artist-image-container">\n        <div class="artist-image-placeholder">🎧</div>\n    </div>\n    <div class="artist-name">kendrick lamar</div>\n</a>\n        <a href="javascript:void(0)" onclick="openChannel('-1002840872720', 'kissesfromeldar')" class="artist-card" data-name="kissesfromeldar">\n    <div class="artist-image-container">\n        <div class="artist-image-placeholder">🎧</div>\n    </div>\n    <div class="artist-name">kissesfromeldar</div>\n</a>\n        <a href="javascript:void(0)" onclick="openChannel('-1001430475904', 'macan')" class="artist-card" data-name="macan">\n    <div class="artist-image-container">\n        <div class="artist-image-placeholder">🎧</div>\n    </div>\n    <div class="artist-name">macan</div>\n</a>\n        <a href="javascript:void(0)" onclick="openChannel('-1001545159472', 'nkeeei')" class="artist-card" data-name="nkeeei">\n    <div class="artist-image-container">\n        <div class="artist-image-placeholder">🎧</div>\n    </div>\n    <div class="artist-name">nkeeei</div>\n</a>\n        <a href="javascript:void(0)" onclick="openChannel('-1002553382160', 'platina')" class="artist-card" data-name="platina">\n    <div class="artist-image-container">\n        <div class="artist-image-placeholder">🎧</div>\n    </div>\n    <div class="artist-name">platina</div>\n</a>\n        <a href="javascript:void(0)" onclick="openChannel('-1001830000670', 'shadowraze')" class="artist-card" data-name="shadowraze">\n    <div class="artist-image-container">\n        <div class="artist-image-placeholder">🎧</div>\n    </div>\n    <div class="artist-name">shadowraze</div>\n</a>\n        <a href="javascript:void(0)" onclick="openChannel('-1002501224334', 'sleepyflock')" class="artist-card" data-name="sleepyflock">\n    <div class="artist-image-container">\n        <div class="artist-image-placeholder">🎧</div>\n    </div>\n    <div class="artist-name">sleepyflock</div>\n</a>\n        <a href="javascript:void(0)" onclick="openChannel('-1002947849540', 'smokepurpp')" class="artist-card" data-name="smokepurpp">\n    <div class="artist-image-container">\n        <div class="artist-image-placeholder">🎧</div>\n    </div>\n    <div class="artist-name">smokepurpp</div>\n</a>\n        <a href="javascript:void(0)" onclick="openChannel('-1003081129284', 'sombr')" class="artist-card" data-name="sombr">\n    <div class="artist-image-container">\n        <div class="artist-image-placeholder">🎧</div>\n    </div>\n    <div class="artist-name">sombr</div>\n</a>\n        <a href="javascript:void(0)" onclick="openChannel('-1002904627604', 'suei')" class="artist-card" data-name="suei">\n    <div class="artist-image-container">\n        <div class="artist-image-placeholder">🎧</div>\n    </div>\n    <div class="artist-name">suei</div>\n</a>\n        <a href="javascript:void(0)" onclick="openChannel('-1002914047560', 't.A.T.u')" class="artist-card" data-name="t.A.T.u">\n    <div class="artist-image-container">\n        <div class="artist-image-placeholder">🎧</div>\n    </div>\n    <div class="artist-name">t.A.T.u</div>\n</a>\n        <a href="javascript:void(0)" onclick="openChannel('-1001899224829', 'takeoff')" class="artist-card" data-name="takeoff">\n    <div class="artist-image-container">\n        <div class="artist-image-placeholder">🎧</div>\n    </div>\n    <div class="artist-name">takeoff</div>\n</a>\n        <a href="javascript:void(0)" onclick="openChannel('-1001887122502', 'uglysephan')" class="artist-card" data-name="uglysephan">\n    <div class="artist-image-container">\n        <div class="artist-image-placeholder">🎧</div>\n    </div>\n    <div class="artist-name">uglysephan</div>\n</a>\n        <a href="javascript:void(0)" onclick="openChannel('-1003111904969', 'xtsy')" class="artist-card" data-name="xtsy">\n    <div class="artist-image-container">\n        <div class="artist-image-placeholder">🎧</div>\n    </div>\n    <div class="artist-name">xtsy</div>\n</a>\n        <a href="javascript:void(0)" onclick="openChannel('-1002560779362', 'zemfira')" class="artist-card" data-name="zemfira">\n    <div class="artist-image-container">\n        <div class="artist-image-placeholder">🎧</div>\n    </div>\n    <div class="artist-name">zemfira</div>\n</a>\n        <a href="javascript:void(0)" onclick="openChannel('-1003194104389', 'zxcursed')" class="artist-card" data-name="zxcursed">\n    <div class="artist-image-container">\n        <div class="artist-image-placeholder">🎧</div>\n    </div>\n    <div class="artist-name">zxcursed</div>\n</a>\n        <a href="javascript:void(0)" onclick="openChannel('-1003126061041', 'Автостопом по фазе сна')" class="artist-card" data-name="Автостопом по фазе сна">\n    <div class="artist-image-container">\n        <div class="artist-image-placeholder">🎧</div>\n    </div>\n    <div class="artist-name">Автостопом по фазе сна</div>\n</a>\n        <a href="javascript:void(0)" onclick="openChannel('-1003011221004', 'Алла Пугачёва')" class="artist-card" data-name="Алла Пугачёва">\n    <div class="artist-image-container">\n        <div class="artist-image-placeholder">🎧</div>\n    </div>\n    <div class="artist-name">Алла Пугачёва</div>\n</a>\n        <a href="javascript:void(0)" onclick="openChannel('https://t.me/basta_musicbox', 'Баста')" class="artist-card" data-name="Баста">\n    <div class="artist-image-container">\n        <div class="artist-image-placeholder">🎧</div>\n    </div>\n    <div class="artist-name">Баста</div>\n</a>\n        <a href="javascript:void(0)" onclick="openChannel('-1002548448332', 'Витя АК-47')" class="artist-card" data-name="Витя АК-47">\n    <div class="artist-image-container">\n        <div class="artist-image-placeholder">🎧</div>\n    </div>\n    <div class="artist-name">Витя АК-47</div>\n</a>\n        <a href="javascript:void(0)" onclick="openChannel('-1003060365513', 'Гио пика')" class="artist-card" data-name="Гио пика">\n    <div class="artist-image-container">\n        <div class="artist-image-placeholder">🎧</div>\n    </div>\n    <div class="artist-name">Гио пика</div>\n</a>\n        <a href="javascript:void(0)" onclick="openChannel('-1003121848750', 'Грибы')" class="artist-card" data-name="Грибы">\n    <div class="artist-image-container">\n        <div class="artist-image-placeholder">🎧</div>\n    </div>\n    <div class="artist-name">Грибы</div>\n</a>\n        <a href="javascript:void(0)" onclick="openChannel('-1002649993144', 'Дельфин')" class="artist-card" data-name="Дельфин">\n    <div class="artist-image-container">\n        <div class="artist-image-placeholder">🎧</div>\n    </div>\n    <div class="artist-name">Дельфин</div>\n</a>\n        <a href="javascript:void(0)" onclick="openChannel('-1003025696529', 'Дети Rave')" class="artist-card" data-name="Дети Rave">\n    <div class="artist-image-container">\n        <div class="artist-image-placeholder">🎧</div>\n    </div>\n    <div class="artist-name">Дети Rave</div>\n</a>\n        <a href="javascript:void(0)" onclick="openChannel('-1001892942552', 'Жак Энтони')" class="artist-card" data-name="Жак Энтони">\n    <div class="artist-image-container">\n        <div class="artist-image-placeholder">🎧</div>\n    </div>\n    <div class="artist-name">Жак Энтони</div>\n</a>\n        <a href="javascript:void(0)" onclick="openChannel('-1002918253626', 'Ирина Аллегрова')" class="artist-card" data-name="Ирина Аллегрова">\n    <div class="artist-image-container">\n        <div class="artist-image-placeholder">🎧</div>\n    </div>\n    <div class="artist-name">Ирина Аллегрова</div>\n</a>\n        <a href="javascript:void(0)" onclick="openChannel('-1003112425189', 'Каспер')" class="artist-card" data-name="Каспер">\n    <div class="artist-image-container">\n        <div class="artist-image-placeholder">🎧</div>\n    </div>\n    <div class="artist-name">Каспер</div>\n</a>\n        <a href="javascript:void(0)" onclick="openChannel('-1003053740961', 'Каспийский Груз')" class="artist-card" data-name="Каспийский Груз">\n    <div class="artist-image-container">\n        <div class="artist-image-placeholder">🎧</div>\n    </div>\n    <div class="artist-name">Каспийский Груз</div>\n</a>\n        <a href="javascript:void(0)" onclick="openChannel('-1003092210657', 'Кишлак')" class="artist-card" data-name="Кишлак">\n    <div class="artist-image-container">\n        <div class="artist-image-placeholder">🎧</div>\n    </div>\n    <div class="artist-name">Кишлак</div>\n</a>\n        <a href="javascript:void(0)" onclick="openChannel('-1003032256665', 'Кравц')" class="artist-card" data-name="Кравц">\n    <div class="artist-image-container">\n        <div class="artist-image-placeholder">🎧</div>\n    </div>\n    <div class="artist-name">Кравц</div>\n</a>\n        <a href="javascript:void(0)" onclick="openChannel('-1002344281679', 'Красное дерево')" class="artist-card" data-name="Красное дерево">\n    <div class="artist-image-container">\n        <div class="artist-image-placeholder">🎧</div>\n    </div>\n    <div class="artist-name">Красное дерево</div>\n</a>\n        <a href="javascript:void(0)" onclick="openChannel('-1001058640087', 'ЛСП')" class="artist-card" data-name="ЛСП">\n    <div class="artist-image-container">\n        <div class="artist-image-placeholder">🎧</div>\n    </div>\n    <div class="artist-name">ЛСП</div>\n</a>\n        <a href="javascript:void(0)" onclick="openChannel('-1001742337862', 'МЕЙБИ БЕЙБИ')" class="artist-card" data-name="МЕЙБИ БЕЙБИ">\n    <div class="artist-image-container">\n        <div class="artist-image-placeholder">🎧</div>\n    </div>\n    <div class="artist-name">МЕЙБИ БЕЙБИ</div>\n</a>\n        <a href="javascript:void(0)" onclick="openChannel('-1001103504792', 'Макс Корж')" class="artist-card" data-name="Макс Корж">\n    <div class="artist-image-container">\n        <div class="artist-image-placeholder">🎧</div>\n    </div>\n    <div class="artist-name">Макс Корж</div>\n</a>\n        <a href="javascript:void(0)" onclick="openChannel('-1001885581843', 'Минин')" class="artist-card" data-name="Минин">\n    <div class="artist-image-container">\n        <div class="artist-image-placeholder">🎧</div>\n    </div>\n    <div class="artist-name">Минин</div>\n</a>\n        <a href="javascript:void(0)" onclick="openChannel('-1002955792002', 'Монеточка')" class="artist-card" data-name="Монеточка">\n    <div class="artist-image-container">\n        <div class="artist-image-placeholder">🎧</div>\n    </div>\n    <div class="artist-name">Монеточка</div>\n</a>\n        <a href="javascript:void(0)" onclick="openChannel('-1003015405854', 'Овсянкин')" class="artist-card" data-name="Овсянкин">\n    <div class="artist-image-container">\n        <div class="artist-image-placeholder">🎧</div>\n    </div>\n    <div class="artist-name">Овсянкин</div>\n</a>\n        <a href="javascript:void(0)" onclick="openChannel('-1001142026130', 'Ольга Бузова')" class="artist-card" data-name="Ольга Бузова">\n    <div class="artist-image-container">\n        <div class="artist-image-placeholder">🎧</div>\n    </div>\n    <div class="artist-name">Ольга Бузова</div>\n</a>\n        <a href="javascript:void(0)" onclick="openChannel('-1003129881239', 'ПОЛМАТЕРИ')" class="artist-card" data-name="ПОЛМАТЕРИ">\n    <div class="artist-image-container">\n        <div class="artist-image-placeholder">🎧</div>\n    </div>\n    <div class="artist-name">ПОЛМАТЕРИ</div>\n</a>\n        <a href="javascript:void(0)" onclick="openChannel('-1001239033912', 'ПОШЛАЯ МОЛЛИ')" class="artist-card" data-name="ПОШЛАЯ МОЛЛИ">\n    <div class="artist-image-container">\n        <div class="artist-image-placeholder">🎧</div>\n    </div>\n    <div class="artist-name">ПОШЛАЯ МОЛЛИ</div>\n</a>\n        <a href="javascript:void(0)" onclick="openChannel('-1003000241641', 'Паша Техник')" class="artist-card" data-name="Паша Техник">\n    <div class="artist-image-container">\n        <div class="artist-image-placeholder">🎧</div>\n    </div>\n    <div class="artist-name">Паша Техник</div>\n</a>\n        <a href="javascript:void(0)" onclick="openChannel('-1002590948551', 'Сardi B')" class="artist-card" data-name="Сardi B">\n    <div class="artist-image-container">\n        <div class="artist-image-placeholder">🎧</div>\n    </div>\n    <div class="artist-name">Сardi B</div>\n</a>\n        <a href="javascript:void(0)" onclick="openChannel('-1002958366430', 'Сектор газа')" class="artist-card" data-name="Сектор газа">\n    <div class="artist-image-container">\n        <div class="artist-image-placeholder">🎧</div>\n    </div>\n    <div class="artist-name">Сектор газа</div>\n</a>\n        <a href="javascript:void(0)" onclick="openChannel('-1001368225453', 'Скриптонит')" class="artist-card" data-name="Скриптонит">\n    <div class="artist-image-container">\n        <div class="artist-image-placeholder">🎧</div>\n    </div>\n    <div class="artist-name">Скриптонит</div>\n</a>\n        <a href="javascript:void(0)" onclick="openChannel('-1003032682812', 'Тима Белорусских')" class="artist-card" data-name="Тима Белорусских">\n    <div class="artist-image-container">\n        <div class="artist-image-placeholder">🎧</div>\n    </div>\n    <div class="artist-name">Тима Белорусских</div>\n</a>\n        <a href="javascript:void(0)" onclick="openChannel('-1003189636629', 'Тимати')" class="artist-card" data-name="Тимати">\n    <div class="artist-image-container">\n        <div class="artist-image-placeholder">🎧</div>\n    </div>\n    <div class="artist-name">Тимати</div>\n</a>\n        <a href="javascript:void(0)" onclick="openChannel('-1002271925111', 'Триагрутрика')" class="artist-card" data-name="Триагрутрика">\n    <div class="artist-image-container">\n        <div class="artist-image-placeholder">🎧</div>\n    </div>\n    <div class="artist-name">Триагрутрика</div>\n</a>\n        <a href="javascript:void(0)" onclick="openChannel('-1003043890266', 'Тяжёлая Атлетика')" class="artist-card" data-name="Тяжёлая Атлетика">\n    <div class="artist-image-container">\n        <div class="artist-image-placeholder">🎧</div>\n    </div>\n    <div class="artist-name">Тяжёлая Атлетика</div>\n</a>\n        <a href="javascript:void(0)" onclick="openChannel('-1003167659790', 'Тёмный Принц')" class="artist-card" data-name="Тёмный Принц">\n    <div class="artist-image-container">\n        <div class="artist-image-placeholder">🎧</div>\n    </div>\n    <div class="artist-name">Тёмный Принц</div>\n</a>\n        <a href="javascript:void(0)" onclick="openChannel('-1001563256704', 'УННВ')" class="artist-card" data-name="УННВ">\n    <div class="artist-image-container">\n        <div class="artist-image-placeholder">🎧</div>\n    </div>\n    <div class="artist-name">УННВ</div>\n</a>\n        <a href="javascript:void(0)" onclick="openChannel('-1001688689188', 'Хаски')" class="artist-card" data-name="Хаски">\n    <div class="artist-image-container">\n        <div class="artist-image-placeholder">🎧</div>\n    </div>\n    <div class="artist-name">Хаски</div>\n</a>\n        <a href="javascript:void(0)" onclick="openChannel('-1001567794750', 'ШАЙНИ')" class="artist-card" data-name="ШАЙНИ">\n    <div class="artist-image-container">\n        <div class="artist-image-placeholder">🎧</div>\n    </div>\n    <div class="artist-name">ШАЙНИ</div>\n</a>\n        <a href="javascript:void(0)" onclick="openChannel('-1001139044900', 'Элджей')" class="artist-card" data-name="Элджей">\n    <div class="artist-image-container">\n        <div class="artist-image-placeholder">🎧</div>\n    </div>\n    <div class="artist-name">Элджей</div>\n</a>\n        <a href="javascript:void(0)" onclick="openChannel('-1002503645301', 'вышел покурить')" class="artist-card" data-name="вышел покурить">\n    <div class="artist-image-container">\n        <div class="artist-image-placeholder">🎧</div>\n    </div>\n    <div class="artist-name">вышел покурить</div>\n</a>\n        <a href="javascript:void(0)" onclick="openChannel('-1002538641790', 'королевский XVII')" class="artist-card" data-name="королевский XVII">\n    <div class="artist-image-container">\n        <div class="artist-image-placeholder">🎧</div>\n    </div>\n    <div class="artist-name">королевский XVII</div>\n</a>\n        <a href="javascript:void(0)" onclick="openChannel('-1001856016367', 'масло черного тмина')" class="artist-card" data-name="масло черного тмина">\n    <div class="artist-image-container">\n        <div class="artist-image-placeholder">🎧</div>\n    </div>\n    <div class="artist-name">масло черного тмина</div>\n</a>\n        <a href="javascript:void(0)" onclick="openChannel('-1003163252031', 'снялцепи')" class="artist-card" data-name="снялцепи">\n    <div class="artist-image-container">\n        <div class="artist-image-placeholder">🎧</div>\n    </div>\n    <div class="artist-name">снялцепи</div>\n</a>
-        </div>
-
-        <div id="emptyState">
-            <span style="font-size: 48px; margin-bottom: 16px;">🔍</span>
-            <p id="emptyText">По вашему запросу ничего не найдено</p>
-        </div>
+<body>
+    <div class="header">
+        <p class="description" data-lang="en" style="display: none;">
+            Music is now closer! Follow our updates on <a href="https://t.me/musicbox_rus" target="_blank">t.me/musicbox_rus</a>.<br>
+            Looking for a good marketer, send me your proposals. <a href="https://t.me/mostbettie" target="_blank">t.me/mostbettie</a>.
+        </p>
+        <p class="description" data-lang="ru">
+            Музыка стала ещё ближе! Следи за нашими обновлениями на <a href="https://t.me/musicbox_rus" target="_blank">t.me/musicbox_rus</a>.<br>
+            Ищу хорошего маркетолога, по предложениям пишите <a href="https://t.me/mostbettie" target="_blank">t.me/mostbettie</a>.
+        </p>
+        <p class="description" data-lang="ua" style="display: none;">
+            Музика стала ближче! Слідкуйте за нашими оновленнями на <a href="https://t.me/musicbox_rus" target="_blank">t.me/musicbox_rus</a>.<br>
+           Шукаю хорошого маркетолога, з пропозиціями пишіть <a href="https://t.me/mostbettie" target="_blank">t.me/mostbettie</a>.
+        </p>
     </div>
-
+    
+    <div class="language-switcher">
+        <button onclick="setLanguage('en')">EN</button>
+        <button onclick="setLanguage('ru')">RU</button>
+        <button onclick="setLanguage('ua')">UA</button>
+    </div>
+    
+    <div class="search-bar">
+        <input type="text" id="searchInput" placeholder="Поиск по артистам..." onkeyup="filterArtists()">
+    </div>
+    
+    <div class="artist-list" id="artistList">
+        <div class="artist" data-name="044 Rose" data-alt-name="044 rose"><a href="https://t.me/c/1515287554/1" target="_blank">044 Rose</a></div>
+        <div class="artist" data-name="10age" data-alt-name="10age"><a href="https://t.me/c/1725449408/1" target="_blank">10age</a></div>
+        <div class="artist" data-name="163ONMYNECK" data-alt-name="163onmyneck"><a href="https://t.me/c/1672379897/1" target="_blank">163ONMYNECK</a></div>
+        <div class="artist" data-name="21 Savage" data-alt-name="21 savage"><a href="https://t.me/c/2533004413/1" target="_blank">21 Savage</a></div>
+        <div class="artist" data-name="2Pac" data-alt-name="2pac"><a href="https://t.me/c/2512025724/1" target="_blank">2Pac</a></div>
+        <div class="artist" data-name="2hollis" data-alt-name="2hollis"><a href="https://t.me/c/3114960526/1" target="_blank">2hollis</a></div>
+        <div class="artist" data-name="4n Way" data-alt-name="4n way"><a href="https://t.me/c/1786437504/1" target="_blank">4n Way</a></div>
+        <div class="artist" data-name="50 Cent" data-alt-name="50 cent"><a href="https://t.me/c/2505170866/1" target="_blank">50 Cent</a></div>
+        <div class="artist" data-name="6ix9ine" data-alt-name="6ix9ine"><a href="https://t.me/c/1127381104/1" target="_blank">6ix9ine</a></div>
+        <div class="artist" data-name="9mice" data-alt-name="9mice"><a href="https://t.me/c/2690291041/1" target="_blank">9mice</a></div>
+        <div class="artist" data-name="AC/DC" data-alt-name="ac/dc"><a href="https://t.me/c/2558275883/1" target="_blank">AC/DC</a></div>
+        <div class="artist" data-name="ALBLACK 52" data-alt-name="alblack 52"><a href="https://t.me/c/3015289788/1" target="_blank">ALBLACK 52</a></div>
+        <div class="artist" data-name="ASAP Ferg" data-alt-name="asap ferg"><a href="https://t.me/c/3174132628/1" target="_blank">ASAP Ferg</a></div>
+        <div class="artist" data-name="ASAP Mob" data-alt-name="asap mob"><a href="https://t.me/c/3100544099/1" target="_blank">ASAP Mob</a></div>
+        <div class="artist" data-name="ASAP Rocky" data-alt-name="asap rocky"><a href="https://t.me/c/1279830188/1" target="_blank">ASAP Rocky</a></div>
+        <div class="artist" data-name="ATL" data-alt-name="atl"><a href="https://t.me/c/3073845499/1" target="_blank">ATL</a></div>
+        <div class="artist" data-name="Aarne" data-alt-name="aarne"><a href="https://t.me/c/2543812363/1" target="_blank">Aarne</a></div>
+        <div class="artist" data-name="Accha" data-alt-name="accha"><a href="https://t.me/c/2936931741/1" target="_blank">Accha</a></div>
+        <div class="artist" data-name="Akon" data-alt-name="akon"><a href="https://t.me/c/3036147242/1" target="_blank">Akon</a></div>
+        <div class="artist" data-name="Amy winehouse" data-alt-name="amy winehouse"><a href="https://t.me/c/2654398311/1" target="_blank">Amy winehouse</a></div>
+        <div class="artist" data-name="Anet Sai" data-alt-name="anet sai"><a href="https://t.me/c/3065203377/1" target="_blank">Anet Sai</a></div>
+        <div class="artist" data-name="Arctic Monkeys" data-alt-name="arctic monkeys"><a href="https://t.me/c/2940550055/1" target="_blank">Arctic Monkeys</a></div>
+        <div class="artist" data-name="Ariana Grande" data-alt-name="ariana grande"><a href="https://t.me/c/2934261113/1" target="_blank">Ariana Grande</a></div>
+        <div class="artist" data-name="Avril Lavigne" data-alt-name="avril lavigne"><a href="https://t.me/c/2646976562/1" target="_blank">Avril Lavigne</a></div>
+        <div class="artist" data-name="BATO" data-alt-name="bato"><a href="https://t.me/c/3041034672/1" target="_blank">BATO</a></div>
+        <div class="artist" data-name="BIGBANG" data-alt-name="bigbang"><a href="https://t.me/c/3076520266/1" target="_blank">BIGBANG</a></div>
+        <div class="artist" data-name="BLACKPINK" data-alt-name="blackpink"><a href="https://t.me/c/2960568345/1" target="_blank">BLACKPINK</a></div>
+        <div class="artist" data-name="BONES" data-alt-name="bones"><a href="https://t.me/c/1797886950/1" target="_blank">BONES</a></div>
+        <div class="artist" data-name="BTS" data-alt-name="bts"><a href="https://t.me/c/3195646994/1" target="_blank">BTS</a></div>
+        <div class="artist" data-name="BUSHIDO ZHO" data-alt-name="bushido zho"><a href="https://t.me/c/1732929236/1" target="_blank">BUSHIDO ZHO</a></div>
+        <div class="artist" data-name="Baby Melo" data-alt-name="baby melo"><a href="https://t.me/c/2949040805/1" target="_blank">Baby Melo</a></div>
+        <div class="artist" data-name="Basta" data-alt-name="basta"><a href="https://t.me/c/1/1" target="_blank">Basta</a></div>
+        <div class="artist" data-name="Beyonce" data-alt-name="beyonce"><a href="https://t.me/c/2664783415/1" target="_blank">Beyonce</a></div>
+        <div class="artist" data-name="Bhad Bhabie" data-alt-name="bhad bhabie"><a href="https://t.me/c/1442060673/1" target="_blank">Bhad Bhabie</a></div>
+        <div class="artist" data-name="Big Baby Tape" data-alt-name="big baby tape"><a href="https://t.me/c/1531478250/1" target="_blank">Big Baby Tape</a></div>
+        <div class="artist" data-name="Billie Eilish" data-alt-name="billie eilish"><a href="https://t.me/c/1846565601/1" target="_blank">Billie Eilish</a></div>
+        <div class="artist" data-name="Black Eyed Peas" data-alt-name="black eyed peas"><a href="https://t.me/c/2973268022/1" target="_blank">Black Eyed Peas</a></div>
+        <div class="artist" data-name="Bladee" data-alt-name="bladee"><a href="https://t.me/c/3157944406/1" target="_blank">Bladee</a></div>
+        <div class="artist" data-name="Boulevard Depo" data-alt-name="boulevard depo"><a href="https://t.me/c/1551301622/1" target="_blank">Boulevard Depo</a></div>
+        <div class="artist" data-name="Bruno Mars" data-alt-name="bruno mars"><a href="https://t.me/c/2997772075/1" target="_blank">Bruno Mars</a></div>
+        <div class="artist" data-name="Busta Rhymes" data-alt-name="busta rhymes"><a href="https://t.me/c/2959126260/1" target="_blank">Busta Rhymes</a></div>
+        <div class="artist" data-name="CAKEBOY" data-alt-name="cakeboy"><a href="https://t.me/c/1596526062/1" target="_blank">CAKEBOY</a></div>
+        <div class="artist" data-name="CAPTOWN" data-alt-name="captown"><a href="https://t.me/c/1836379656/1" target="_blank">CAPTOWN</a></div>
+        <div class="artist" data-name="Charli xcx" data-alt-name="charli xcx"><a href="https://t.me/c/3184861989/1" target="_blank">Charli xcx</a></div>
+        <div class="artist" data-name="Chief Keef" data-alt-name="chief keef"><a href="https://t.me/c/2450918578/1" target="_blank">Chief Keef</a></div>
+        <div class="artist" data-name="Chris Browm" data-alt-name="chris browm"><a href="https://t.me/c/2655155091/1" target="_blank">Chris Browm</a></div>
+        <div class="artist" data-name="Cigarettes After Sex" data-alt-name="cigarettes after sex"><a href="https://t.me/c/2494275860/1" target="_blank">Cigarettes After Sex</a></div>
+        <div class="artist" data-name="City Morgue" data-alt-name="city morgue"><a href="https://t.me/c/1574327971/1" target="_blank">City Morgue</a></div>
+        <div class="artist" data-name="Cleffy" data-alt-name="cleffy"><a href="https://t.me/c/3028751318/1" target="_blank">Cleffy</a></div>
+        <div class="artist" data-name="Coldplay" data-alt-name="coldplay"><a href="https://t.me/c/2942204555/1" target="_blank">Coldplay</a></div>
+        <div class="artist" data-name="Cypis" data-alt-name="cypis"><a href="https://t.me/c/1663648836/1" target="_blank">Cypis</a></div>
+        <div class="artist" data-name="D.Masta" data-alt-name="d.masta"><a href="https://t.me/c/2990991974/1" target="_blank">D.Masta</a></div>
+        <div class="artist" data-name="DJ Asul" data-alt-name="dj asul"><a href="https://t.me/c/3124713154/1" target="_blank">DJ Asul</a></div>
+        <div class="artist" data-name="DK" data-alt-name="dk"><a href="https://t.me/c/3004882465/1" target="_blank">DK</a></div>
+        <div class="artist" data-name="DOROFEEVA" data-alt-name="dorofeeva"><a href="https://t.me/c/3167276862/1" target="_blank">DOROFEEVA</a></div>
+        <div class="artist" data-name="Deftones" data-alt-name="deftones"><a href="https://t.me/c/3005364182/1" target="_blank">Deftones</a></div>
+        <div class="artist" data-name="Denzel Curry" data-alt-name="denzel curry"><a href="https://t.me/c/1724626824/1" target="_blank">Denzel Curry</a></div>
+        <div class="artist" data-name="Destroy Lonely" data-alt-name="destroy lonely"><a href="https://t.me/c/2806168011/1" target="_blank">Destroy Lonely</a></div>
+        <div class="artist" data-name="Diamond" data-alt-name="diamond"><a href="https://t.me/c/2991130442/1" target="_blank">Diamond</a></div>
+        <div class="artist" data-name="Doja Cat" data-alt-name="doja cat"><a href="https://t.me/c/3174854634/1" target="_blank">Doja Cat</a></div>
+        <div class="artist" data-name="Don Toliver" data-alt-name="don toliver"><a href="https://t.me/c/3164231634/1" target="_blank">Don Toliver</a></div>
+        <div class="artist" data-name="Drake" data-alt-name="drake"><a href="https://t.me/c/1784245787/1" target="_blank">Drake</a></div>
+        <div class="artist" data-name="Dua Lipa" data-alt-name="dua lipa"><a href="https://t.me/c/2938728117/1" target="_blank">Dua Lipa</a></div>
+        <div class="artist" data-name="Duft Punk" data-alt-name="duft punk"><a href="https://t.me/c/3030236200/1" target="_blank">Duft Punk</a></div>
+        <div class="artist" data-name="Dutch Melrose" data-alt-name="dutch melrose"><a href="https://t.me/c/3141769573/1" target="_blank">Dutch Melrose</a></div>
+        <div class="artist" data-name="Ed Sheeran" data-alt-name="ed sheeran"><a href="https://t.me/c/2594100013/1" target="_blank">Ed Sheeran</a></div>
+        <div class="artist" data-name="Effie" data-alt-name="effie"><a href="https://t.me/c/3060742314/1" target="_blank">Effie</a></div>
+        <div class="artist" data-name="Electroforez" data-alt-name="electroforez"><a href="https://t.me/c/2971391187/1" target="_blank">Electroforez</a></div>
+        <div class="artist" data-name="Eminem" data-alt-name="eminem"><a href="https://t.me/c/2298964257/1" target="_blank">Eminem</a></div>
+        <div class="artist" data-name="Eyedress" data-alt-name="eyedress"><a href="https://t.me/c/2912004220/1" target="_blank">Eyedress</a></div>
+        <div class="artist" data-name="Eгор Крид" data-alt-name="eгор крид"><a href="https://t.me/c/1110422244/1" target="_blank">Eгор Крид</a></div>
+        <div class="artist" data-name="FENDIGLOCK" data-alt-name="fendiglock"><a href="https://t.me/c/1875466223/1" target="_blank">FENDIGLOCK</a></div>
+        <div class="artist" data-name="FRESHTIMMER" data-alt-name="freshtimmer"><a href="https://t.me/c/1798835173/1" target="_blank">FRESHTIMMER</a></div>
+        <div class="artist" data-name="Face" data-alt-name="face"><a href="https://t.me/c/1112676414/1" target="_blank">Face</a></div>
+        <div class="artist" data-name="Famous Dexter" data-alt-name="famous dexter"><a href="https://t.me/c/1202628079/1" target="_blank">Famous Dexter</a></div>
+        <div class="artist" data-name="Freddie Gibbs" data-alt-name="freddie gibbs"><a href="https://t.me/c/3112164747/1" target="_blank">Freddie Gibbs</a></div>
+        <div class="artist" data-name="Friendly Thug 52 NGG" data-alt-name="friendly thug 52 ngg"><a href="https://t.me/c/3109627207/1" target="_blank">Friendly Thug 52 NGG</a></div>
+        <div class="artist" data-name="Future" data-alt-name="future"><a href="https://t.me/c/2620094289/1" target="_blank">Future</a></div>
+        <div class="artist" data-name="GONE.Fludd" data-alt-name="gone.fludd"><a href="https://t.me/c/1290050665/1" target="_blank">GONE.Fludd</a></div>
+        <div class="artist" data-name="GSPD" data-alt-name="gspd"><a href="https://t.me/c/2931239249/1" target="_blank">GSPD</a></div>
+        <div class="artist" data-name="Ghostemane" data-alt-name="ghostemane"><a href="https://t.me/c/2603433371/1" target="_blank">Ghostemane</a></div>
+        <div class="artist" data-name="GloRilla" data-alt-name="glorilla"><a href="https://t.me/c/3119876274/1" target="_blank">GloRilla</a></div>
+        <div class="artist" data-name="Grimes" data-alt-name="grimes"><a href="https://t.me/c/2695708391/1" target="_blank">Grimes</a></div>
+        <div class="artist" data-name="Guf" data-alt-name="guf"><a href="https://t.me/c/1833128359/1" target="_blank">Guf</a></div>
+        <div class="artist" data-name="Gunna" data-alt-name="gunna"><a href="https://t.me/c/3127832755/1" target="_blank">Gunna</a></div>
+        <div class="artist" data-name="Guns N Roses" data-alt-name="guns n roses"><a href="https://t.me/c/3169940754/1" target="_blank">Guns N Roses</a></div>
+        <div class="artist" data-name="INSTASAMKA" data-alt-name="instasamka"><a href="https://t.me/c/1768915547/1" target="_blank">INSTASAMKA</a></div>
+        <div class="artist" data-name="Icegergert" data-alt-name="icegergert"><a href="https://t.me/c/3139971521/1" target="_blank">Icegergert</a></div>
+        <div class="artist" data-name="J.Cole" data-alt-name="j.cole"><a href="https://t.me/c/3122229552/1" target="_blank">J.Cole</a></div>
+        <div class="artist" data-name="JAY-Z" data-alt-name="jay-z"><a href="https://t.me/c/3052690499/1" target="_blank">JAY-Z</a></div>
+        <div class="artist" data-name="JEEMBO" data-alt-name="jeembo"><a href="https://t.me/c/2999357740/1" target="_blank">JEEMBO</a></div>
+        <div class="artist" data-name="JENNIE" data-alt-name="jennie"><a href="https://t.me/c/3148301850/1" target="_blank">JENNIE</a></div>
+        <div class="artist" data-name="JISOO" data-alt-name="jisoo"><a href="https://t.me/c/3001058770/1" target="_blank">JISOO</a></div>
+        <div class="artist" data-name="Jade LeMac" data-alt-name="jade lemac"><a href="https://t.me/c/2905578794/1" target="_blank">Jade LeMac</a></div>
+        <div class="artist" data-name="Jah Khalib" data-alt-name="jah khalib"><a href="https://t.me/c/1143810885/1" target="_blank">Jah Khalib</a></div>
+        <div class="artist" data-name="Jamik" data-alt-name="jamik"><a href="https://t.me/c/1520765697/1" target="_blank">Jamik</a></div>
+        <div class="artist" data-name="Jay Roxxx" data-alt-name="jay roxxx"><a href="https://t.me/c/3179799857/1" target="_blank">Jay Roxxx</a></div>
+        <div class="artist" data-name="Jennifer Lopez" data-alt-name="jennifer lopez"><a href="https://t.me/c/2774539346/1" target="_blank">Jennifer Lopez</a></div>
+        <div class="artist" data-name="Johnny Cash" data-alt-name="johnny cash"><a href="https://t.me/c/3026692430/1" target="_blank">Johnny Cash</a></div>
+        <div class="artist" data-name="Joji" data-alt-name="joji"><a href="https://t.me/c/2761796047/1" target="_blank">Joji</a></div>
+        <div class="artist" data-name="Joyner Lucas" data-alt-name="joyner lucas"><a href="https://t.me/c/3108754954/1" target="_blank">Joyner Lucas</a></div>
+        <div class="artist" data-name="Juice WRLD" data-alt-name="juice wrld"><a href="https://t.me/c/1590407452/1" target="_blank">Juice WRLD</a></div>
+        <div class="artist" data-name="Justin Bieber" data-alt-name="justin bieber"><a href="https://t.me/c/1602349909/1" target="_blank">Justin Bieber</a></div>
+        <div class="artist" data-name="Justin Timberlake" data-alt-name="justin timberlake"><a href="https://t.me/c/2929129087/1" target="_blank">Justin Timberlake</a></div>
+        <div class="artist" data-name="KA$HDAMI" data-alt-name="ka$hdami"><a href="https://t.me/c/1849878196/1" target="_blank">KA$HDAMI</a></div>
+        <div class="artist" data-name="KIRILIK" data-alt-name="kirilik"><a href="https://t.me/c/2964169758/1" target="_blank">KIRILIK</a></div>
+        <div class="artist" data-name="KRBK" data-alt-name="krbk"><a href="https://t.me/c/2596333811/1" target="_blank">KRBK</a></div>
+        <div class="artist" data-name="KSLV Noh" data-alt-name="kslv noh"><a href="https://t.me/c/3001302905/1" target="_blank">KSLV Noh</a></div>
+        <div class="artist" data-name="Kai Angel" data-alt-name="kai angel"><a href="https://t.me/c/3155697695/1" target="_blank">Kai Angel</a></div>
+        <div class="artist" data-name="Kanye West" data-alt-name="kanye west"><a href="https://t.me/c/2925812937/1" target="_blank">Kanye West</a></div>
+        <div class="artist" data-name="Kay Flock" data-alt-name="kay flock"><a href="https://t.me/c/2650118101/1" target="_blank">Kay Flock</a></div>
+        <div class="artist" data-name="Kee Nola" data-alt-name="kee nola"><a href="https://t.me/c/3174193118/1" target="_blank">Kee Nola</a></div>
+        <div class="artist" data-name="Kelly Rowland" data-alt-name="kelly rowland"><a href="https://t.me/c/2764986150/1" target="_blank">Kelly Rowland</a></div>
+        <div class="artist" data-name="Ken Carson" data-alt-name="ken carson"><a href="https://t.me/c/2505455068/1" target="_blank">Ken Carson</a></div>
+        <div class="artist" data-name="Key Glock" data-alt-name="key glock"><a href="https://t.me/c/2679460763/1" target="_blank">Key Glock</a></div>
+        <div class="artist" data-name="King Von" data-alt-name="king von"><a href="https://t.me/c/3088407832/1" target="_blank">King Von</a></div>
+        <div class="artist" data-name="Kizaru" data-alt-name="kizaru"><a href="https://t.me/c/1201646104/1" target="_blank">Kizaru</a></div>
+        <div class="artist" data-name="Kodak Black" data-alt-name="kodak black"><a href="https://t.me/c/2862538692/1" target="_blank">Kodak Black</a></div>
+        <div class="artist" data-name="LAZER DIM 700" data-alt-name="lazer dim 700"><a href="https://t.me/c/3198859279/1" target="_blank">LAZER DIM 700</a></div>
+        <div class="artist" data-name="LIL KRYSTALLL" data-alt-name="lil krystalll"><a href="https://t.me/c/1780739932/1" target="_blank">LIL KRYSTALLL</a></div>
+        <div class="artist" data-name="LILDRUGHILL" data-alt-name="lildrughill"><a href="https://t.me/c/1892148611/1" target="_blank">LILDRUGHILL</a></div>
+        <div class="artist" data-name="LIZER" data-alt-name="lizer"><a href="https://t.me/c/1702591993/1" target="_blank">LIZER</a></div>
+        <div class="artist" data-name="LOVV66" data-alt-name="lovv66"><a href="https://t.me/c/1501042656/1" target="_blank">LOVV66</a></div>
+        <div class="artist" data-name="Lady Gaga" data-alt-name="lady gaga"><a href="https://t.me/c/2722458750/1" target="_blank">Lady Gaga</a></div>
+        <div class="artist" data-name="Lana Del Rey" data-alt-name="lana del rey"><a href="https://t.me/c/2847078184/1" target="_blank">Lana Del Rey</a></div>
+        <div class="artist" data-name="Lil Baby" data-alt-name="lil baby"><a href="https://t.me/c/2589388626/1" target="_blank">Lil Baby</a></div>
+        <div class="artist" data-name="Lil Darkie" data-alt-name="lil darkie"><a href="https://t.me/c/3144633471/1" target="_blank">Lil Darkie</a></div>
+        <div class="artist" data-name="Lil Jon" data-alt-name="lil jon"><a href="https://t.me/c/1822648274/1" target="_blank">Lil Jon</a></div>
+        <div class="artist" data-name="Lil Mabu" data-alt-name="lil mabu"><a href="https://t.me/c/3060051249/1" target="_blank">Lil Mabu</a></div>
+        <div class="artist" data-name="Lil Morty" data-alt-name="lil morty"><a href="https://t.me/c/1685610287/1" target="_blank">Lil Morty</a></div>
+        <div class="artist" data-name="Lil Peep" data-alt-name="lil peep"><a href="https://t.me/c/1181112670/1" target="_blank">Lil Peep</a></div>
+        <div class="artist" data-name="Lil Pump" data-alt-name="lil pump"><a href="https://t.me/c/1130857236/1" target="_blank">Lil Pump</a></div>
+        <div class="artist" data-name="Lil Tecca" data-alt-name="lil tecca"><a href="https://t.me/c/3075725139/1" target="_blank">Lil Tecca</a></div>
+        <div class="artist" data-name="Lil Uzi Vert" data-alt-name="lil uzi vert"><a href="https://t.me/c/2500497631/1" target="_blank">Lil Uzi Vert</a></div>
+        <div class="artist" data-name="Lil Wayne" data-alt-name="lil wayne"><a href="https://t.me/c/2539387708/1" target="_blank">Lil Wayne</a></div>
+        <div class="artist" data-name="Lil X21" data-alt-name="lil x21"><a href="https://t.me/c/2776200639/1" target="_blank">Lil X21</a></div>
+        <div class="artist" data-name="Limp Bizkit" data-alt-name="limp bizkit"><a href="https://t.me/c/3124695409/1" target="_blank">Limp Bizkit</a></div>
+        <div class="artist" data-name="Linkin Park" data-alt-name="linkin park"><a href="https://t.me/c/3139426779/1" target="_blank">Linkin Park</a></div>
+        <div class="artist" data-name="Lithe" data-alt-name="lithe"><a href="https://t.me/c/2964386316/1" target="_blank">Lithe</a></div>
+        <div class="artist" data-name="Luis Fonsi" data-alt-name="luis fonsi"><a href="https://t.me/c/3007760801/1" target="_blank">Luis Fonsi</a></div>
+        <div class="artist" data-name="MAYOT" data-alt-name="mayot"><a href="https://t.me/c/1509531629/1" target="_blank">MAYOT</a></div>
+        <div class="artist" data-name="MEGAHITS" data-alt-name="megahits"><a href="https://t.me/musicbox_megahit" target="_blank">MEGAHITS</a></div>
+        <div class="artist" data-name="MORGENSHTERN" data-alt-name="morgenshtern"><a href="https://t.me/c/1456661121/1" target="_blank">MORGENSHTERN</a></div>
+        <div class="artist" data-name="MYTH &amp; ROID" data-alt-name="myth &amp; roid"><a href="https://t.me/c/3091260665/1" target="_blank">MYTH &amp; ROID</a></div>
+        <div class="artist" data-name="Mac Miller" data-alt-name="mac miller"><a href="https://t.me/c/3147836574/1" target="_blank">Mac Miller</a></div>
+        <div class="artist" data-name="Mariah Carey" data-alt-name="mariah carey"><a href="https://t.me/c/2962403586/1" target="_blank">Mariah Carey</a></div>
+        <div class="artist" data-name="Markul" data-alt-name="markul"><a href="https://t.me/c/2662653245/1" target="_blank">Markul</a></div>
+        <div class="artist" data-name="Maroon 5" data-alt-name="maroon 5"><a href="https://t.me/c/2980959445/1" target="_blank">Maroon 5</a></div>
+        <div class="artist" data-name="Masked Wolf" data-alt-name="masked wolf"><a href="https://t.me/c/2996116429/1" target="_blank">Masked Wolf</a></div>
+        <div class="artist" data-name="Mavado" data-alt-name="mavado"><a href="https://t.me/c/2908117020/1" target="_blank">Mavado</a></div>
+        <div class="artist" data-name="May Wave$" data-alt-name="may wave$"><a href="https://t.me/c/1686898448/1" target="_blank">May Wave$</a></div>
+        <div class="artist" data-name="Melody Thorton" data-alt-name="melody thorton"><a href="https://t.me/c/2608490798/1" target="_blank">Melody Thorton</a></div>
+        <div class="artist" data-name="Metallica" data-alt-name="metallica"><a href="https://t.me/c/2991312909/1" target="_blank">Metallica</a></div>
+        <div class="artist" data-name="Migos" data-alt-name="migos"><a href="https://t.me/c/2924320655/1" target="_blank">Migos</a></div>
+        <div class="artist" data-name="Miley Cyrus" data-alt-name="miley cyrus"><a href="https://t.me/c/2970780546/1" target="_blank">Miley Cyrus</a></div>
+        <div class="artist" data-name="MiyaGi" data-alt-name="miyagi"><a href="https://t.me/c/1669689858/1" target="_blank">MiyaGi</a></div>
+        <div class="artist" data-name="Monatik" data-alt-name="monatik"><a href="https://t.me/c/1089576623/1" target="_blank">Monatik</a></div>
+        <div class="artist" data-name="Mosquit" data-alt-name="mosquit"><a href="https://t.me/c/1758312024/1" target="_blank">Mosquit</a></div>
+        <div class="artist" data-name="Noize MC" data-alt-name="noize mc"><a href="https://t.me/c/2940101247/1" target="_blank">Noize MC</a></div>
+        <div class="artist" data-name="OG BUDA" data-alt-name="og buda"><a href="https://t.me/c/1281072338/1" target="_blank">OG BUDA</a></div>
+        <div class="artist" data-name="OHGEESY" data-alt-name="ohgeesy"><a href="https://t.me/c/3030989366/1" target="_blank">OHGEESY</a></div>
+        <div class="artist" data-name="OM." data-alt-name="om."><a href="https://t.me/c/1827083619/1" target="_blank">OM.</a></div>
+        <div class="artist" data-name="Obladaet" data-alt-name="obladaet"><a href="https://t.me/c/1291262698/1" target="_blank">Obladaet</a></div>
+        <div class="artist" data-name="Oxxymiron" data-alt-name="oxxymiron"><a href="https://t.me/c/1550821944/1" target="_blank">Oxxymiron</a></div>
+        <div class="artist" data-name="Pa Salieu" data-alt-name="pa salieu"><a href="https://t.me/c/3197858707/1" target="_blank">Pa Salieu</a></div>
+        <div class="artist" data-name="Pepel Nahudi" data-alt-name="pepel nahudi"><a href="https://t.me/c/2560587323/1" target="_blank">Pepel Nahudi</a></div>
+        <div class="artist" data-name="Pharaoh" data-alt-name="pharaoh"><a href="https://t.me/c/1072243785/1" target="_blank">Pharaoh</a></div>
+        <div class="artist" data-name="Pitbull" data-alt-name="pitbull"><a href="https://t.me/c/3158667705/1" target="_blank">Pitbull</a></div>
+        <div class="artist" data-name="Playboi Carti" data-alt-name="playboi carti"><a href="https://t.me/c/3050179754/1" target="_blank">Playboi Carti</a></div>
+        <div class="artist" data-name="Pop smoke" data-alt-name="pop smoke"><a href="https://t.me/c/3162494371/1" target="_blank">Pop smoke</a></div>
+        <div class="artist" data-name="Post Malone" data-alt-name="post malone"><a href="https://t.me/c/2656099309/1" target="_blank">Post Malone</a></div>
+        <div class="artist" data-name="Public Enemy" data-alt-name="public enemy"><a href="https://t.me/c/3067764909/1" target="_blank">Public Enemy</a></div>
+        <div class="artist" data-name="Pusha T" data-alt-name="pusha t"><a href="https://t.me/c/3023644192/1" target="_blank">Pusha T</a></div>
+        <div class="artist" data-name="RAUL" data-alt-name="raul"><a href="https://t.me/c/1630968576/1" target="_blank">RAUL</a></div>
+        <div class="artist" data-name="REDZED" data-alt-name="redzed"><a href="https://t.me/c/1897647141/1" target="_blank">REDZED</a></div>
+        <div class="artist" data-name="ROCKET" data-alt-name="rocket"><a href="https://t.me/c/1525462632/1" target="_blank">ROCKET</a></div>
+        <div class="artist" data-name="Rihanna" data-alt-name="rihanna"><a href="https://t.me/c/2625209428/1" target="_blank">Rihanna</a></div>
+        <div class="artist" data-name="Rob Zombie" data-alt-name="rob zombie"><a href="https://t.me/c/3038110490/1" target="_blank">Rob Zombie</a></div>
+        <div class="artist" data-name="Rod Wave" data-alt-name="rod wave"><a href="https://t.me/c/2592489933/1" target="_blank">Rod Wave</a></div>
+        <div class="artist" data-name="Rosalia" data-alt-name="rosalia"><a href="https://t.me/c/2603486402/1" target="_blank">Rosalia</a></div>
+        <div class="artist" data-name="SAINt JHN" data-alt-name="saint jhn"><a href="https://t.me/c/2717076101/1" target="_blank">SAINt JHN</a></div>
+        <div class="artist" data-name="SALUKI" data-alt-name="saluki"><a href="https://t.me/c/3020119951/1" target="_blank">SALUKI</a></div>
+        <div class="artist" data-name="SIL-A" data-alt-name="sil-a"><a href="https://t.me/c/3150408087/1" target="_blank">SIL-A</a></div>
+        <div class="artist" data-name="SLAVA MARLOW" data-alt-name="slava marlow"><a href="https://t.me/c/1358911045/1" target="_blank">SLAVA MARLOW</a></div>
+        <div class="artist" data-name="SODA LOVE" data-alt-name="soda love"><a href="https://t.me/c/1658159495/1" target="_blank">SODA LOVE</a></div>
+        <div class="artist" data-name="Santiz" data-alt-name="santiz"><a href="https://t.me/c/1926098487/1" target="_blank">Santiz</a></div>
+        <div class="artist" data-name="Scally Milano" data-alt-name="scally milano"><a href="https://t.me/c/1336172779/1" target="_blank">Scally Milano</a></div>
+        <div class="artist" data-name="Sean Paul" data-alt-name="sean paul"><a href="https://t.me/c/2916188331/1" target="_blank">Sean Paul</a></div>
+        <div class="artist" data-name="Selena Gomez" data-alt-name="selena gomez"><a href="https://t.me/c/3048321274/1" target="_blank">Selena Gomez</a></div>
+        <div class="artist" data-name="Shaggy" data-alt-name="shaggy"><a href="https://t.me/c/2982361131/1" target="_blank">Shaggy</a></div>
+        <div class="artist" data-name="Shakira" data-alt-name="shakira"><a href="https://t.me/c/1907247595/1" target="_blank">Shakira</a></div>
+        <div class="artist" data-name="Shallipopi" data-alt-name="shallipopi"><a href="https://t.me/c/3103926729/1" target="_blank">Shallipopi</a></div>
+        <div class="artist" data-name="Sharma Boy" data-alt-name="sharma boy"><a href="https://t.me/c/3183327669/1" target="_blank">Sharma Boy</a></div>
+        <div class="artist" data-name="Sheck Wes" data-alt-name="sheck wes"><a href="https://t.me/c/3177216482/1" target="_blank">Sheck Wes</a></div>
+        <div class="artist" data-name="Showbiz School" data-alt-name="showbiz school"><a href="https://t.me/c/1608386287/1" target="_blank">Showbiz School</a></div>
+        <div class="artist" data-name="Siavash Ghomayshi" data-alt-name="siavash ghomayshi"><a href="https://t.me/c/2994485685/1" target="_blank">Siavash Ghomayshi</a></div>
+        <div class="artist" data-name="Sirusho" data-alt-name="sirusho"><a href="https://t.me/c/2916533693/1" target="_blank">Sirusho</a></div>
+        <div class="artist" data-name="Slimus" data-alt-name="slimus"><a href="https://t.me/c/2736996881/1" target="_blank">Slimus</a></div>
+        <div class="artist" data-name="Snoop Dogg" data-alt-name="snoop dogg"><a href="https://t.me/c/1621959709/1" target="_blank">Snoop Dogg</a></div>
+        <div class="artist" data-name="Snow Strippers" data-alt-name="snow strippers"><a href="https://t.me/c/3156349931/1" target="_blank">Snow Strippers</a></div>
+        <div class="artist" data-name="Stray Kids" data-alt-name="stray kids"><a href="https://t.me/c/1831812426/1" target="_blank">Stray Kids</a></div>
+        <div class="artist" data-name="Suicide Boys" data-alt-name="suicide boys"><a href="https://t.me/c/1187860602/1" target="_blank">Suicide Boys</a></div>
+        <div class="artist" data-name="T-Fest" data-alt-name="t-fest"><a href="https://t.me/c/1143796711/1" target="_blank">T-Fest</a></div>
+        <div class="artist" data-name="TOMORROW X TOGETHER" data-alt-name="tomorrow x together"><a href="https://t.me/c/2831950788/1" target="_blank">TOMORROW X TOGETHER</a></div>
+        <div class="artist" data-name="TRALLFACE PHONK" data-alt-name="trallface phonk"><a href="https://t.me/c/3105021767/1" target="_blank">TRALLFACE PHONK</a></div>
+        <div class="artist" data-name="TVETH" data-alt-name="tveth"><a href="https://t.me/c/3150386811/1" target="_blank">TVETH</a></div>
+        <div class="artist" data-name="Taylor Swift" data-alt-name="taylor swift"><a href="https://t.me/c/3138170654/1" target="_blank">Taylor Swift</a></div>
+        <div class="artist" data-name="That&#x27;s Girl" data-alt-name="that&#x27;s girl"><a href="https://t.me/c/3187802484/1" target="_blank">That&#x27;s Girl</a></div>
+        <div class="artist" data-name="The Pretty Reckless" data-alt-name="the pretty reckless"><a href="https://t.me/c/2984653203/1" target="_blank">The Pretty Reckless</a></div>
+        <div class="artist" data-name="The Weekend" data-alt-name="the weekend"><a href="https://t.me/c/2605347775/1" target="_blank">The Weekend</a></div>
+        <div class="artist" data-name="Thekidszn" data-alt-name="thekidszn"><a href="https://t.me/c/3184937335/1" target="_blank">Thekidszn</a></div>
+        <div class="artist" data-name="Thomas Mraz" data-alt-name="thomas mraz"><a href="https://t.me/c/1135888665/1" target="_blank">Thomas Mraz</a></div>
+        <div class="artist" data-name="Thrill Pill" data-alt-name="thrill pill"><a href="https://t.me/c/1779770776/1" target="_blank">Thrill Pill</a></div>
+        <div class="artist" data-name="Timbaland" data-alt-name="timbaland"><a href="https://t.me/c/3085612061/1" target="_blank">Timbaland</a></div>
+        <div class="artist" data-name="Tommy Lee Sparta" data-alt-name="tommy lee sparta"><a href="https://t.me/c/2754921177/1" target="_blank">Tommy Lee Sparta</a></div>
+        <div class="artist" data-name="Tory Lanez" data-alt-name="tory lanez"><a href="https://t.me/c/3163217885/1" target="_blank">Tory Lanez</a></div>
+        <div class="artist" data-name="ToxiS" data-alt-name="toxis"><a href="https://t.me/c/3165776512/1" target="_blank">ToxiS</a></div>
+        <div class="artist" data-name="Travis Scott" data-alt-name="travis scott"><a href="https://t.me/c/2511902724/1" target="_blank">Travis Scott</a></div>
+        <div class="artist" data-name="Trippie Redd" data-alt-name="trippie redd"><a href="https://t.me/c/2681274476/1" target="_blank">Trippie Redd</a></div>
+        <div class="artist" data-name="Tyga" data-alt-name="tyga"><a href="https://t.me/c/2721788784/1" target="_blank">Tyga</a></div>
+        <div class="artist" data-name="Tyler, The Creator" data-alt-name="tyler, the creator"><a href="https://t.me/c/2941821539/1" target="_blank">Tyler, The Creator</a></div>
+        <div class="artist" data-name="Unaverage Gang" data-alt-name="unaverage gang"><a href="https://t.me/c/1656619311/1" target="_blank">Unaverage Gang</a></div>
+        <div class="artist" data-name="Underaiki" data-alt-name="underaiki"><a href="https://t.me/c/3015453479/1" target="_blank">Underaiki</a></div>
+        <div class="artist" data-name="VUDOO" data-alt-name="vudoo"><a href="https://t.me/c/2935444176/1" target="_blank">VUDOO</a></div>
+        <div class="artist" data-name="VXSV Prince" data-alt-name="vxsv prince"><a href="https://t.me/VSXV_PRINCE_musicbox" target="_blank">VXSV Prince</a></div>
+        <div class="artist" data-name="Vallenatos Rafael Santo" data-alt-name="vallenatos rafael santo"><a href="https://t.me/c/3066894249/1" target="_blank">Vallenatos Rafael Santo</a></div>
+        <div class="artist" data-name="Vsx Prince" data-alt-name="vsx prince"><a href="https://t.me/c/2780894233/1" target="_blank">Vsx Prince</a></div>
+        <div class="artist" data-name="Waka Focka Flame" data-alt-name="waka focka flame"><a href="https://t.me/c/3184211102/1" target="_blank">Waka Focka Flame</a></div>
+        <div class="artist" data-name="XCho" data-alt-name="xcho"><a href="https://t.me/c/2654207592/1" target="_blank">XCho</a></div>
+        <div class="artist" data-name="XXXTentacion" data-alt-name="xxxtentacion"><a href="https://t.me/c/1186294203/1" target="_blank">XXXTentacion</a></div>
+        <div class="artist" data-name="YBN Nahmir" data-alt-name="ybn nahmir"><a href="https://t.me/c/2562077253/1" target="_blank">YBN Nahmir</a></div>
+        <div class="artist" data-name="YNW Melly" data-alt-name="ynw melly"><a href="https://t.me/c/3071518649/1" target="_blank">YNW Melly</a></div>
+        <div class="artist" data-name="YUNG TRAPPA" data-alt-name="yung trappa"><a href="https://t.me/c/1212223088/1" target="_blank">YUNG TRAPPA</a></div>
+        <div class="artist" data-name="Yanix" data-alt-name="yanix"><a href="https://t.me/c/1755349259/1" target="_blank">Yanix</a></div>
+        <div class="artist" data-name="Yeat" data-alt-name="yeat"><a href="https://t.me/c/2524224416/1" target="_blank">Yeat</a></div>
+        <div class="artist" data-name="Young Mix" data-alt-name="young mix"><a href="https://t.me/c/2972769072/1" target="_blank">Young Mix</a></div>
+        <div class="artist" data-name="Yung Hurn" data-alt-name="yung hurn"><a href="https://t.me/c/1880532008/1" target="_blank">Yung Hurn</a></div>
+        <div class="artist" data-name="Yung Thug" data-alt-name="yung thug"><a href="https://t.me/c/1887977238/1" target="_blank">Yung Thug</a></div>
+        <div class="artist" data-name="Zillakami" data-alt-name="zillakami"><a href="https://t.me/c/3152755682/1" target="_blank">Zillakami</a></div>
+        <div class="artist" data-name="ak47" data-alt-name="ak47"><a href="https://t.me/c/2563099021/1" target="_blank">ak47</a></div>
+        <div class="artist" data-name="gorod 312" data-alt-name="gorod 312"><a href="https://t.me/c/2584758913/1" target="_blank">gorod 312</a></div>
+        <div class="artist" data-name="ilyTOMMY" data-alt-name="ilytommy"><a href="https://t.me/c/3061725039/1" target="_blank">ilyTOMMY</a></div>
+        <div class="artist" data-name="kendrick lamar" data-alt-name="kendrick lamar"><a href="https://t.me/c/2512299764/1" target="_blank">kendrick lamar</a></div>
+        <div class="artist" data-name="kissesfromeldar" data-alt-name="kissesfromeldar"><a href="https://t.me/c/2840872720/1" target="_blank">kissesfromeldar</a></div>
+        <div class="artist" data-name="macan" data-alt-name="macan"><a href="https://t.me/c/1430475904/1" target="_blank">macan</a></div>
+        <div class="artist" data-name="nkeeei" data-alt-name="nkeeei"><a href="https://t.me/c/1545159472/1" target="_blank">nkeeei</a></div>
+        <div class="artist" data-name="platina" data-alt-name="platina"><a href="https://t.me/c/2553382160/1" target="_blank">platina</a></div>
+        <div class="artist" data-name="shadowraze" data-alt-name="shadowraze"><a href="https://t.me/c/1830000670/1" target="_blank">shadowraze</a></div>
+        <div class="artist" data-name="sleepyflock" data-alt-name="sleepyflock"><a href="https://t.me/c/2501224334/1" target="_blank">sleepyflock</a></div>
+        <div class="artist" data-name="smokepurpp" data-alt-name="smokepurpp"><a href="https://t.me/c/2947849540/1" target="_blank">smokepurpp</a></div>
+        <div class="artist" data-name="sombr" data-alt-name="sombr"><a href="https://t.me/c/3081129284/1" target="_blank">sombr</a></div>
+        <div class="artist" data-name="suei" data-alt-name="suei"><a href="https://t.me/c/2904627604/1" target="_blank">suei</a></div>
+        <div class="artist" data-name="t.A.T.u" data-alt-name="t.a.t.u"><a href="https://t.me/c/2914047560/1" target="_blank">t.A.T.u</a></div>
+        <div class="artist" data-name="takeoff" data-alt-name="takeoff"><a href="https://t.me/c/1899224829/1" target="_blank">takeoff</a></div>
+        <div class="artist" data-name="uglysephan" data-alt-name="uglysephan"><a href="https://t.me/c/1887122502/1" target="_blank">uglysephan</a></div>
+        <div class="artist" data-name="xtsy" data-alt-name="xtsy"><a href="https://t.me/c/3111904969/1" target="_blank">xtsy</a></div>
+        <div class="artist" data-name="zemfira" data-alt-name="zemfira"><a href="https://t.me/c/2560779362/1" target="_blank">zemfira</a></div>
+        <div class="artist" data-name="zxcursed" data-alt-name="zxcursed"><a href="https://t.me/c/3194104389/1" target="_blank">zxcursed</a></div>
+        <div class="artist" data-name="Автостопом по фазе сна" data-alt-name="автостопом по фазе сна"><a href="https://t.me/c/3126061041/1" target="_blank">Автостопом по фазе сна</a></div>
+        <div class="artist" data-name="Алла Пугачёва" data-alt-name="алла пугачёва"><a href="https://t.me/c/3011221004/1" target="_blank">Алла Пугачёва</a></div>
+        <div class="artist" data-name="Баста" data-alt-name="баста"><a href="https://t.me/basta_musicbox" target="_blank">Баста</a></div>
+        <div class="artist" data-name="Витя АК-47" data-alt-name="витя ак-47"><a href="https://t.me/c/2548448332/1" target="_blank">Витя АК-47</a></div>
+        <div class="artist" data-name="Гио пика" data-alt-name="гио пика"><a href="https://t.me/c/3060365513/1" target="_blank">Гио пика</a></div>
+        <div class="artist" data-name="Грибы" data-alt-name="грибы"><a href="https://t.me/c/3121848750/1" target="_blank">Грибы</a></div>
+        <div class="artist" data-name="Дельфин" data-alt-name="дельфин"><a href="https://t.me/c/2649993144/1" target="_blank">Дельфин</a></div>
+        <div class="artist" data-name="Дети Rave" data-alt-name="дети rave"><a href="https://t.me/c/3025696529/1" target="_blank">Дети Rave</a></div>
+        <div class="artist" data-name="Жак Энтони" data-alt-name="жак энтони"><a href="https://t.me/c/1892942552/1" target="_blank">Жак Энтони</a></div>
+        <div class="artist" data-name="Ирина Аллегрова" data-alt-name="ирина аллегрова"><a href="https://t.me/c/2918253626/1" target="_blank">Ирина Аллегрова</a></div>
+        <div class="artist" data-name="Каспер" data-alt-name="каспер"><a href="https://t.me/c/3112425189/1" target="_blank">Каспер</a></div>
+        <div class="artist" data-name="Каспийский Груз" data-alt-name="каспийский груз"><a href="https://t.me/c/3053740961/1" target="_blank">Каспийский Груз</a></div>
+        <div class="artist" data-name="Кишлак" data-alt-name="кишлак"><a href="https://t.me/c/3092210657/1" target="_blank">Кишлак</a></div>
+        <div class="artist" data-name="Кравц" data-alt-name="кравц"><a href="https://t.me/c/3032256665/1" target="_blank">Кравц</a></div>
+        <div class="artist" data-name="Красное дерево" data-alt-name="красное дерево"><a href="https://t.me/c/2344281679/1" target="_blank">Красное дерево</a></div>
+        <div class="artist" data-name="ЛСП" data-alt-name="лсп"><a href="https://t.me/c/1058640087/1" target="_blank">ЛСП</a></div>
+        <div class="artist" data-name="МЕЙБИ БЕЙБИ" data-alt-name="мейби бейби"><a href="https://t.me/c/1742337862/1" target="_blank">МЕЙБИ БЕЙБИ</a></div>
+        <div class="artist" data-name="Макс Корж" data-alt-name="макс корж"><a href="https://t.me/c/1103504792/1" target="_blank">Макс Корж</a></div>
+        <div class="artist" data-name="Минин" data-alt-name="минин"><a href="https://t.me/c/1885581843/1" target="_blank">Минин</a></div>
+        <div class="artist" data-name="Монеточка" data-alt-name="монеточка"><a href="https://t.me/c/2955792002/1" target="_blank">Монеточка</a></div>
+        <div class="artist" data-name="Овсянкин" data-alt-name="овсянкин"><a href="https://t.me/c/3015405854/1" target="_blank">Овсянкин</a></div>
+        <div class="artist" data-name="Ольга Бузова" data-alt-name="ольга бузова"><a href="https://t.me/c/1142026130/1" target="_blank">Ольга Бузова</a></div>
+        <div class="artist" data-name="ПОЛМАТЕРИ" data-alt-name="полматери"><a href="https://t.me/c/3129881239/1" target="_blank">ПОЛМАТЕРИ</a></div>
+        <div class="artist" data-name="ПОШЛАЯ МОЛЛИ" data-alt-name="пошлая молли"><a href="https://t.me/c/1239033912/1" target="_blank">ПОШЛАЯ МОЛЛИ</a></div>
+        <div class="artist" data-name="Паша Техник" data-alt-name="паша техник"><a href="https://t.me/c/3000241641/1" target="_blank">Паша Техник</a></div>
+        <div class="artist" data-name="Сardi B" data-alt-name="сardi b"><a href="https://t.me/c/2590948551/1" target="_blank">Сardi B</a></div>
+        <div class="artist" data-name="Сектор газа" data-alt-name="сектор газа"><a href="https://t.me/c/2958366430/1" target="_blank">Сектор газа</a></div>
+        <div class="artist" data-name="Скриптонит" data-alt-name="скриптонит"><a href="https://t.me/c/1368225453/1" target="_blank">Скриптонит</a></div>
+        <div class="artist" data-name="Тима Белорусских" data-alt-name="тима белорусских"><a href="https://t.me/c/3032682812/1" target="_blank">Тима Белорусских</a></div>
+        <div class="artist" data-name="Тимати" data-alt-name="тимати"><a href="https://t.me/c/3189636629/1" target="_blank">Тимати</a></div>
+        <div class="artist" data-name="Триагрутрика" data-alt-name="триагрутрика"><a href="https://t.me/c/2271925111/1" target="_blank">Триагрутрика</a></div>
+        <div class="artist" data-name="Тяжёлая Атлетика" data-alt-name="тяжёлая атлетика"><a href="https://t.me/c/3043890266/1" target="_blank">Тяжёлая Атлетика</a></div>
+        <div class="artist" data-name="Тёмный Принц" data-alt-name="тёмный принц"><a href="https://t.me/c/3167659790/1" target="_blank">Тёмный Принц</a></div>
+        <div class="artist" data-name="УННВ" data-alt-name="уннв"><a href="https://t.me/c/1563256704/1" target="_blank">УННВ</a></div>
+        <div class="artist" data-name="Хаски" data-alt-name="хаски"><a href="https://t.me/c/1688689188/1" target="_blank">Хаски</a></div>
+        <div class="artist" data-name="ШАЙНИ" data-alt-name="шайни"><a href="https://t.me/c/1567794750/1" target="_blank">ШАЙНИ</a></div>
+        <div class="artist" data-name="Элджей" data-alt-name="элджей"><a href="https://t.me/c/1139044900/1" target="_blank">Элджей</a></div>
+        <div class="artist" data-name="вышел покурить" data-alt-name="вышел покурить"><a href="https://t.me/c/2503645301/1" target="_blank">вышел покурить</a></div>
+        <div class="artist" data-name="королевский XVII" data-alt-name="королевский xvii"><a href="https://t.me/c/2538641790/1" target="_blank">королевский XVII</a></div>
+        <div class="artist" data-name="масло черного тмина" data-alt-name="масло черного тмина"><a href="https://t.me/c/1856016367/1" target="_blank">масло черного тмина</a></div>
+        <div class="artist" data-name="снялцепи" data-alt-name="снялцепи"><a href="https://t.me/c/3163252031/1" target="_blank">снялцепи</a></div>
+    </div>
+    
     <footer>
-        <div id="footerText">
-            <!-- Data from JS -->
+        <div class="contact-info">
+            <p data-lang="en">
+                Didn't find your favorite artist? Message us in the bot, and we'll definitely add them: <a href="https://t.me/musicboxrus_bot" target="_blank">t.me/musicboxrus_bot</a>
+            </p>
+            <p data-lang="ru">
+                Не нашли вашего любимого исполнителя? Напишите нам в бот, и мы обязательно добавим его: <a href="https://t.me/musicboxrus_bot" target="_blank">t.me/musicboxrus_bot</a>
+            </p>
+            <p data-lang="ua">
+                Не знайшли вашого улюбленого виконавця? Напишіть нам у бот, і ми обов’язково додамо його: <a href="https://t.me/musicboxrus_bot" target="_blank">t.me/musicboxrus_bot</a>
+            </p>
         </div>
     </footer>
-
+    
+    <script src="//codice.shinystat.com/cgi-bin/getcod.cgi?USER=SS-51041999-2282b"></script>
+    <noscript>
+        <a href="https://www.shinystat.com/it/" target="_top">
+            <img src="//www.shinystat.com/cgi-bin/shinystat.cgi?USER=SS-51041999-2282b" alt="Statistiche web" style="border:0px" />
+        </a>
+    </noscript>
+    
     <script>
-        const WebApp = window.Telegram.WebApp;
-        WebApp.ready();
-        WebApp.expand();
+        var currentLanguage = 'ru';
 
-        const translations = {
-            ru: {
-                header: 'Музыка стала ещё ближе! Следите за обновлениями на <a href="https://t.me/musicbox_rus">t.me/musicbox_rus</a>.\nИщу маркетолога, пишите <a href="https://t.me/mostbettie">@mostbettie</a>.',
-                searchPlaceholder: 'Поиск артиста...',
-                empty: 'По вашему запросу ничего не найдено',
-                footer: 'Не нашли любимого артиста? Напишите нам в бот: <a href="https://t.me/musicboxrus_bot">t.me/musicboxrus_bot</a>'
-            },
-            ua: {
-                header: 'Музика стала ближче! Слідкуйте за оновленнями на <a href="https://t.me/musicbox_rus">t.me/musicbox_rus</a>.\nШукаю маркетолога, пишіть <a href="https://t.me/mostbettie">@mostbettie</a>.',
-                searchPlaceholder: 'Пошук артиста...',
-                empty: 'За вашим запитом нічого не знайдено',
-                footer: 'Не знайшли улюбленого артиста? Напишіть нам у бот: <a href="https://t.me/musicboxrus_bot">t.me/musicboxrus_bot</a>'
-            },
-            en: {
-                header: 'Music is now closer! Follow updates at <a href="https://t.me/musicbox_rus">t.me/musicbox_rus</a>.\nLooking for a marketer, contact <a href="https://t.me/mostbettie">@mostbettie</a>.',
-                searchPlaceholder: 'Search for an artist...',
-                empty: 'No results found for your query',
-                footer: "Didn't find your favorite artist? Message our bot: <a href='https://t.me/musicboxrus_bot'>t.me/musicboxrus_bot</a>"
-            }
-        };
-
-        let currentLang = 'ru';
-
-        function setLanguage(lang) {
-            currentLang = lang;
-            const t = translations[lang];
-            
-            document.getElementById('headerDesc').innerHTML = t.header.replace('\n', '<br>');
-            document.getElementById('searchInput').placeholder = t.searchPlaceholder;
-            document.getElementById('emptyText').innerText = t.empty;
-            document.getElementById('footerText').innerHTML = t.footer;
-
-            document.querySelectorAll('.lang-btn').forEach(btn => {
-                btn.classList.toggle('active', btn.innerText.toLowerCase() === lang);
+        function setLanguage(language) {
+            currentLanguage = language;
+            var elements = document.querySelectorAll('[data-lang]');
+            elements.forEach(function(element) {
+                element.style.display = element.getAttribute('data-lang') === language ? 'block' : 'none';
             });
 
-            WebApp.HapticFeedback.selectionChanged();
+            var searchInput = document.getElementById('searchInput');
+            var placeholders = {
+                'en': 'Search for artists...',
+                'ru': 'Поиск по артистам...',
+                'ua': 'Пошук артистів...'
+            };
+            searchInput.placeholder = placeholders[language];
+
+            var languageButtons = document.querySelectorAll('.language-switcher button');
+            languageButtons.forEach(function(button) {
+                button.classList.toggle('active', button.innerText.toLowerCase() === language);
+            });
+        }
+
+        function toggleMenu() {
+            var menu = document.getElementById('menu');
+            var menuText = document.getElementById('menuText');
+
+            if (menu && menuText) {
+                if (menu.style.display === 'block') {
+                    menu.style.display = 'none';
+                } else {
+                    var content = {
+                        'en': "Didn't find your favorite artist? Message us in the bot, and we'll definitely add them: <a href='https://t.me/musicboxrus_bot' target='_blank'>t.me/musicboxrus_bot</a>",
+                        'ru': "Не нашли вашего любимого исполнителя? Напишите нам в бот,и мы обязательно добавим его: <a href='https://t.me/musicboxrus_bot' target='_blank'>t.me/musicboxrus_bot</a>",
+                        'ua': "Не знайшли вашого улюбленого виконавця? Напишіть нам у бот, і ми обов’язково додамо його: <a href='https://t.me/musicboxrus_bot' target='_blank'>t.me/musicboxrus_bot</a>"
+                    };
+                    menuText.innerHTML = content[currentLanguage];
+                    menu.style.display = 'block';
+                }
+
+                var blurElements = document.querySelectorAll('body > *:not(.dropdown)');
+                blurElements.forEach(function(element) {
+                    element.style.filter = menu.style.display === 'block' ? 'blur(5px)' : 'none';
+                    element.style.pointerEvents = menu.style.display === 'block' ? 'none' : 'auto';
+                });
+            }
         }
 
         function filterArtists() {
-            const query = document.getElementById('searchInput').value.toLowerCase().trim();
-            const cards = document.querySelectorAll('.artist-card');
-            let foundCount = 0;
+            var input = document.getElementById('searchInput');
+            var filter = input.value.toLowerCase();
+            var artists = document.getElementsByClassName('artist');
 
-            cards.forEach(card => {
-                const name = card.getAttribute('data-name').toLowerCase();
-                if (name.includes(query)) {
-                    card.style.display = 'flex';
-                    foundCount++;
+            Array.from(artists).forEach(function(artist) {
+                var artistName = artist.getAttribute('data-name').toLowerCase();
+                var artistAltName = (artist.getAttribute('data-alt-name') || '').toLowerCase();
+                if (artistName.includes(filter) || artistAltName.includes(filter)) {
+                    artist.style.display = '';
                 } else {
-                    card.style.display = 'none';
+                    artist.style.display = 'none';
                 }
             });
-
-            document.getElementById('emptyState').style.display = foundCount === 0 ? 'flex' : 'none';
         }
 
-        function openChannel(url, name) {
-            console.log('Opening channel:', url, 'for artist:', name);
-            if (!url || url === '#' || url === 'None') {
-                WebApp.showAlert('Ссылка на канал этого артиста пока не добавлена. \n\nНапишите нам в поддержку, если хотите ускорить добавление!');
-                return;
-            }
-            
-            // Premium Feedback
-            WebApp.HapticFeedback.impactOccurred('medium');
-            
-            if (url.startsWith('https://t.me/')) {
-                WebApp.openTelegramLink(url);
-            } else if (url.startsWith('-100')) {
-                // Numeric ID format
-                WebApp.openTelegramLink('https://t.me/c/' + url.substring(4));
-            } else {
-                WebApp.openLink(url);
-            }
-        }
-
-        // Initialize with default language
-        document.addEventListener('DOMContentLoaded', () => {
+        document.addEventListener('DOMContentLoaded', function() {
             setLanguage('ru');
-            
-            // Stagger animation for cards
-            const cards = document.querySelectorAll('.artist-card');
-            cards.forEach((card, index) => {
-                card.style.animationDelay = `${Math.min(index * 20, 1000)}ms`;
-            });
         });
+
+        document.addEventListener('contextmenu', function(e) { e.preventDefault(); });
+        document.addEventListener('selectstart', function(e) { e.preventDefault(); });
     </script>
 </body>
 </html>
